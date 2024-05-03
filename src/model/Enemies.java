@@ -54,11 +54,11 @@ public class Enemies {
     }
 
     public void move() {
-        this.y = y - speed; // Bewegt sich von Rechts nach Links
+        this.x = x - speed; // Bewegt sich von Rechts nach Links
     }
 
     public boolean isOffScreen() {
-        return y < 0; //Überprüfen, ob Gegner am Ende ist, dann lose, Y-Offset muss noch an Gegnergröße angepasst werden
+        return x < 0; //Überprüfen, ob Gegner am Ende ist, dann lose, Y-Offset muss noch an Gegnergröße angepasst werden
     }
 
 }
