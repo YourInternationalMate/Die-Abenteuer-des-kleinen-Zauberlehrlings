@@ -13,10 +13,6 @@ public class Enemies {
         this.y = y;
     }
 
-    public int getHealth() {
-        return health;
-    }
-
     public int getSpeed() {
         return speed;
     }
@@ -27,10 +23,6 @@ public class Enemies {
 
     public int getY() {
         return y;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
     }
 
     public void setSpeed(int speed) {
