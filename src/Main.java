@@ -7,9 +7,7 @@ import javax.swing.SwingUtilities;
 
 public class Main {
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            start();
-        });
+        SwingUtilities.invokeLater(Main::start);
     }
 
     private static void start() {

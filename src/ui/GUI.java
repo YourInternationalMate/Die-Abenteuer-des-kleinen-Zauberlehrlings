@@ -13,7 +13,7 @@ public class GUI extends JPanel {
     private Image spellImage;
     private Image enemyImage;
 
-    private MainModel model;
+    private final MainModel model;
 
 
 

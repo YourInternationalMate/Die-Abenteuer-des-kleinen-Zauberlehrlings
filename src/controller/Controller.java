@@ -13,11 +13,9 @@ import java.util.ArrayList;
 public class Controller extends KeyAdapter {
     private MainModel model;
     private GUI view;
-    private Timer timer;
 
     private int currentLevel;
     private Level[] level;
-    private ArrayList<Enemies> enemies;
 
     public Controller(MainModel model, GUI view) {
         this.model = model;
@@ -27,7 +25,7 @@ public class Controller extends KeyAdapter {
     }
 
     public void startGame(){
-        timer = new Timer(16, e -> gameLoop()); // Timer starten mit 60 FPS (16 Millisekunden(laut Google))
+        Timer timer = new Timer(16, e -> gameLoop()); // Timer starten mit 60 FPS (16 Millisekunden(laut Google))
         timer.start();
     }
 
@@ -44,7 +42,7 @@ public class Controller extends KeyAdapter {
             startGame();
         }
 
-        this.enemies = model.getEnemies();
+        ArrayList<Enemies> enemies = model.getEnemies();
 
         for (Enemies enemy : enemies) {
             if (enemy.isOffScreen()) {
