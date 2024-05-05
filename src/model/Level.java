@@ -34,8 +34,4 @@ public class Level {
     public int getEnemyCount() {
         return enemyCount;
     }
-
-    public int getKilledEnemies() {
-        return killedEnemies;
-    }
 }
