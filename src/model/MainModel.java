@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-public class Main {
+public class MainModel {
 
     private ArrayList<Enemies> enemies = new ArrayList<>();
     private ArrayList<Spells> spells = new ArrayList<>();
@@ -11,33 +11,10 @@ public class Main {
 
     private int currentLevel = 0;
 
-    public Main() {
-        this.player = new Player(5, 0, 200); // Startposition muss noch angepasst werden + Speed
+    public MainModel() {
+        this.player = new Player(5, 0, 360); // Startposition muss noch angepasst werden + Speed
         createLevel(5); // Anzahl an Gegnern pro Level
         spawnEnemies(level[currentLevel].getEnemyCount());
-
-        while (true) {
-            moveEnemies();
-            moveSpells();
-            isEnemieHit();
-
-            if (level[currentLevel].isCompleted()) {
-                System.out.println("Level " + level[currentLevel].getLevelNumber() + " geschafft!");
-                currentLevel++;
-                break;
-            }
-
-            for (Enemies enemy : enemies) {
-                if (enemy.isOffScreen()) {
-                    System.out.println("Game Over!");
-                    restart();
-                }
-            }
-
-            // Steuerung Spieler?
-        }
-
-
     }
 
     public void createLevel(int enemyCount) {
@@ -48,7 +25,7 @@ public class Main {
 
     public void spawnEnemies(int enemyCount) {
         for (int i = 0; i < enemyCount; i++){
-            enemies.add(new Enemies(10, 5, 700, 0)); // für nur einen Gegnertypen, X anpassen
+            enemies.add(new Enemies(10, 5, 1280, 0)); // für nur einen Gegnertypen, X anpassen
         }
     }
 
@@ -67,6 +44,22 @@ public class Main {
     public void shootSpell() {
         Spells spell = new Spells(10, 10, player.getX(), player.getY()); //Erstellt Spell an Position von Spieler, X muss angepasst werden
         spells.add(spell);
+    }
+
+    public void movePlayerUp() {
+        player.moveUp();
+    }
+
+    public void movePlayerDown() {
+        player.moveDown();
+    }
+
+    public int getPlayerX() {
+        return player.getX();
+    }
+
+    public int getPlayerY() {
+        return player.getY();
     }
 
     public void isEnemieHit() {
@@ -88,5 +81,21 @@ public class Main {
         enemies.clear();
         spells.clear();
         spawnEnemies(level[currentLevel].getEnemyCount());
+    }
+
+    public ArrayList<Spells> getSpells() {
+        return spells;
+    }
+
+    public ArrayList<Enemies> getEnemies() {
+        return enemies;
+    }
+
+    public Level[] getLevel() {
+        return level;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
     }
 }

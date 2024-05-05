@@ -1,10 +1,6 @@
 package model;
 
 public class Level {
-
-    public static final int WIDTH = 700;
-    public static final int HEIGHT = 400;
-
     public int levelNumber;
     public int enemyCount;
     public int killedEnemies;

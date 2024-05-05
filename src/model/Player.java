@@ -38,7 +38,7 @@ public class Player {
 
     public void reset() { // Start Position muss noch angepasst werden
         x = 0;
-        y = 200;
+        y = 360;
     }
 
     public void moveUp() {

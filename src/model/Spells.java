@@ -7,14 +7,6 @@ public class Spells {
     public int x;
     public int y;
 
-//    public Spells(String type, int damage, int speed, int x, int y) { // für mehrere Typen
-//        this.type = type;
-//        this.damage = damage;
-//        this.speed = speed;
-//        this.x = x;
-//        this.y = y;
-//    }
-
     public Spells(int damage, int speed, int x, int y) { // solange wir nur einen Typ haben
         this.type = "normal";
         this.damage = damage;
