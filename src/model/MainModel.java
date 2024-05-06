@@ -67,8 +67,10 @@ public class MainModel {
             for (Spells spell : spells) {
                 if (enemy.getX() == spell.getX() && enemy.getY() == spell.getY()) { // Wenn Pos übereinstimmt
                     enemy.takeDamage(spell.damage);
-                    if (enemy.isAlive()) { // Überprüfen, ob Gegner nach Schaden noch lebt
+                    spells.remove(spell); // Spell entfernen, wenn Gegner getroffen
+                    if (!enemy.isAlive()) { // Überprüfen, ob Gegner nach Schaden noch lebt
                         level[currentLevel].enemyKilled();
+                        enemies.remove(enemy); // Gegner entfernen, wenn tot
                     }
                 }
             }

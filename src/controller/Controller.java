@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Controller extends KeyAdapter {
     private MainModel model;
     private GUI view;
+    private Timer timer;
 
     private int currentLevel;
     private Level[] level;
@@ -25,7 +26,7 @@ public class Controller extends KeyAdapter {
     }
 
     public void startGame(){
-        Timer timer = new Timer(16, e -> gameLoop()); // Timer starten mit 60 FPS (16 Millisekunden(laut Google))
+        this.timer = new Timer(16, e -> gameLoop()); // Timer starten mit 60 FPS (16 Millisekunden(laut Google))
         timer.start();
     }
 
@@ -38,8 +39,9 @@ public class Controller extends KeyAdapter {
 
         if (level[model.getCurrentLevel()].isCompleted()) {
             System.out.println("Level " + level[currentLevel].getLevelNumber() + " geschafft!");
-            currentLevel++;
-            startGame();
+//            currentLevel++; // wenn mehr Level verfügbar sind, dann nächstes Level
+//            startGame();
+            timer.stop(); // Spiel stoppen
         }
 
         ArrayList<Enemies> enemies = model.getEnemies();
@@ -47,7 +49,8 @@ public class Controller extends KeyAdapter {
         for (Enemies enemy : enemies) {
             if (enemy.isOffScreen()) {
                 System.out.println("Game Over!");
-                model.restart();
+                model.restart(); // Model auf Anfangswerte zurücksetzen
+                timer.stop(); // Spiel stoppen
             }
         }
     }
