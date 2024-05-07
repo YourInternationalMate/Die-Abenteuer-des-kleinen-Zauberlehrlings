@@ -5,6 +5,8 @@ public class Enemies {
     private int speed;
     private int x;
     private int y;
+    private static final int HEIGHT = 90;
+    private static final int WIDTH = 128;
 
     public Enemies(int health, int speed, int x, int y) {
         this.health = health;
@@ -23,6 +25,14 @@ public class Enemies {
 
     public int getY() {
         return y;
+    }
+
+    public static int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public static int getWIDTH() {
+        return WIDTH;
     }
 
     public void setSpeed(int speed) {

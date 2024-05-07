@@ -38,14 +38,18 @@ public class Player {
 
     public void reset() { // Start Position muss noch angepasst werden
         x = 0;
-        y = 360;
+        y = 270;
     }
 
     public void moveUp() {
-        this.y = y + speed;
+        if (y > 0) {
+            this.y = y - speed;
+        }
     }
 
     public void moveDown() {
-        this.y = y - speed;
+        if (y + 90 < 720) {
+            this.y = y + speed;
+        }
     }
 }

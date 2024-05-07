@@ -1,13 +1,15 @@
 package model;
 
 public class Level {
-    public int levelNumber;
-    public int enemyCount;
-    public int killedEnemies;
+    private int levelNumber;
+    private int enemyCount;
+    private int killedEnemies;
+    private int enemySpeed;
 
-    public Level(int levelNumber, int enemyCount) {
+    public Level(int levelNumber, int enemyCount, int enemySpeed) {
         this.levelNumber = levelNumber;
         this.enemyCount = enemyCount;
+        this.enemySpeed = enemySpeed;
         this.killedEnemies = 0;
     }
 
@@ -29,5 +31,9 @@ public class Level {
 
     public int getEnemyCount() {
         return enemyCount;
+    }
+
+    public int getEnemySpeed(){
+        return enemySpeed;
     }
 }

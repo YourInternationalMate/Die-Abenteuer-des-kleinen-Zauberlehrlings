@@ -1,11 +1,15 @@
 package model;
 
 public class Spells {
-    public String type;
-    public int damage;
-    public int speed;
-    public int x;
-    public int y;
+    private String type;
+    private int damage;
+    private int speed;
+    private int x;
+    private int y;
+
+    private static final int WIDTH = 50; // muss noch angepasst werden, richtige Werte
+    private static final int HEIGHT = 50;
+
 
     public Spells(int damage, int speed, int x, int y) { // solange wir nur einen Typ haben
         this.type = "normal";
@@ -21,6 +25,18 @@ public class Spells {
 
     public int getY() {
         return y;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public static int getWIDTH() {
+        return WIDTH;
+    }
+
+    public static int getHEIGHT() {
+        return HEIGHT;
     }
 
     public void move() {
