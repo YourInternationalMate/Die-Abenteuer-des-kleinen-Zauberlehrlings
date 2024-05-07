@@ -5,7 +5,7 @@ import model.MainModel;
 import model.Level;
 import ui.GUI;
 
-import javax.swing.Timer;
+import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -31,17 +31,15 @@ public class Controller extends KeyAdapter {
     }
 
     private void gameLoop() {
-        model.moveEnemies();
-        model.moveSpells();
-        model.isEnemieHit();
-
-        view.repaint();
-
         if (level[model.getCurrentLevel()].isCompleted()) {
-            System.out.println("Level " + level[currentLevel].getLevelNumber() + " geschafft!");
-//            currentLevel++; // wenn mehr Level verfügbar sind, dann nächstes Level
-//            startGame();
-            timer.stop(); // Spiel stoppen
+            currentLevel++;
+            if (currentLevel < level.length) {
+                initializeLevel(currentLevel);
+            } else {
+                System.out.println("Spiel abgeschlossen!");
+                timer.stop();
+                return;
+            }
         }
 
         ArrayList<Enemies> enemies = model.getEnemies();
@@ -53,6 +51,18 @@ public class Controller extends KeyAdapter {
                 timer.stop(); // Spiel stoppen
             }
         }
+
+        model.moveEnemies();
+        model.moveSpells();
+        model.isEnemieHit();
+
+        view.repaint();
+    }
+
+    private void initializeLevel(int levelindex) {
+        System.out.println("Starte Level " + levelindex);
+        model.nextLevel();
+        timer.start();
     }
 
     @Override

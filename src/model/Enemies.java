@@ -56,7 +56,7 @@ public class Enemies {
     }
 
     public void move() {
-        this.x = x - speed; // Bewegt sich von Rechts nach Links
+        this.x -= speed;// Bewegt sich von Rechts nach Links
     }
 
     public boolean isOffScreen() {

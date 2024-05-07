@@ -26,9 +26,9 @@ public class GUI extends JPanel {
     }
 
     private void loadImages() {
-        playerImage = new ImageIcon("src/images/player.png").getImage();
-        spellImage = new ImageIcon("src/images/spell.png").getImage();
-        enemyImage = new ImageIcon("src/images/enemy.png").getImage();
+        playerImage = new ImageIcon("src/resources/player.png").getImage();
+        spellImage = new ImageIcon("src/resources/spell.png").getImage();
+        enemyImage = new ImageIcon("src/resources/enemy.png").getImage();
     }
 
     @Override
@@ -50,8 +50,11 @@ public class GUI extends JPanel {
     }
 
     private void drawEnemies(Graphics g) {
-        for (Enemies enemy : model.getEnemies()) {
-            g.drawImage(enemyImage, enemy.getX(), enemy.getY(), null);
+        if (!(model.getEnemies().isEmpty())) {
+            for (Enemies enemy : model.getEnemies()) {
+                g.drawImage(enemyImage, enemy.getX(), enemy.getY(), null);
+            }
         }
+
     }
 }

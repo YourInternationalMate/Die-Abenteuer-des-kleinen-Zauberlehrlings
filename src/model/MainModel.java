@@ -8,25 +8,26 @@ public class MainModel {
     private ArrayList<Enemies> enemies = new ArrayList<>();
     private ArrayList<Spells> spells = new ArrayList<>();
     private Player player;
-    private Level[] level = new Level[1]; // Anfangs nur 1 Level (festgelegte Anzahl an Leveln, deswegen Array)
+    private Level[] level = new Level[3]; // Anfangs nur 1 Level (festgelegte Anzahl an Leveln, deswegen Array)
     private int currentLevel = 0;
     private ArrayList<Point> possiblePositions = new ArrayList<>();
 
     public MainModel() {
         this.player = new Player(5, 0, 360); // Startposition muss noch angepasst werden + Speed
-        createLevel(5); // Anzahl an Gegnern pro Level
+        createLevel(4); // Anzahl an Gegnern pro Level
         spawnEnemies(level[currentLevel].getEnemyCount());
     }
 
     public void createLevel(int enemyCount) {
         for (int levelNumber = 0; levelNumber < level.length; levelNumber++) { //Anzahl an Level wird oben festgelegt
-            level[levelNumber] = new Level(levelNumber, enemyCount, levelNumber*2); // Enemyspeed noch änderbar
+            level[levelNumber] = new Level(levelNumber, enemyCount+levelNumber, 1); // Enemyspeed noch änderbar
         }
     }
 
     public void spawnEnemies(int enemyCount) {
+        System.out.println(enemyCount);
         calculatePossiblePositions();  // Stelle sicher, dass Positionen berechnet sind
-        for (int i = 0; i < enemyCount && i < possiblePositions.size(); i++) {
+        for (int i = 0; i < enemyCount; i++) {
             Point position = possiblePositions.get(i);
             enemies.add(new Enemies(10, level[currentLevel].getEnemySpeed(), position.x, position.y));
         }
@@ -53,7 +54,7 @@ public class MainModel {
     }
 
     public void shootSpell() {
-        Spells spell = new Spells(10, 10, player.getX(), player.getY()); //Erstellt Spell an Position von Spieler, X muss angepasst werden
+        Spells spell = new Spells(10, 10, player.getX(), player.getY()+20); //Erstellt Spell an Position von Spieler, X muss angepasst werden
         spells.add(spell);
     }
 
@@ -74,7 +75,8 @@ public class MainModel {
     }
 
     public void isEnemieHit() {
-        for (Enemies enemy : enemies) { // jeden Gegner mit Pos von jedem Spell vergleichen
+        ArrayList<Enemies> copyOfEnemies = new ArrayList<>(enemies);
+        for (Enemies enemy : copyOfEnemies) { // jeden Gegner mit Pos von jedem Spell vergleichen
             for (Spells spell : spells) {
                 if (isCollision(enemy, spell)) { // Wenn Pos übereinstimmt
                     enemy.takeDamage(spell.getDamage());
@@ -83,6 +85,7 @@ public class MainModel {
                         level[currentLevel].enemyKilled();
                         enemies.remove(enemy); // Gegner entfernen, wenn tot
                     }
+                    break;
                 }
             }
         }
@@ -112,6 +115,15 @@ public class MainModel {
         enemies.clear();
         spells.clear();
         spawnEnemies(level[currentLevel].getEnemyCount());
+    }
+
+    public void nextLevel() {
+        currentLevel++;
+        if (currentLevel < level.length) {
+            restart();
+        } else {
+            System.out.println("Spiel abgeschlossen!");
+        }
     }
 
     public ArrayList<Spells> getSpells() {
