@@ -27,10 +27,10 @@ public class GUI extends JPanel {
     }
 
     private void loadImages() {
-        playerImage = new ImageIcon("src/resources/player.png").getImage();
-        spellImage = new ImageIcon("src/resources/spell.png").getImage();
-        enemyImage = new ImageIcon("src/resources/enemy.png").getImage();
-        backgroundImage = new ImageIcon("src/resources/background.png").getImage();
+        playerImage = new ImageIcon("src/resources/game/player.png").getImage();
+        spellImage = new ImageIcon("src/resources/game/spell.png").getImage();
+        enemyImage = new ImageIcon("src/resources/game/enemy.png").getImage();
+//        backgroundImage = new ImageIcon("src/resources/game/background.png").getImage();
     }
 
     @Override
