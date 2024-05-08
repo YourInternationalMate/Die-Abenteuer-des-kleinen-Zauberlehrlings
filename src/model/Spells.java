@@ -7,8 +7,8 @@ public class Spells {
     private int x;
     private int y;
 
-    private static final int WIDTH = 50; // muss noch angepasst werden, richtige Werte
-    private static final int HEIGHT = 50;
+    private static final int WIDTH = 20; // muss noch angepasst werden, richtige Werte
+    private static final int HEIGHT = 10;
 
 
     public Spells(int damage, int speed, int x, int y) { // solange wir nur einen Typ haben
