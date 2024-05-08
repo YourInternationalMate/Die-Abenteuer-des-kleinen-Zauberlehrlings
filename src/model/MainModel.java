@@ -8,13 +8,13 @@ public class MainModel {
     private ArrayList<Enemies> enemies = new ArrayList<>();
     private ArrayList<Spells> spells = new ArrayList<>();
     private Player player;
-    private Level[] level = new Level[3]; // Anfangs nur 1 Level (festgelegte Anzahl an Leveln, deswegen Array)
+    private Level[] level = new Level[3]; //Anzahl an Level
     private int currentLevel = 0;
     private ArrayList<Point> possiblePositions = new ArrayList<>();
 
     public MainModel() {
-        this.player = new Player(5, 0, 360); // Startposition muss noch angepasst werden + Speed
-        createLevel(4); // Anzahl an Gegnern pro Level
+        this.player = new Player(5, 0, 360); // Speed evtl noch anpassen
+        createLevel(4); // Start Anzahl an Gegnern pro Level; jedes Level+1
         spawnEnemies(level[currentLevel].getEnemyCount());
     }
 
@@ -26,7 +26,7 @@ public class MainModel {
 
     public void spawnEnemies(int enemyCount) {
         System.out.println(enemyCount);
-        calculatePossiblePositions();  // Stelle sicher, dass Positionen berechnet sind
+        calculatePossiblePositions();  // Berechnet mögliche Positionen für Gegner
         for (int i = 0; i < enemyCount; i++) {
             Point position = possiblePositions.get(i);
             enemies.add(new Enemies(10, level[currentLevel].getEnemySpeed(), position.x, position.y));
@@ -42,7 +42,7 @@ public class MainModel {
     public void calculatePossiblePositions() {
         for (int x = 1280 - Enemies.getWIDTH(); x >= 1280 - 2*Enemies.getWIDTH(); x -= Enemies.getWIDTH()) {
             for (int y = 0; y <= 720 - Enemies.getHEIGHT(); y += Enemies.getHEIGHT()) {
-                possiblePositions.add(new Point(x, y)); // zwei Reihen für Gegner = 16 Gegner
+                possiblePositions.add(new Point(x, y)); // zwei Reihen für Gegner = 16 Gegner max
             }
         }
     }
@@ -54,7 +54,7 @@ public class MainModel {
     }
 
     public void shootSpell() {
-        Spells spell = new Spells(10, 10, player.getX(), player.getY()+20); //Erstellt Spell an Position von Spieler, X muss angepasst werden
+        Spells spell = new Spells(10, 10, player.getX(), player.getY()+20); //Erstellt Spell an Position von Spieler
         spells.add(spell);
     }
 
@@ -140,5 +140,9 @@ public class MainModel {
 
     public int getCurrentLevel() {
         return currentLevel;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
     }
 }

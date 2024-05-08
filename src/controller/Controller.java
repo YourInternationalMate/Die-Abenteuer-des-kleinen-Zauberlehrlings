@@ -14,8 +14,6 @@ public class Controller extends KeyAdapter {
     private MainModel model;
     private GUI view;
     private Timer timer;
-
-    private int currentLevel;
     private Level[] level;
 
     public Controller(MainModel model, GUI view) {
@@ -32,9 +30,9 @@ public class Controller extends KeyAdapter {
 
     private void gameLoop() {
         if (level[model.getCurrentLevel()].isCompleted()) {
-            currentLevel++;
-            if (currentLevel < level.length) {
-                initializeLevel(currentLevel);
+            model.setCurrentLevel(model.getCurrentLevel() + 1);
+            if (model.getCurrentLevel() < level.length) {
+                initializeLevel(model.getCurrentLevel());
             } else {
                 System.out.println("Spiel abgeschlossen!");
                 timer.stop();

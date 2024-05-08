@@ -12,6 +12,7 @@ public class GUI extends JPanel {
     private Image playerImage;
     private Image spellImage;
     private Image enemyImage;
+    private Image backgroundImage;
 
     private final MainModel model;
 
@@ -29,14 +30,20 @@ public class GUI extends JPanel {
         playerImage = new ImageIcon("src/resources/player.png").getImage();
         spellImage = new ImageIcon("src/resources/spell.png").getImage();
         enemyImage = new ImageIcon("src/resources/enemy.png").getImage();
+        backgroundImage = new ImageIcon("src/resources/background.png").getImage();
     }
 
     @Override
     protected void paintComponent(Graphics g) { // Spieler zeichnen
         super.paintComponent(g);
+//        drawBackground(g); // Bild fehlt noch
         drawPlayer(g);
         drawSpells(g);
-        drawEnemies(g);
+        drawEnemies(g); // evtl Liste mit verschiedenen Gegner Bildern, dann random choice
+    }
+
+    private void drawBackground(Graphics g) {
+        g.drawImage(backgroundImage, 0, 0, null);
     }
 
     private void drawPlayer(Graphics g) {

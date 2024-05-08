@@ -60,7 +60,7 @@ public class Enemies {
     }
 
     public boolean isOffScreen() {
-        return x < 0; //Überprüfen, ob Gegner am Ende ist, dann lose, Y-Offset muss noch an Gegnergröße angepasst werden
+        return x < 0; //Überprüfen, ob Gegner am Ende ist
     }
 
 }
