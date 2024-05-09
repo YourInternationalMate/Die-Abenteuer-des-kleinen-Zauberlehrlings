@@ -74,6 +74,7 @@ public class Controller extends KeyAdapter {
         for (Enemies enemy : enemies) {
             if (enemy.isOffScreen()) {
                 timer.stop(); // Spiel stoppen
+                model.saveLevel("Test"); // Namen einbauen -> Eingabe fehlt noch
                 return; // lose Screen einbauen
             }
         }
