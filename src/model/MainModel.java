@@ -10,7 +10,7 @@ public class MainModel {
     private ArrayList<Enemies> enemies = new ArrayList<>();
     private ArrayList<Spells> spells = new ArrayList<>();
     private Player player;
-    private Level[] level = new Level[3]; //Anzahl an Level
+    private Level[] level = new Level[4]; //Anzahl an Level
 
     public MainModel() {
         this.player = new Player(5, 0, 360); // Speed evtl noch anpassen

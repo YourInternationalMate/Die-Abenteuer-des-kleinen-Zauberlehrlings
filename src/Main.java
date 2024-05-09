@@ -30,7 +30,7 @@ public class Main implements GameStarter{
 
     public void setWindow() {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setSize(1280, 760);
+        mainFrame.setSize(1280, 780);
         mainFrame.setResizable(false);
         initMenu();
     }

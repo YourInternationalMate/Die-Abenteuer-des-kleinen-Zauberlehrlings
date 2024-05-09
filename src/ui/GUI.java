@@ -12,7 +12,7 @@ public class GUI extends JPanel {
     private Image playerImage;
     private Image spellImage;
     private Image enemyImage;
-    private Image backgroundImage;
+    private Image[] backgroundImages = new Image[4];
 
     private final MainModel model;
 
@@ -32,20 +32,24 @@ public class GUI extends JPanel {
         playerImage = new ImageIcon("src/resources/game/player.png").getImage();
         spellImage = new ImageIcon("src/resources/game/spell.jpg").getImage();
         enemyImage = new ImageIcon("src/resources/game/enemy.png").getImage();
-//        backgroundImage = new ImageIcon("src/resources/game/background.png").getImage();
+        for (int i = 0; i <= 3; i++) {
+            backgroundImages[i] = new ImageIcon("src/resources/game/level" + i + ".jpg").getImage();
+            System.out.println("src/resources/game/level" + (i+1) + ".jpg");
+        }
+        System.out.println(backgroundImages[1]);
     }
 
     @Override
     protected void paintComponent(Graphics g) { // Spieler zeichnen
         super.paintComponent(g);
-//        drawBackground(g); // Bild fehlt noch
+        drawBackground(g);
         drawPlayer(g);
         drawSpells(g);
         drawEnemies(g); // evtl Liste mit verschiedenen Gegner Bildern, dann random choice
     }
 
     private void drawBackground(Graphics g) {
-        g.drawImage(backgroundImage, 0, 0, null);
+        g.drawImage(backgroundImages[model.getCurrentLevel()+1], 0, 0, null);
     }
 
     private void drawPlayer(Graphics g) {
