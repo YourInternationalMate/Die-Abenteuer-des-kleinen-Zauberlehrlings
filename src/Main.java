@@ -14,6 +14,9 @@ public class Main {
         JFrame frame = new JFrame("Die Abenteuer des kleinen Zauberlehrlings"); //Stimmt das?
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1280, 760);
+        frame.setResizable(false);
+        
+//        frame.setIconImage(); // Bild fehlt noch
 
         MainModel model = new MainModel();
         GUI view = new GUI(model);
@@ -24,7 +27,7 @@ public class Main {
         frame.setLocationRelativeTo(null); // Zentrieren und anzeigen
         frame.setVisible(true);
 
-        frame.addKeyListener(controller);
+        frame.addKeyListener(controller); // Steuerung einbinden
 
         controller.startGame();
     }

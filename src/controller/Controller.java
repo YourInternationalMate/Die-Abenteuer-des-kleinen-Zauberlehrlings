@@ -30,12 +30,11 @@ public class Controller extends KeyAdapter {
 
     private void gameLoop() {
         if (level[model.getCurrentLevel()].isCompleted()) {
-            model.setCurrentLevel(model.getCurrentLevel() + 1);
-            if (model.getCurrentLevel() < level.length) {
-                initializeLevel(model.getCurrentLevel());
+            if (model.getCurrentLevel() < level.length -1) {
+                model.increaseCurrentLevel();
+                initializeLevel();
             } else {
-                System.out.println("Spiel abgeschlossen!");
-                timer.stop();
+                timer.stop(); // lose Screen einbauen
                 return;
             }
         }
@@ -44,9 +43,8 @@ public class Controller extends KeyAdapter {
 
         for (Enemies enemy : enemies) {
             if (enemy.isOffScreen()) {
-                System.out.println("Game Over!");
-                model.restart(); // Model auf Anfangswerte zurücksetzen
                 timer.stop(); // Spiel stoppen
+                return;
             }
         }
 
@@ -57,8 +55,7 @@ public class Controller extends KeyAdapter {
         view.repaint();
     }
 
-    private void initializeLevel(int levelindex) {
-        System.out.println("Starte Level " + levelindex);
+    private void initializeLevel() {
         model.nextLevel();
         timer.start();
     }

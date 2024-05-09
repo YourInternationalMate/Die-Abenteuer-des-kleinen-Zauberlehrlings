@@ -5,11 +5,12 @@ import java.awt.Point;
 
 public class MainModel {
 
+    private int currentLevel = 0;
+
     private ArrayList<Enemies> enemies = new ArrayList<>();
     private ArrayList<Spells> spells = new ArrayList<>();
     private Player player;
     private Level[] level = new Level[3]; //Anzahl an Level
-    private int currentLevel = 0;
     private ArrayList<Point> possiblePositions = new ArrayList<>();
 
     public MainModel() {
@@ -25,7 +26,6 @@ public class MainModel {
     }
 
     public void spawnEnemies(int enemyCount) {
-        System.out.println(enemyCount);
         calculatePossiblePositions();  // Berechnet mögliche Positionen für Gegner
         for (int i = 0; i < enemyCount; i++) {
             Point position = possiblePositions.get(i);
@@ -108,22 +108,12 @@ public class MainModel {
                 enemyY + enemyHeight > spellY;
     }
 
-
-    public void restart() {
-        level[currentLevel].reset();
-        player.reset();
+    public void nextLevel() {
+        level[currentLevel].reset(); // Killcount auf 0 setzen
+        player.reset(); // Startposition
         enemies.clear();
         spells.clear();
         spawnEnemies(level[currentLevel].getEnemyCount());
-    }
-
-    public void nextLevel() {
-        currentLevel++;
-        if (currentLevel < level.length) {
-            restart();
-        } else {
-            System.out.println("Spiel abgeschlossen!");
-        }
     }
 
     public ArrayList<Spells> getSpells() {
@@ -142,7 +132,7 @@ public class MainModel {
         return currentLevel;
     }
 
-    public void setCurrentLevel(int currentLevel) {
-        this.currentLevel = currentLevel;
+    public void increaseCurrentLevel() {
+        this.currentLevel += 1;
     }
 }
