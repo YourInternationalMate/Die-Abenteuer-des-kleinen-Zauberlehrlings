@@ -1,5 +1,6 @@
 package controller;
 
+import interfaces.GameStarter;
 import model.Enemies;
 import model.MainModel;
 import model.Level;
@@ -13,14 +14,20 @@ import java.util.ArrayList;
 public class Controller extends KeyAdapter {
     private MainModel model;
     private GUI view;
+    private GameStarter gameStarter;
     private Timer timer;
     private Level[] level;
 
-    public Controller(MainModel model, GUI view) {
+    private boolean[] keys = new boolean[256];
+
+    private long lastSpellTime; // letzter Schuss
+    private static final long SPELL_COOLDOWN = 500; // Cooldown Zeit
+
+    public Controller(MainModel model, GUI view, GameStarter gameStarter) {
         this.model = model;
         this.view = view;
         this.level = model.getLevel();
-        startGame();
+        this.gameStarter = gameStarter;
     }
 
     public void startGame(){
@@ -29,6 +36,22 @@ public class Controller extends KeyAdapter {
     }
 
     private void gameLoop() {
+        if (keys[KeyEvent.VK_UP]) { // Nach oben
+            model.movePlayerUp();
+        }
+        if (keys[KeyEvent.VK_DOWN]) { // Nach unten
+            model.movePlayerDown();
+        }
+        if (keys[KeyEvent.VK_SPACE] && canShoot()) { // Schießen
+            model.shootSpell();
+            lastSpellTime = System.currentTimeMillis();
+        }
+        if (keys[KeyEvent.VK_ESCAPE]) { // Pause
+            timer.stop();
+            gameStarter.menu();
+        }
+
+
         if (level[model.getCurrentLevel()].isCompleted()) {
             if (model.getCurrentLevel() < level.length -1) {
                 model.increaseCurrentLevel();
@@ -55,25 +78,23 @@ public class Controller extends KeyAdapter {
         view.repaint();
     }
 
+    private boolean canShoot() { // Cooldown für Schüsse, gegen Spam
+        return (System.currentTimeMillis() - lastSpellTime) >= SPELL_COOLDOWN;
+    }
+
     private void initializeLevel() {
         model.nextLevel();
         timer.start();
     }
 
     @Override
-    public void keyPressed(KeyEvent e) { // Steuerung des Spielers
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP: // Pfeiltaste nach oben
-                model.movePlayerUp();
-                break;
-            case KeyEvent.VK_DOWN: // Pfeiltaste nach unten
-                model.movePlayerDown();
-                break;
-            case KeyEvent.VK_SPACE: // Leertaste
-                model.shootSpell();
-                break;
-        }
-        view.repaint();
+    public void keyPressed(KeyEvent e) { // in Array speichern, welche Taste gedrückt ist
+        keys[e.getKeyCode()] = true;
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        keys[e.getKeyCode()] = false;
     }
 }
 

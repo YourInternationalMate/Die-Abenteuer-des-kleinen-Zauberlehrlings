@@ -22,12 +22,15 @@ public class GUI extends JPanel {
         this.model = model;
 
         setPreferredSize(new Dimension(1280, 760));
+        setFocusable(true);
+        requestFocusInWindow();
+
         loadImages();
     }
 
     private void loadImages() {
         playerImage = new ImageIcon("src/resources/game/player.png").getImage();
-        spellImage = new ImageIcon("src/resources/game/spell.png").getImage();
+        spellImage = new ImageIcon("src/resources/game/spell.jpg").getImage();
         enemyImage = new ImageIcon("src/resources/game/enemy.png").getImage();
 //        backgroundImage = new ImageIcon("src/resources/game/background.png").getImage();
     }
