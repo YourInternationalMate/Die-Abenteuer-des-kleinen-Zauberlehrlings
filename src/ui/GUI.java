@@ -21,8 +21,7 @@ public class GUI extends JPanel {
     public GUI(MainModel model) {
         this.model = model;
 
-        setPreferredSize(new Dimension(1280, 720));
-
+        setPreferredSize(new Dimension(1280, 760));
         loadImages();
     }
 

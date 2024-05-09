@@ -11,7 +11,6 @@ public class MainModel {
     private ArrayList<Spells> spells = new ArrayList<>();
     private Player player;
     private Level[] level = new Level[3]; //Anzahl an Level
-    private ArrayList<Point> possiblePositions = new ArrayList<>();
 
     public MainModel() {
         this.player = new Player(5, 0, 360); // Speed evtl noch anpassen
@@ -26,24 +25,31 @@ public class MainModel {
     }
 
     public void spawnEnemies(int enemyCount) {
-        calculatePossiblePositions();  // Berechnet mögliche Positionen für Gegner
-        for (int i = 0; i < enemyCount; i++) {
-            Point position = possiblePositions.get(i);
-            enemies.add(new Enemies(10, level[currentLevel].getEnemySpeed(), position.x, position.y));
-        }
+        randomizeEnemySpawn(calculatePossiblePositions()); // Spawnt Gegner an zufälligen Positionen
     }
 
-    public void moveEnemies() { // Bewegt alle Gegner
-        for (Enemies enemy : enemies) {
-            enemy.move();
-        }
-    }
-
-    public void calculatePossiblePositions() {
+    public ArrayList<Point> calculatePossiblePositions() {
+        ArrayList<Point> possiblePositions = new ArrayList<>();
         for (int x = 1280 - Enemies.getWIDTH(); x >= 1280 - 2*Enemies.getWIDTH(); x -= Enemies.getWIDTH()) {
             for (int y = 0; y <= 720 - Enemies.getHEIGHT(); y += Enemies.getHEIGHT()) {
                 possiblePositions.add(new Point(x, y)); // zwei Reihen für Gegner = 16 Gegner max
             }
+        }
+        return possiblePositions;
+    }
+
+    public void randomizeEnemySpawn(ArrayList<Point> positionsToUse) {
+        for (int i = 0; i < level[currentLevel].getEnemyCount(); i++) {
+            int index = (int) (Math.random() * positionsToUse.size()); // Zufälligen Index wählen
+            Point position = positionsToUse.remove(index); // Position entfernen, gegen doppeltes spawnen
+            enemies.add(new Enemies(10, level[currentLevel].getEnemySpeed(), position.x, position.y));
+        }
+    }
+
+
+    public void moveEnemies() { // Bewegt alle Gegner
+        for (Enemies enemy : enemies) {
+            enemy.move();
         }
     }
 
