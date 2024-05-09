@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class Menu extends JPanel {
 
     private Image backgroundImage;
-    private JButton playButton, resumeButton, exitButton;
+    private JButton playButton, exitButton;
     private GameStarter gameStarter;
     private JFrame frame;
 
@@ -39,26 +39,12 @@ public class Menu extends JPanel {
         });
         add(playButton);
 
-        resumeButton = new JButton(new ImageIcon("src/resources/menu/button_resume.png"));
-        resumeButton.setContentAreaFilled(false);
-        resumeButton.setBorderPainted(false);
-        resumeButton.setFocusPainted(false);
-
-        resumeButton.setBounds(100, 560, 180, 50);
-        resumeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Resume Game
-            }
-        });
-        add(resumeButton);
-
         exitButton = new JButton(new ImageIcon("src/resources/menu/button_exit.png"));
         exitButton.setContentAreaFilled(false);
         exitButton.setBorderPainted(false);
         exitButton.setFocusPainted(false);
 
-        exitButton.setBounds(100, 620, 180, 50);
+        exitButton.setBounds(100, 560, 180, 50);
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

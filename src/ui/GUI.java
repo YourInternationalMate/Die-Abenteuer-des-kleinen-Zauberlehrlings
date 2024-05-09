@@ -34,9 +34,7 @@ public class GUI extends JPanel {
         enemyImage = new ImageIcon("src/resources/game/enemy.png").getImage();
         for (int i = 0; i <= 3; i++) {
             backgroundImages[i] = new ImageIcon("src/resources/game/level" + i + ".jpg").getImage();
-            System.out.println("src/resources/game/level" + (i+1) + ".jpg");
         }
-        System.out.println(backgroundImages[1]);
     }
 
     @Override

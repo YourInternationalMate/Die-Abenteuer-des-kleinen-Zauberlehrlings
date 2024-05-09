@@ -35,6 +35,11 @@ public class Controller extends KeyAdapter {
         timer.start();
     }
 
+    private void initializeLevel() {
+        model.nextLevel();
+        timer.start();
+    }
+
     private void gameLoop() {
         if (keys[KeyEvent.VK_UP]) { // Nach oben
             model.movePlayerUp();
@@ -48,6 +53,7 @@ public class Controller extends KeyAdapter {
         }
         if (keys[KeyEvent.VK_ESCAPE]) { // Pause
             timer.stop();
+            model.saveLevel("Test"); // Namen einbauen -> Eingabe fehlt noch
             gameStarter.menu();
         }
 
@@ -57,7 +63,8 @@ public class Controller extends KeyAdapter {
                 model.increaseCurrentLevel();
                 initializeLevel();
             } else {
-                timer.stop(); // lose Screen einbauen
+                timer.stop();
+                model.resetLevel("Test"); // Namen einbauen -> Eingabe fehlt noch
                 return;
             }
         }
@@ -67,7 +74,7 @@ public class Controller extends KeyAdapter {
         for (Enemies enemy : enemies) {
             if (enemy.isOffScreen()) {
                 timer.stop(); // Spiel stoppen
-                return;
+                return; // lose Screen einbauen
             }
         }
 
@@ -80,11 +87,6 @@ public class Controller extends KeyAdapter {
 
     private boolean canShoot() { // Cooldown für Schüsse, gegen Spam
         return (System.currentTimeMillis() - lastSpellTime) >= SPELL_COOLDOWN;
-    }
-
-    private void initializeLevel() {
-        model.nextLevel();
-        timer.start();
     }
 
     @Override
