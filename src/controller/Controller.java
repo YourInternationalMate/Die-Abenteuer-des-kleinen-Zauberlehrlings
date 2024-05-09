@@ -1,10 +1,10 @@
 package controller;
 
-import interfaces.GameStarter;
+import interfaces.Redirector;
 import model.Enemies;
 import model.MainModel;
 import model.Level;
-import ui.GUI;
+import view.GUI;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Controller extends KeyAdapter {
     private MainModel model;
     private GUI view;
-    private GameStarter gameStarter;
+    private Redirector redirector;
     private Timer timer;
     private Level[] level;
 
@@ -23,11 +23,11 @@ public class Controller extends KeyAdapter {
     private long lastSpellTime; // letzter Schuss
     private static final long SPELL_COOLDOWN = 500; // Cooldown Zeit
 
-    public Controller(MainModel model, GUI view, GameStarter gameStarter) {
+    public Controller(MainModel model, GUI view, Redirector redirector) {
         this.model = model;
         this.view = view;
         this.level = model.getLevel();
-        this.gameStarter = gameStarter;
+        this.redirector = redirector;
     }
 
     public void startGame(){
@@ -54,7 +54,7 @@ public class Controller extends KeyAdapter {
         if (keys[KeyEvent.VK_ESCAPE]) { // Pause
             timer.stop();
             model.saveLevel("Test"); // Namen einbauen -> Eingabe fehlt noch
-            gameStarter.menu();
+            redirector.menu();
         }
 
 

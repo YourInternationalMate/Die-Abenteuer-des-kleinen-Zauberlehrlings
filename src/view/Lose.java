@@ -1,14 +1,14 @@
-package ui;
+package view;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class Story extends JPanel{
+public class Lose extends JPanel{
 
     private Image backgroundImage;
     private JFrame frame;
 
-    public Story(JFrame frame) {
+    public Lose(JFrame frame) {
         this.frame = frame;
     }
 

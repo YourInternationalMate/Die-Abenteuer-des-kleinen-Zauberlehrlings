@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface GameStarter {
+public interface Redirector {
     void startGame();
     void menu();
 }

@@ -1,13 +1,13 @@
-import ui.Menu;
-import ui.GUI;
+import view.Menu;
+import view.GUI;
 import controller.Controller;
 import model.MainModel;
-import interfaces.GameStarter;
+import interfaces.Redirector;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class Main implements GameStarter{
+public class Main implements Redirector {
     private static JFrame mainFrame;
     private Menu menu;
     private GUI gui;

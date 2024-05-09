@@ -1,6 +1,6 @@
-package ui;
+package view;
 
-import interfaces.GameStarter;
+import interfaces.Redirector;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,11 +11,11 @@ public class Menu extends JPanel {
 
     private Image backgroundImage;
     private JButton playButton, exitButton;
-    private GameStarter gameStarter;
+    private Redirector redirector;
     private JFrame frame;
 
-    public Menu(JFrame frame, GameStarter gameStarter) {
-        this.gameStarter = gameStarter;
+    public Menu(JFrame frame, Redirector redirector) {
+        this.redirector = redirector;
         this.frame = frame;
         setPreferredSize(new Dimension(1280, 760));
         loadImages();
@@ -33,7 +33,7 @@ public class Menu extends JPanel {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameStarter.startGame();
+                redirector.startGame();
 //                frame.dispose();
             }
         });
