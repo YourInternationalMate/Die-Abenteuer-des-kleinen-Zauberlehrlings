@@ -31,4 +31,14 @@ public class SQLite {
             System.out.println("Fehler beim Verbinden zur Datenbank: " + e.getMessage());
         }
     }
+
+    public static void insertLevel(String query) {
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL);
+             Statement statement = connection.createStatement()) {
+
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            System.out.println("Fehler beim Verbinden zur Datenbank: " + e.getMessage());
+        }
+    }
 }

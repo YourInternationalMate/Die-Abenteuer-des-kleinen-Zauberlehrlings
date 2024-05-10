@@ -154,12 +154,19 @@ public class MainModel {
                 this.currentLevel = Integer.parseInt(level);
             } else {
                 this.currentLevel = 0;
+                insertLevel(name);
             }
-
-            System.out.println("Current Level: " + currentLevel);
         } catch (Exception e) {
             System.err.println("Fehler beim Abrufen des Levels aus der Datenbank: " + e.getMessage());
             this.currentLevel = 0;
+        }
+    }
+
+    public void insertLevel(String name) {
+        try {
+            SQLite.insertLevel("INSERT INTO score (name, level) VALUES ('" + name + "', 0)");
+        } catch (Exception e) {
+            System.err.println("Fehler beim Einfügen des Levels in die Datenbank: " + e.getMessage());
         }
     }
 
