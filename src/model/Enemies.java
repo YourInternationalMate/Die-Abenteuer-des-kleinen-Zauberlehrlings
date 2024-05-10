@@ -1,6 +1,9 @@
 package model;
 
+import java.awt.*;
+
 public class Enemies {
+    private Image image;
     private int health;
     private int speed;
     private int x;
@@ -8,11 +11,16 @@ public class Enemies {
     private static final int HEIGHT = 90;
     private static final int WIDTH = 128;
 
-    public Enemies(int health, int speed, int x, int y) {
+    public Enemies(Image image, int health, int speed, int x, int y) {
+        this.image = image;
         this.health = health;
         this.speed = speed;
         this.x = x;
         this.y = y;
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     public int getSpeed() {

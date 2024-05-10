@@ -26,12 +26,7 @@ public class Main implements Redirector {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Main().setWindow();
-            }
-        });
+        SwingUtilities.invokeLater(() -> new Main().setWindow());
     }
 
     public void setWindow() {

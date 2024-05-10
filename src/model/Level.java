@@ -1,12 +1,16 @@
 package model;
 
+import java.awt.*;
+
 public class Level {
+    private Image image;
     private int levelNumber;
     private int enemyCount;
     private int killedEnemies;
     private int enemySpeed;
 
-    public Level(int levelNumber, int enemyCount, int enemySpeed) {
+    public Level(Image image, int levelNumber, int enemyCount, int enemySpeed) {
+        this.image = image;
         this.levelNumber = levelNumber;
         this.enemyCount = enemyCount;
         this.enemySpeed = enemySpeed;
@@ -35,5 +39,9 @@ public class Level {
 
     public int getEnemySpeed(){
         return enemySpeed;
+    }
+
+    public Image getImage() {
+        return image;
     }
 }

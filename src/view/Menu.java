@@ -1,6 +1,7 @@
 package view;
 
 import interfaces.Redirector;
+import model.MainModel;
 
 import javax.swing.*;
 import java.awt.*;

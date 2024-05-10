@@ -26,73 +26,63 @@ public class Controller extends KeyAdapter {
     public Controller(MainModel model, GUI view, Redirector redirector) {
         this.model = model;
         this.view = view;
-        this.level = model.getLevel();
+        this.level = model.getLevels();
         this.redirector = redirector;
     }
 
-    public void startGame(){
-        this.timer = new Timer(16, e -> gameLoop()); // Timer starten mit 60 FPS (16 Millisekunden(laut Google))
-        timer.start();
-    }
-
-    private void initializeLevel() {
-        model.nextLevel();
+    public void startGame() {
+        this.timer = new Timer(16, e -> gameLoop());
         timer.start();
     }
 
     private void gameLoop() {
-        if (keys[KeyEvent.VK_UP]) { // Nach oben
-            model.movePlayerUp();
-        }
-        if (keys[KeyEvent.VK_DOWN]) { // Nach unten
-            model.movePlayerDown();
-        }
-        if (keys[KeyEvent.VK_SPACE] && canShoot()) { // Schießen
+        if (keys[KeyEvent.VK_UP]) model.movePlayerUp();
+        if (keys[KeyEvent.VK_DOWN]) model.movePlayerDown();
+        if (keys[KeyEvent.VK_SPACE] && canShoot()) {
             model.shootSpell();
             lastSpellTime = System.currentTimeMillis();
         }
-        if (keys[KeyEvent.VK_ESCAPE]) { // Pause
+        if (keys[KeyEvent.VK_ESCAPE]) {
             timer.stop();
-            model.saveLevel("test"); // Namen einbauen -> Eingabe fehlt noch
+            model.saveLevel("test");
             redirector.menu();
         }
 
-
         if (level[model.getCurrentLevel()].isCompleted()) {
-            if (model.getCurrentLevel() < level.length -1) {
+            if (model.getCurrentLevel() < level.length - 1) {
                 model.increaseCurrentLevel();
-                initializeLevel();
+                model.nextLevel();
+                timer.start();
             } else {
                 timer.stop();
-                model.resetLevel("test"); // Namen einbauen -> Eingabe fehlt noch
+                model.resetLevel("test");
+//                redirector.win();
                 return;
             }
         }
 
         ArrayList<Enemies> enemies = model.getEnemies();
-
         for (Enemies enemy : enemies) {
             if (enemy.isOffScreen()) {
-                timer.stop(); // Spiel stoppen
-                model.saveLevel("test"); // Namen einbauen -> Eingabe fehlt noch
+                timer.stop();
+                model.saveLevel("test");
                 redirector.lose();
-                return; // lose Screen einbauen
+                return;
             }
         }
 
         model.moveEnemies();
         model.moveSpells();
         model.isEnemieHit();
-
         view.repaint();
     }
 
-    private boolean canShoot() { // Cooldown für Schüsse, gegen Spam
+    private boolean canShoot() {
         return (System.currentTimeMillis() - lastSpellTime) >= SPELL_COOLDOWN;
     }
 
     @Override
-    public void keyPressed(KeyEvent e) { // in Array speichern, welche Taste gedrückt ist
+    public void keyPressed(KeyEvent e) {
         keys[e.getKeyCode()] = true;
     }
 
@@ -101,4 +91,3 @@ public class Controller extends KeyAdapter {
         keys[e.getKeyCode()] = false;
     }
 }
-

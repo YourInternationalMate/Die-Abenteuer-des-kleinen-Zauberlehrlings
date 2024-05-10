@@ -2,96 +2,67 @@ package model;
 
 import data.SQLite;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
-import java.awt.Point;
 
 public class MainModel {
 
     private int currentLevel;
-
     private ArrayList<Enemies> enemies = new ArrayList<>();
     private ArrayList<Spells> spells = new ArrayList<>();
     private Player player;
-    private Level[] level = new Level[4]; //Anzahl an Level
+    private Level[] level = new Level[4];
+
+    private Image playerImage;
+    private Image spellImage;
+    private Image[] enemyImages = new Image[7];
+    private Image[] backgroundImages = new Image[4];
 
     public MainModel() {
-
+        loadImages();
         getLevel("test");
-        this.player = new Player(5, 0, 360); // Speed evtl noch anpassen
-        createLevel(4); // Start Anzahl an Gegnern pro Level; jedes Level+1
-        spawnEnemies(level[currentLevel].getEnemyCount());
+        this.player = new Player(playerImage ,5, 0, 360);
+        createLevel(4);
+        spawnEnemies();
     }
 
-    // Getter und Setter
+    // Getter and Setter
 
-    public int getPlayerX() {
-        return player.getX();
-    }
-
-    public int getPlayerY() {
-        return player.getY();
-    }
-
-    public ArrayList<Spells> getSpells() {
-        return spells;
-    }
-
-    public ArrayList<Enemies> getEnemies() {
-        return enemies;
-    }
-
-    public Level[] getLevel() {
-        return level;
-    }
-
-    public int getCurrentLevel() {
-        return currentLevel;
-    }
-
-    public void increaseCurrentLevel() {
-        this.currentLevel += 1;
-    }
+    public int getPlayerX() { return player.getX(); }
+    public int getPlayerY() { return player.getY(); }
+    public ArrayList<Spells> getSpells() { return spells; }
+    public ArrayList<Enemies> getEnemies() { return enemies; }
+    public Level[] getLevels() { return level; }
+    public int getCurrentLevel() { return currentLevel; }
+    public void increaseCurrentLevel() { this.currentLevel += 1; }
+    public Player getPlayer() { return player; }
+    public Level getLevel() { return level[currentLevel]; }
 
     // Movement
 
-    public void movePlayerUp() {
-        player.moveUp();
-    }
-
-    public void movePlayerDown() {
-        player.moveDown();
-    }
-
-    public void moveEnemies() { // Bewegt alle Gegner
-        for (Enemies enemy : enemies) {
-            enemy.move();
-        }
-    }
-
-    public void moveSpells() { // Bewegt alle Spells
-        for (Spells spell : spells) {
-            spell.move();
-        }
-    }
+    public void movePlayerUp() { player.moveUp(); }
+    public void movePlayerDown() { player.moveDown(); }
+    public void moveEnemies() { enemies.forEach(Enemies::move); }
+    public void moveSpells() { spells.forEach(Spells::move); }
 
     // Spells spawnen
 
     public void shootSpell() {
-        Spells spell = new Spells(10, 10, player.getX(), player.getY()+20); //Erstellt Spell an Position von Spieler
-        spells.add(spell);
+        spells.add(new Spells(spellImage, 10, 10, player.getX(), player.getY()+20));
     }
 
     // Gegner spawnen
 
-    public void spawnEnemies(int enemyCount) {
-        randomizeEnemySpawn(calculatePossiblePositions()); // Spawnt Gegner an zufälligen Positionen
+    public void spawnEnemies() {
+        randomizeEnemySpawn(calculatePossiblePositions());
     }
 
     public ArrayList<Point> calculatePossiblePositions() {
         ArrayList<Point> possiblePositions = new ArrayList<>();
         for (int x = 1280 - Enemies.getWIDTH(); x >= 1280 - 2*Enemies.getWIDTH(); x -= Enemies.getWIDTH()) {
             for (int y = 0; y <= 720 - Enemies.getHEIGHT(); y += Enemies.getHEIGHT()) {
-                possiblePositions.add(new Point(x, y)); // zwei Reihen für Gegner = 16 Gegner max
+                possiblePositions.add(new Point(x, y));
             }
         }
         return possiblePositions;
@@ -99,9 +70,9 @@ public class MainModel {
 
     public void randomizeEnemySpawn(ArrayList<Point> positionsToUse) {
         for (int i = 0; i < level[currentLevel].getEnemyCount(); i++) {
-            int index = (int) (Math.random() * positionsToUse.size()); // Zufälligen Index wählen
-            Point position = positionsToUse.remove(index); // Position entfernen, gegen doppeltes spawnen
-            enemies.add(new Enemies(10, level[currentLevel].getEnemySpeed(), position.x, position.y));
+            int index = (int) (Math.random() * positionsToUse.size());
+            Point position = positionsToUse.remove(index);
+            enemies.add(new Enemies(enemyImages[(int) (Math.random() * enemyImages.length)], 10, level[currentLevel].getEnemySpeed(), position.x, position.y));
         }
     }
 
@@ -109,14 +80,14 @@ public class MainModel {
 
     public void isEnemieHit() {
         ArrayList<Enemies> copyOfEnemies = new ArrayList<>(enemies);
-        for (Enemies enemy : copyOfEnemies) { // jeden Gegner mit Pos von jedem Spell vergleichen
+        for (Enemies enemy : copyOfEnemies) {
             for (Spells spell : spells) {
-                if (isCollision(enemy, spell)) { // Wenn Pos übereinstimmt
+                if (isCollision(enemy, spell)) {
                     enemy.takeDamage(spell.getDamage());
-                    spells.remove(spell); // Spell entfernen, wenn Gegner getroffen
-                    if (!enemy.isAlive()) { // Überprüfen, ob Gegner nach Schaden noch lebt
+                    spells.remove(spell);
+                    if (!enemy.isAlive()) {
                         level[currentLevel].enemyKilled();
-                        enemies.remove(enemy); // Gegner entfernen, wenn tot
+                        enemies.remove(enemy);
                     }
                     break;
                 }
@@ -144,17 +115,17 @@ public class MainModel {
     // Level Logik
 
     public void createLevel(int enemyCount) {
-        for (int levelNumber = 0; levelNumber < level.length; levelNumber++) { //Anzahl an Level wird oben festgelegt
-            level[levelNumber] = new Level(levelNumber, enemyCount+levelNumber, 5); // Enemyspeed noch änderbar
+        for (int levelNumber = 0; levelNumber < level.length; levelNumber++) {
+            level[levelNumber] = new Level(backgroundImages[levelNumber], levelNumber, enemyCount+levelNumber, 1);
         }
     }
 
     public void nextLevel() {
-        level[currentLevel].reset(); // Killcount auf 0 setzen
-        player.reset(); // Startposition
+        level[currentLevel].reset();
+        player.reset();
         enemies.clear();
         spells.clear();
-        spawnEnemies(level[currentLevel].getEnemyCount());
+        spawnEnemies();
     }
 
     // Datenbank Methoden
@@ -189,6 +160,21 @@ public class MainModel {
         } catch (Exception e) {
             System.err.println("Fehler beim Abrufen des Levels aus der Datenbank: " + e.getMessage());
             this.currentLevel = 0;
+        }
+    }
+
+    // Bilder
+
+    public void loadImages() {
+        playerImage = new ImageIcon("src/resources/game/player.png").getImage();
+        spellImage = new ImageIcon("src/resources/game/spell.png").getImage();
+
+        for (int i = 0; i <= 6; i++) {
+            enemyImages[i] = new ImageIcon("src/resources/game/enemies/enemy" + i + ".png").getImage();
+        }
+
+        for (int i = 0; i <= 3; i++) {
+            backgroundImages[i] = new ImageIcon("src/resources/game/backgrounds/level" + i + ".jpg").getImage();
         }
     }
 }

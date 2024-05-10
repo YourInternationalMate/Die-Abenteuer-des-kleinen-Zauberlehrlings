@@ -1,15 +1,22 @@
 package model;
 
-public class Player {
+import java.awt.*;
 
+public class Player {
+    private Image image;
     private int speed;
     private int x;
     private int y;
 
-    public Player( int speed, int x, int y) {
+    public Player(Image image, int speed, int x, int y) {
+        this.image = image;
         this.speed = speed;
         this.x = x;
         this.y = y;
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     public int getSpeed() {

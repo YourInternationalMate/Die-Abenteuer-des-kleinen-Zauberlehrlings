@@ -1,6 +1,9 @@
 package model;
 
+import java.awt.*;
+
 public class Spells {
+    private Image image;
     private String type;
     private int damage;
     private int speed;
@@ -11,12 +14,17 @@ public class Spells {
     private static final int HEIGHT = 10;
 
 
-    public Spells(int damage, int speed, int x, int y) { // solange wir nur einen Typ haben
+    public Spells(Image image, int damage, int speed, int x, int y) {// solange wir nur einen Typ haben
+        this.image = image;
         this.type = "normal";
         this.damage = damage;
         this.speed = speed;
         this.x = x;
         this.y = y;
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     public int getX() {
