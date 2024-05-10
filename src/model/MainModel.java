@@ -15,6 +15,7 @@ public class MainModel {
     private Level[] level = new Level[4]; //Anzahl an Level
 
     public MainModel() {
+
         getLevel("test");
         this.player = new Player(5, 0, 360); // Speed evtl noch anpassen
         createLevel(4); // Start Anzahl an Gegnern pro Level; jedes Level+1
@@ -144,7 +145,7 @@ public class MainModel {
 
     public void createLevel(int enemyCount) {
         for (int levelNumber = 0; levelNumber < level.length; levelNumber++) { //Anzahl an Level wird oben festgelegt
-            level[levelNumber] = new Level(levelNumber, enemyCount+levelNumber, 1); // Enemyspeed noch änderbar
+            level[levelNumber] = new Level(levelNumber, enemyCount+levelNumber, 5); // Enemyspeed noch änderbar
         }
     }
 
@@ -155,8 +156,6 @@ public class MainModel {
         spells.clear();
         spawnEnemies(level[currentLevel].getEnemyCount());
     }
-
-
 
     // Datenbank Methoden
 

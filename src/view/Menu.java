@@ -12,11 +12,9 @@ public class Menu extends JPanel {
     private Image backgroundImage;
     private JButton playButton, exitButton;
     private Redirector redirector;
-    private JFrame frame;
 
-    public Menu(JFrame frame, Redirector redirector) {
+    public Menu(Redirector redirector) {
         this.redirector = redirector;
-        this.frame = frame;
         setPreferredSize(new Dimension(1280, 760));
         loadImages();
         initButtons();

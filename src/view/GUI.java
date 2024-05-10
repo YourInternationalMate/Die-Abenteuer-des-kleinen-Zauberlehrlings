@@ -6,16 +6,17 @@ import model.Enemies;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class GUI extends JPanel {
     private Image playerImage;
     private Image spellImage;
-    private Image enemyImage;
+    private Image[] enemyImages = new Image[7];
+    private ArrayList<Image> imageForEnemy;
     private Image[] backgroundImages = new Image[4];
 
     private final MainModel model;
-
 
 
     public GUI(MainModel model) {
@@ -26,14 +27,19 @@ public class GUI extends JPanel {
         requestFocusInWindow();
 
         loadImages();
+        this.imageForEnemy = getEnemyImage();
     }
 
     private void loadImages() {
         playerImage = new ImageIcon("src/resources/game/player.png").getImage();
-        spellImage = new ImageIcon("src/resources/game/spell.jpg").getImage();
-        enemyImage = new ImageIcon("src/resources/game/enemy.png").getImage();
+        spellImage = new ImageIcon("src/resources/game/spell.png").getImage();
+
+        for (int i = 0; i <= 6; i++) {
+            enemyImages[i] = new ImageIcon("src/resources/game/enemies/enemy" + i + ".png").getImage();
+        }
+
         for (int i = 0; i <= 3; i++) {
-            backgroundImages[i] = new ImageIcon("src/resources/game/level" + i + ".jpg").getImage();
+            backgroundImages[i] = new ImageIcon("src/resources/game/backgrounds/level" + i + ".jpg").getImage();
         }
     }
 
@@ -60,10 +66,21 @@ public class GUI extends JPanel {
         }
     }
 
+    private ArrayList<Image> getEnemyImage() {
+        ArrayList<Image> imageForEnemy = new ArrayList<>();
+        for (int i = 0; i <= enemyImages.length; i++) {
+            imageForEnemy.add(enemyImages[(int) (Math.random() * enemyImages.length)]);
+        }
+        return  imageForEnemy;
+    }
+
     private void drawEnemies(Graphics g) {
+        int index = 0;
+
         if (!(model.getEnemies().isEmpty())) {
             for (Enemies enemy : model.getEnemies()) {
-                g.drawImage(enemyImage, enemy.getX(), enemy.getY(), null);
+                g.drawImage(imageForEnemy.get(index), enemy.getX(), enemy.getY(), null); //funktioniert so halb, wenn gegner stirb, muss bild aus liste entfernt werden
+                index++;
             }
         }
 

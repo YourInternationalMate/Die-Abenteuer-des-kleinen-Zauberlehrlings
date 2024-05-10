@@ -53,7 +53,7 @@ public class Controller extends KeyAdapter {
         }
         if (keys[KeyEvent.VK_ESCAPE]) { // Pause
             timer.stop();
-            model.saveLevel("Test"); // Namen einbauen -> Eingabe fehlt noch
+            model.saveLevel("test"); // Namen einbauen -> Eingabe fehlt noch
             redirector.menu();
         }
 
@@ -64,7 +64,7 @@ public class Controller extends KeyAdapter {
                 initializeLevel();
             } else {
                 timer.stop();
-                model.resetLevel("Test"); // Namen einbauen -> Eingabe fehlt noch
+                model.resetLevel("test"); // Namen einbauen -> Eingabe fehlt noch
                 return;
             }
         }
@@ -74,7 +74,8 @@ public class Controller extends KeyAdapter {
         for (Enemies enemy : enemies) {
             if (enemy.isOffScreen()) {
                 timer.stop(); // Spiel stoppen
-                model.saveLevel("Test"); // Namen einbauen -> Eingabe fehlt noch
+                model.saveLevel("test"); // Namen einbauen -> Eingabe fehlt noch
+                redirector.lose();
                 return; // lose Screen einbauen
             }
         }

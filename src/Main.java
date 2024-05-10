@@ -1,5 +1,7 @@
 import view.Menu;
 import view.GUI;
+import view.Lose;
+import view.Win;
 import controller.Controller;
 import model.MainModel;
 import interfaces.Redirector;
@@ -10,13 +12,17 @@ import javax.swing.SwingUtilities;
 public class Main implements Redirector {
     private static JFrame mainFrame;
     private Menu menu;
+    private Lose lose;
+    private Win win;
     private GUI gui;
     private Controller controller;
     private MainModel model;
 
     public Main() {
         mainFrame = new JFrame("Die Abenteuer des kleinen Zauberlehrlings");
-        menu = new Menu(mainFrame, this);
+        menu = new Menu(this);
+        lose = new Lose();
+//        win = new Win(mainFrame, this);
     }
 
     public static void main(String[] args) {
@@ -30,7 +36,7 @@ public class Main implements Redirector {
 
     public void setWindow() {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setSize(1280, 780);
+        mainFrame.setSize(1280, 760);
         mainFrame.setResizable(false);
         initMenu();
     }
@@ -68,5 +74,29 @@ public class Main implements Redirector {
         mainFrame.addKeyListener(controller);
 
         controller.startGame();
+    }
+
+    @Override
+    public void lose() {
+        mainFrame.remove(gui);
+
+        mainFrame.add(lose);
+        mainFrame.revalidate();
+
+        mainFrame.addKeyListener(controller); // ESC für Back to Menu
+
+        mainFrame.repaint();
+        mainFrame.setVisible(true);
+    }
+
+    @Override
+    public void win() {
+        mainFrame.remove(gui);
+
+        mainFrame.add(win);
+        mainFrame.revalidate();
+
+        mainFrame.repaint();
+        mainFrame.setVisible(true);
     }
 }
