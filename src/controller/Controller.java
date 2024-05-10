@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class Controller extends KeyAdapter {
+    private String name;
     private MainModel model;
     private GUI view;
     private Redirector redirector;
@@ -23,11 +24,12 @@ public class Controller extends KeyAdapter {
     private long lastSpellTime; // letzter Schuss
     private static final long SPELL_COOLDOWN = 500; // Cooldown Zeit
 
-    public Controller(MainModel model, GUI view, Redirector redirector) {
+    public Controller(MainModel model, GUI view, Redirector redirector, String name) {
         this.model = model;
         this.view = view;
         this.level = model.getLevels();
         this.redirector = redirector;
+        this.name = name;
     }
 
     public void startGame() {
@@ -44,7 +46,7 @@ public class Controller extends KeyAdapter {
         }
         if (keys[KeyEvent.VK_ESCAPE]) {
             timer.stop();
-            model.saveLevel("test");
+            model.saveLevel(name);
             redirector.menu();
         }
 
@@ -55,7 +57,7 @@ public class Controller extends KeyAdapter {
                 timer.start();
             } else {
                 timer.stop();
-                model.resetLevel("test");
+                model.resetLevel(name);
 //                redirector.win();
                 return;
             }
@@ -65,7 +67,7 @@ public class Controller extends KeyAdapter {
         for (Enemies enemy : enemies) {
             if (enemy.isOffScreen()) {
                 timer.stop();
-                model.saveLevel("test");
+                model.saveLevel(name);
                 redirector.lose();
                 return;
             }

@@ -1,24 +1,29 @@
 package view;
 
 import interfaces.Redirector;
-import model.MainModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class Menu extends JPanel {
 
     private Image backgroundImage;
     private JButton playButton, exitButton;
+    private JTextField nameField;
     private Redirector redirector;
+
+    private static final String DEFAULT_TEXT = "Username";
 
     public Menu(Redirector redirector) {
         this.redirector = redirector;
         setPreferredSize(new Dimension(1280, 760));
         loadImages();
         initButtons();
+        initTextFields();
         setLayout(null); // Layout deaktivieren -> manuelle Positionierung
     }
 
@@ -32,7 +37,8 @@ public class Menu extends JPanel {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                redirector.startGame();
+                System.out.println(nameField.getText());
+                redirector.startGame(nameField.getText());
             }
         });
         add(playButton);
@@ -50,6 +56,33 @@ public class Menu extends JPanel {
             }
         });
         add(exitButton);
+    }
+
+    private void initTextFields() {
+        nameField = new JTextField(DEFAULT_TEXT);
+        nameField.setBounds(520, 600, 220, 50);
+        nameField.setHorizontalAlignment(JTextField.CENTER);
+        nameField.setForeground(Color.WHITE);
+        nameField.setFont(new Font("SansSerif", Font.BOLD, 24));
+        nameField.setOpaque(false);
+        nameField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+        nameField.setCaretColor(Color.WHITE);
+        nameField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (nameField.getText().equals(DEFAULT_TEXT)) {
+                    nameField.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (nameField.getText().isEmpty()) {
+                    nameField.setText(DEFAULT_TEXT);
+                }
+            }
+        });
+        add(nameField);
     }
 
     @Override

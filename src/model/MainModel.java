@@ -19,9 +19,9 @@ public class MainModel {
     private Image[] enemyImages = new Image[7];
     private Image[] backgroundImages = new Image[4];
 
-    public MainModel() {
+    public MainModel(String name) {
         loadImages();
-        getLevel("test");
+        getLevel(name);
         this.player = new Player(playerImage ,5, 0, 360);
         createLevel(4);
         spawnEnemies();

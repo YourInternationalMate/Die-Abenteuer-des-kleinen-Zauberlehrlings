@@ -65,18 +65,18 @@ public class Main implements Redirector {
     }
 
     @Override
-    public void startGame() {
+    public void startGame(String name) {
         story(); // Delay für Story
 
-        Timer timer = new Timer(5000, e -> startGameNow());
+        Timer timer = new Timer(5000, e -> startGameNow(name));
         timer.setRepeats(false);
         timer.start();
     }
 
-    private void startGameNow() {
-        model = new MainModel();
+    private void startGameNow(String name) {
+        model = new MainModel(name);
         gui = new GUI(model);
-        controller = new Controller(model, gui, this);
+        controller = new Controller(model, gui, this, name);
 
         mainFrame.remove(story);
 
