@@ -33,7 +33,6 @@ public class Menu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 redirector.startGame();
-//                frame.dispose();
             }
         });
         add(playButton);

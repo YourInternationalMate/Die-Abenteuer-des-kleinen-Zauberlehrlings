@@ -5,25 +5,21 @@ import java.awt.*;
 
 public class Story extends JPanel{
 
-    private Image backgroundImage;
-    private JFrame frame;
-
-    public Story(JFrame frame) {
-        this.frame = frame;
-    }
+    private Image storyImage;
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        drawBackground(g);
+        loadImages();
+        drawStory(g);
     }
 
     private void loadImages() {
-        backgroundImage = new ImageIcon("src/resources/menu/background.jpg").getImage();
+        storyImage = new ImageIcon("src/resources/game/story.jpg").getImage();
     }
 
-    private void drawBackground(Graphics g) {
-        g.drawImage(backgroundImage, 0, 0, null);
+    private void drawStory(Graphics g) {
+        g.drawImage(storyImage, 0, 0, null);
     }
 
 
