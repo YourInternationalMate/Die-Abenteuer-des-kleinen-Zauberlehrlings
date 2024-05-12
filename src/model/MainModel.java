@@ -49,7 +49,7 @@ public class MainModel {
     // Spells spawnen
 
     public void shootSpell() {
-        spells.add(new Spells(spellImage, 10, 10, player.getX(), player.getY()+20));
+        spells.add(new Spells(spellImage, 10, 10, player.getX()+115, player.getY()+35));
     }
 
     // Gegner spawnen

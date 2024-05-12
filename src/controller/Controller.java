@@ -37,6 +37,11 @@ public class Controller extends KeyAdapter {
         timer.start();
     }
 
+    public void winOrLose() {
+        this.timer = new Timer(16, e -> winOrLoseLoop());
+        timer.start();
+    }
+
     private void gameLoop() {
         if (keys[KeyEvent.VK_UP]) model.movePlayerUp();
         if (keys[KeyEvent.VK_DOWN]) model.movePlayerDown();
@@ -58,7 +63,7 @@ public class Controller extends KeyAdapter {
             } else {
                 timer.stop();
                 model.resetLevel(name);
-//                redirector.win();
+                redirector.win();
                 return;
             }
         }
@@ -77,6 +82,14 @@ public class Controller extends KeyAdapter {
         model.moveSpells();
         model.isEnemieHit();
         view.repaint();
+    }
+
+    private void winOrLoseLoop() {
+        if (keys[KeyEvent.VK_ESCAPE]) {
+            timer.stop();
+            model.saveLevel(name);
+            redirector.menu();
+        }
     }
 
     private boolean canShoot() {

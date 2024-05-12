@@ -23,7 +23,7 @@ public class Main implements Redirector {
         mainFrame = new JFrame("Die Abenteuer des kleinen Zauberlehrlings");
         menu = new Menu(this);
         lose = new Lose();
-//        win = new Win(mainFrame, this);
+        win = new Win();
         story = new Story();
     }
 
@@ -35,6 +35,7 @@ public class Main implements Redirector {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(1280, 760);
         mainFrame.setResizable(false);
+        mainFrame.setIconImage(new ImageIcon("src/resources/game/icon.jpg").getImage());
         initMenu();
     }
 
@@ -97,7 +98,10 @@ public class Main implements Redirector {
         mainFrame.add(lose);
         mainFrame.revalidate();
 
-        mainFrame.addKeyListener(controller); // ESC für Back to Menu
+        mainFrame.requestFocus();
+        mainFrame.addKeyListener(controller);
+
+        controller.winOrLose();
 
         mainFrame.repaint();
         mainFrame.setVisible(true);
@@ -109,6 +113,11 @@ public class Main implements Redirector {
 
         mainFrame.add(win);
         mainFrame.revalidate();
+
+        mainFrame.requestFocus();
+        mainFrame.addKeyListener(controller);
+
+        controller.winOrLose();
 
         mainFrame.repaint();
         mainFrame.setVisible(true);
