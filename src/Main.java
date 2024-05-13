@@ -69,7 +69,7 @@ public class Main implements Redirector {
     public void startGame(String name) {
         story(); // Delay für Story
 
-        Timer timer = new Timer(5000, e -> startGameNow(name));
+        Timer timer = new Timer(3000, e -> startGameNow(name));
         timer.setRepeats(false);
         timer.start();
     }
