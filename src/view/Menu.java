@@ -37,7 +37,6 @@ public class Menu extends JPanel {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(nameField.getText());
                 redirector.startGame(nameField.getText());
             }
         });
