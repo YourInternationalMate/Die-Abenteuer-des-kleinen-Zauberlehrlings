@@ -49,6 +49,8 @@ public class Main implements Redirector {
     @Override
     public void menu() { // um vom Spiel zurück ins Menü zu kommen
         mainFrame.remove(gui);
+        mainFrame.remove(lose);
+        mainFrame.remove(win);
 
         mainFrame.add(menu);
         mainFrame.revalidate();
@@ -98,9 +100,6 @@ public class Main implements Redirector {
         mainFrame.add(lose);
         mainFrame.revalidate();
 
-        mainFrame.requestFocus();
-        mainFrame.addKeyListener(controller);
-
         controller.winOrLose();
 
         mainFrame.repaint();
@@ -113,9 +112,6 @@ public class Main implements Redirector {
 
         mainFrame.add(win);
         mainFrame.revalidate();
-
-        mainFrame.requestFocus();
-        mainFrame.addKeyListener(controller);
 
         controller.winOrLose();
 
