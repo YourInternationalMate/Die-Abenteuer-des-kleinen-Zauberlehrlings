@@ -65,53 +65,53 @@ Um "Die Abenteuer des kleinen Zauberlehrlings" auf deinem lokalen Rechner zu spi
 ## Ordnerstruktur
 Hier ist die vollständige Ordnerstruktur des Projekts:
 
-src
-├── controller
-│ └── Controller.java
-├── data
-│ └── SQLite.java
-├── interfaces
-│ └── Redirector.java
-├── model
-│ ├── Enemies.java
-│ ├── Level.java
-│ ├── MainModel.java
-│ ├── Player.java
-│ └── Spells.java
-├── resources
-│ ├── game
-│ │ ├── backgrounds
-│ │ │ ├── level0.jpg
-│ │ │ ├── level1.jpg
-│ │ │ ├── level2.jpg
-│ │ │ └── level3.jpg
-│ │ ├── ending
-│ │ │ ├── lose.jpg
-│ │ │ └── win.jpg
-│ │ ├── enemies
-│ │ │ ├── enemy0.png
-│ │ │ ├── enemy1.png
-│ │ │ ├── enemy2.png
-│ │ │ ├── enemy3.png
-│ │ │ ├── enemy4.png
-│ │ │ ├── enemy5.png
-│ │ │ └── enemy6.png
-│ │ ├── icon.jpg
-│ │ ├── player.png
-│ │ ├── spell.png
-│ │ └── story.jpg
-│ └── menu
-│ ├── background.jpg
-│ ├── button_exit.png
-│ ├── button_play.png
-│ └── button_resume.png
-├── view
-│ ├── GUI.java
-│ ├── Lose.java
-│ ├── Menu.java
-│ ├── Story.java
-│ └── Win.java
-└── Main.java
+- src
+- ├── controller
+- │ └── Controller.java
+- ├── data
+- │ └── SQLite.java
+- ├── interfaces
+- │ └── Redirector.java
+- ├── model
+- │ ├── Enemies.java
+- │ ├── Level.java
+- │ ├── MainModel.java
+- │ ├── Player.java
+- │ └── Spells.java
+- ├── resources
+- │ ├── game
+- │ │ ├── backgrounds
+- │ │ │ ├── level0.jpg
+- │ │ │ ├── level1.jpg
+- │ │ │ ├── level2.jpg
+- │ │ │ └── level3.jpg
+- │ │ ├── ending
+- │ │ │ ├── lose.jpg
+- │ │ │ └── win.jpg
+- │ │ ├── enemies
+- │ │ │ ├── enemy0.png
+- │ │ │ ├── enemy1.png
+- │ │ │ ├── enemy2.png
+- │ │ │ ├── enemy3.png
+- │ │ │ ├── enemy4.png
+- │ │ │ ├── enemy5.png
+- │ │ │ └── enemy6.png
+- │ │ ├── icon.jpg
+- │ │ ├── player.png
+- │ │ ├── spell.png
+- │ │ └── story.jpg
+- │ └── menu
+- │ ├── background.jpg
+- │ ├── button_exit.png
+- │ ├── button_play.png
+- │ └── button_resume.png
+- ├── view
+- │ ├── GUI.java
+- │ ├── Lose.java
+- │ ├── Menu.java
+- │ ├── Story.java
+- │ └── Win.java
+- └── Main.java
 
 
 ## Mitwirkende
