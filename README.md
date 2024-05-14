@@ -45,7 +45,7 @@ Um "Die Abenteuer des kleinen Zauberlehrlings" auf deinem lokalen Rechner zu spi
     - **Nach oben bewegen**: Verwende die Pfeil-nach-oben-Taste.
     - **Nach unten bewegen**: Verwende die Pfeil-nach-unten-Taste.
     - **Schießen**: Drücke die Leertaste, um einen Zauber zu wirken.
-3. **Ziel**: Besiege alle ankommenden Wellen von magischen Kreaturen, ohne dass sie dich erreichen. Versuche, den höchsten Punktestand zu erzielen.
+3. **Ziel**: Besiege alle ankommenden Wellen von magischen Kreaturen, ohne dass sie dich erreichen.
 
 ## Code-Struktur
 - **Main.java**: Einstiegspunkt des Spiels, initialisiert das Hauptfenster und verwaltet Spielzustandsübergänge.
@@ -65,9 +65,9 @@ Um "Die Abenteuer des kleinen Zauberlehrlings" auf deinem lokalen Rechner zu spi
 ## Ordnerstruktur
 Hier ist die vollständige Ordnerstruktur des Projekts:
 
-src
-├── controller
-│ └── Controller.java
+- src
+- ├── controller
+- │ └── Controller.java
 ├── data
 │ └── SQLite.java
 ├── interfaces
