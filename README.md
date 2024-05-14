@@ -65,6 +65,7 @@ Um "Die Abenteuer des kleinen Zauberlehrlings" auf deinem lokalen Rechner zu spi
 ## Ordnerstruktur
 Hier ist die vollständige Ordnerstruktur des Projekts:
 
+```
 src
 ├── Main.java
 ├── backup.txt
@@ -114,7 +115,7 @@ src
     ├── Menu.java
     ├── Story.java
     └── Win.java
-
+```
 
 ## Mitwirkende
 - **Mika Königsmann**
