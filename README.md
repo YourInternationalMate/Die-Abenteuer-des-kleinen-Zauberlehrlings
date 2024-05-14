@@ -65,9 +65,9 @@ Um "Die Abenteuer des kleinen Zauberlehrlings" auf deinem lokalen Rechner zu spi
 ## Ordnerstruktur
 Hier ist die vollständige Ordnerstruktur des Projekts:
 
-- src
-- ├── controller
-- │ └── Controller.java
+src
+├── controller
+│ └── Controller.java
 ├── data
 │ └── SQLite.java
 ├── interfaces
