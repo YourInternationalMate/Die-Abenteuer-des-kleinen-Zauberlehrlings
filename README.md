@@ -17,7 +17,7 @@ Willkommen zu "Die Abenteuer des kleinen Zauberlehrlings", einem von Space Invad
 - **Klassisches Gameplay**: Inspiriert vom klassischen Space Invaders Spiel, jedoch mit einer einzigartigen Wendung.
 - **Benutzeroberfläche**: Entwickelt mit Java Swing für eine reaktionsschnelle und interaktive UI.
 - **Spielzustände**: Beinhaltet verschiedene Spielzustände wie Menü, Spielen, Gewinnen und Verlieren.
-- **Punktestandverfolgung**: Verfolge deine Highscores und versuche, sie zu überbieten.
+- **Levelwiedereinstieg**: Starte in dem Level, in dem du aufgehört hast zu spielen.
 
 ## Installation
 Um "Die Abenteuer des kleinen Zauberlehrlings" auf deinem lokalen Rechner zu spielen, folge diesen Schritten:
