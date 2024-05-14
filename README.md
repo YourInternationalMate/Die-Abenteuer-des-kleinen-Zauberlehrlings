@@ -24,7 +24,7 @@ Um "Die Abenteuer des kleinen Zauberlehrlings" auf deinem lokalen Rechner zu spi
 
 1. **Repository klonen**:
     ```bash
-    git clone https://github.com/YourInternationalMate/Die-Abenteuer-des-kleinen-Zauberlehrlings.git
+    git clone https://github.com/YourUsername/Die-Abenteuer-des-kleinen-Zauberlehrlings.git
     cd Die-Abenteuer-des-kleinen-Zauberlehrlings
     ```
 
