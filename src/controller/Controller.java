@@ -22,7 +22,7 @@ public class Controller extends KeyAdapter {
     private boolean[] keys = new boolean[256];
 
     private long lastSpellTime; // letzter Schuss
-    private static final long SPELL_COOLDOWN = 500; // Cooldown Zeit
+    private static final long SPELL_COOLDOWN = 300; // Cooldown Zeit
 
     public Controller(MainModel model, GUI view, Redirector redirector, String name) {
         this.model = model;

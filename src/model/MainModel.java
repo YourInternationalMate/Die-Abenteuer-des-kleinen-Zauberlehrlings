@@ -22,7 +22,7 @@ public class MainModel {
     public MainModel(String name) {
         loadImages();
         getLevel(name);
-        this.player = new Player(playerImage ,5, 0, 360);
+        this.player = new Player(playerImage ,7, 0, 360);
         createLevel();
         spawnEnemies();
     }
@@ -49,7 +49,7 @@ public class MainModel {
     // Spells spawnen
 
     public void shootSpell() {
-        spells.add(new Spells(spellImage, 10, 10, player.getX()+115, player.getY()+35));
+        spells.add(new Spells(spellImage, currentLevel+8, 10, player.getX()+115, player.getY()+35));
     }
 
     // Gegner spawnen
