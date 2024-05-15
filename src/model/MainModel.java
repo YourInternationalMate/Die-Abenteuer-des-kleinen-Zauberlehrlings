@@ -49,7 +49,7 @@ public class MainModel {
     // Spells spawnen
 
     public void shootSpell() {
-        spells.add(new Spells(spellImage, currentLevel+8, 10, player.getX()+115, player.getY()+35));
+        spells.add(new Spells(spellImage, Math.min(currentLevel + 8, 10), 10, player.getX()+115, player.getY()+35));
     }
 
     // Gegner spawnen
@@ -116,8 +116,8 @@ public class MainModel {
 
     public void createLevel() {
         for (int levelNumber = 0; levelNumber < level.length; levelNumber++) {
-            level[levelNumber] = new Level(backgroundImages[levelNumber], levelNumber, 4+levelNumber, levelNumber+1);
-        }
+            level[levelNumber] = new Level(backgroundImages[levelNumber], levelNumber, Math.min(4 + levelNumber, 16), Math.min(levelNumber + 1, 5));
+        } // nur bis zur Maximalen Anzahl an Gegnern + nicht zu schnell
     }
 
     public void nextLevel() {
