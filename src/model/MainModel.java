@@ -23,7 +23,7 @@ public class MainModel {
         loadImages();
         getLevel(name);
         this.player = new Player(playerImage ,5, 0, 360);
-        createLevel(4);
+        createLevel();
         spawnEnemies();
     }
 
@@ -114,9 +114,9 @@ public class MainModel {
 
     // Level Logik
 
-    public void createLevel(int enemyCount) {
+    public void createLevel() {
         for (int levelNumber = 0; levelNumber < level.length; levelNumber++) {
-            level[levelNumber] = new Level(backgroundImages[levelNumber], levelNumber, enemyCount+levelNumber, 1);
+            level[levelNumber] = new Level(backgroundImages[levelNumber], levelNumber, 4+levelNumber, levelNumber+1);
         }
     }
 
