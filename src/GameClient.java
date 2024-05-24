@@ -1,25 +1,30 @@
+import model.MainModel;
+
 import java.io.*;
 import java.net.*;
 
 public class GameClient {
     private Socket socket;
-    private DataInputStream in;
+    private ObjectInputStream in;
 
     public GameClient(String address, int port) {
         try {
             socket = new Socket(address, port);
-            in = new DataInputStream(socket.getInputStream());
+            in = new ObjectInputStream(socket.getInputStream());
 
             // Empfange die Daten vom Server
             while (true) {
-                String message = in.readUTF();
-                System.out.println("Server says: " + message);
+                MainModel model = (MainModel) in.readObject();
 
-                // TODO: Hier die empfangenen Spiel-Daten verarbeiten
+                System.out.println(model.getPlayerX());
+
+                // TODO: Hier die empfangenen Spiel-Daten an View weiterleiten
             }
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         } finally {
             try {
                 if (socket != null) socket.close();
@@ -27,9 +32,5 @@ public class GameClient {
                 e.printStackTrace();
             }
         }
-    }
-
-    public static void main(String[] args) {
-        GameClient client = new GameClient("127.0.0.1", 12345);
     }
 }

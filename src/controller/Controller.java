@@ -19,6 +19,7 @@ public class Controller extends KeyAdapter {
     private Timer timer;
     private Level[] level;
     private boolean win = false;
+    private boolean lose = false;
 
     private boolean[] keys = new boolean[256];
 
@@ -55,7 +56,6 @@ public class Controller extends KeyAdapter {
             if (name.equals("Username")){
                 redirector.menu();
             } else {
-                System.out.println(name);
                 model.saveLevel(name);
                 redirector.menu();
             }
@@ -84,6 +84,7 @@ public class Controller extends KeyAdapter {
                     redirector.lose();
                 } else {
                     model.saveLevel(name);
+                    this.lose = true;
                     redirector.lose();
                 }
                 return;
@@ -115,5 +116,9 @@ public class Controller extends KeyAdapter {
     @Override
     public void keyReleased(KeyEvent e) {
         keys[e.getKeyCode()] = false;
+    }
+
+    public boolean isEnd() {
+        return win && lose;
     }
 }

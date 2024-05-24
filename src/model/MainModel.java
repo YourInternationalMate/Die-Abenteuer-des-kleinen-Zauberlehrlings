@@ -4,9 +4,12 @@ import data.SQLite;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MainModel {
+public class MainModel implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private int currentLevel;
     private ArrayList<Enemies> enemies = new ArrayList<>();

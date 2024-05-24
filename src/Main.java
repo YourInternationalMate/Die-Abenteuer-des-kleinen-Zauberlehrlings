@@ -91,10 +91,10 @@ public class Main implements Redirector {
     }
 
     private void startGameNow(String name) {
-        startStream();
         model = new MainModel(name);
         gui = new GUI(model);
         controller = new Controller(model, gui, this, name);
+        startStream();
 
         mainFrame.remove(story);
 
@@ -138,7 +138,7 @@ public class Main implements Redirector {
     public void startStream() {
         new Thread(() -> {
             try {
-                GameServer server = new GameServer(8080);
+                GameServer server = new GameServer(8080, model, controller);
                 server.start();
             } catch (IOException e) {
                 e.printStackTrace();
