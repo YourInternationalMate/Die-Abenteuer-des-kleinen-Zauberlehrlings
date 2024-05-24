@@ -3,11 +3,13 @@ import view.GUI;
 import view.Lose;
 import view.Win;
 import view.Story;
+import view.Watch;
 import controller.Controller;
 import model.MainModel;
 import interfaces.Redirector;
 
 import javax.swing.*;
+import java.io.IOException;
 
 public class Main implements Redirector {
     private static JFrame mainFrame;
@@ -15,6 +17,7 @@ public class Main implements Redirector {
     private Lose lose;
     private Win win;
     private Story story;
+    private Watch watch;
     private GUI gui;
     private Controller controller;
     private MainModel model;
@@ -25,6 +28,7 @@ public class Main implements Redirector {
         lose = new Lose();
         win = new Win();
         story = new Story();
+        watch = new Watch(this);
     }
 
     public static void main(String[] args) {
@@ -48,11 +52,21 @@ public class Main implements Redirector {
 
     @Override
     public void menu() { // um vom Spiel zurück ins Menü zu kommen
+        mainFrame.remove(watch);
         mainFrame.remove(gui);
         mainFrame.remove(lose);
         mainFrame.remove(win);
 
         mainFrame.add(menu);
+        mainFrame.revalidate();
+        mainFrame.repaint();
+        mainFrame.setVisible(true);
+    }
+
+    @Override
+    public void watch() {
+        mainFrame.remove(menu);
+        mainFrame.add(watch);
         mainFrame.revalidate();
         mainFrame.repaint();
         mainFrame.setVisible(true);
@@ -77,6 +91,7 @@ public class Main implements Redirector {
     }
 
     private void startGameNow(String name) {
+        startStream();
         model = new MainModel(name);
         gui = new GUI(model);
         controller = new Controller(model, gui, this, name);
@@ -118,4 +133,25 @@ public class Main implements Redirector {
         mainFrame.repaint();
         mainFrame.setVisible(true);
     }
+
+    //Stream
+    public void startStream() {
+        new Thread(() -> {
+            try {
+                GameServer server = new GameServer(8080);
+                server.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+    }
+
+    @Override
+    public void connectToStream(String IP) {
+        new Thread(() -> {
+            GameClient client = new GameClient(IP, 8080);
+        }).start();
+    }
+
 }

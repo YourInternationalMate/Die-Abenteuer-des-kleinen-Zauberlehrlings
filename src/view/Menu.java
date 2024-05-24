@@ -12,7 +12,7 @@ import java.awt.event.FocusEvent;
 public class Menu extends JPanel {
 
     private Image backgroundImage;
-    private JButton playButton, exitButton;
+    private JButton playButton, exitButton, watchButton;
     private JTextField nameField;
     private Redirector redirector;
 
@@ -33,7 +33,7 @@ public class Menu extends JPanel {
         playButton.setBorderPainted(false);
         playButton.setFocusPainted(false);
 
-        playButton.setBounds(100, 500, 180, 50);
+        playButton.setBounds(100, 440, 180, 50);
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -41,6 +41,20 @@ public class Menu extends JPanel {
             }
         });
         add(playButton);
+
+        watchButton = new JButton(new ImageIcon("src/resources/menu/button_watch.png"));
+        watchButton.setContentAreaFilled(false);
+        watchButton.setBorderPainted(false);
+        watchButton.setFocusPainted(false);
+
+        watchButton.setBounds(100, 500, 180, 50);
+        watchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                redirector.watch();
+            }
+        });
+        add(watchButton);
 
         exitButton = new JButton(new ImageIcon("src/resources/menu/button_exit.png"));
         exitButton.setContentAreaFilled(false);
