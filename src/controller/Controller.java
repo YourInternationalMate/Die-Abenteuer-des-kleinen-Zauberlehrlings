@@ -18,6 +18,7 @@ public class Controller extends KeyAdapter {
     private Redirector redirector;
     private Timer timer;
     private Level[] level;
+    private boolean win = false;
 
     private boolean[] keys = new boolean[256];
 
@@ -51,8 +52,14 @@ public class Controller extends KeyAdapter {
         }
         if (keys[KeyEvent.VK_ESCAPE]) {
             timer.stop();
-            model.saveLevel(name);
-            redirector.menu();
+            if (name.equals("Username")){
+                redirector.menu();
+            } else {
+                System.out.println(name);
+                model.saveLevel(name);
+                redirector.menu();
+            }
+
         }
 
         if (level[model.getCurrentLevel()].isCompleted()) {
@@ -63,6 +70,7 @@ public class Controller extends KeyAdapter {
             } else {
                 timer.stop();
                 model.resetLevel(name);
+                this.win = true;
                 redirector.win();
                 return;
             }
@@ -72,8 +80,12 @@ public class Controller extends KeyAdapter {
         for (Enemies enemy : enemies) {
             if (enemy.isOffScreen()) {
                 timer.stop();
-                model.saveLevel(name);
-                redirector.lose();
+                if (name.equals("Username")){
+                    redirector.lose();
+                } else {
+                    model.saveLevel(name);
+                    redirector.lose();
+                }
                 return;
             }
         }
@@ -87,7 +99,6 @@ public class Controller extends KeyAdapter {
     private void winOrLoseLoop() {
         if (keys[KeyEvent.VK_ESCAPE]) {
             timer.stop();
-            model.saveLevel(name);
             redirector.menu();
         }
     }

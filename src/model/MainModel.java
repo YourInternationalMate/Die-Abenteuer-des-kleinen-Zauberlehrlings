@@ -162,7 +162,7 @@ public class MainModel {
         }
     }
 
-    public void insertLevel(String name) {
+    public void insertLevel(String name) { // User anlegen
         try {
             SQLite.insertLevel("INSERT INTO score (name, level) VALUES ('" + name + "', 0)");
         } catch (Exception e) {
