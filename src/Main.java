@@ -52,10 +52,18 @@ public class Main implements Redirector {
 
     @Override
     public void menu() { // um vom Spiel zurück ins Menü zu kommen
-        mainFrame.remove(watch);
-        mainFrame.remove(gui);
-        mainFrame.remove(lose);
-        mainFrame.remove(win);
+        if (watch != null) {
+            mainFrame.remove(watch);
+        }
+        if (gui != null) {
+            mainFrame.remove(gui);
+        }
+        if (lose != null) {
+            mainFrame.remove(lose);
+        }
+        if (win != null) {
+            mainFrame.remove(win);
+        }
 
         mainFrame.add(menu);
         mainFrame.revalidate();
