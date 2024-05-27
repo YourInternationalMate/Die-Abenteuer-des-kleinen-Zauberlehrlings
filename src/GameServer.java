@@ -28,7 +28,7 @@ public class GameServer {
 
     private static class ClientHandler extends Thread {
         private Socket clientSocket;
-        private ObjectOutputStream out;
+        private DataOutputStream out;
 
         private MainModel model;
         private Controller controller;
@@ -41,10 +41,10 @@ public class GameServer {
 
         public void run() {
             try {
-                out = new ObjectOutputStream(clientSocket.getOutputStream());
+                out = new DataOutputStream(clientSocket.getOutputStream());
 
                  while (!controller.isEnd()) { // solange das Spiel nicht beendet ist
-                     out.writeObject(model);
+                     out.write(model.getPlayerX());
                      out.flush();
                  }
 

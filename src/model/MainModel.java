@@ -187,4 +187,5 @@ public class MainModel implements Serializable {
             backgroundImages[i] = new ImageIcon("src/resources/game/backgrounds/level" + i + ".jpg").getImage();
         }
     }
+
 }

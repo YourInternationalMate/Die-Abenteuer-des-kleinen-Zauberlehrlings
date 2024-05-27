@@ -146,7 +146,7 @@ public class Main implements Redirector {
     public void startStream() {
         new Thread(() -> {
             try {
-                GameServer server = new GameServer(8080, model, controller);
+                GameServer server = new GameServer(8000, model, controller);
                 server.start();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -158,7 +158,7 @@ public class Main implements Redirector {
     @Override
     public void connectToStream(String IP) {
         new Thread(() -> {
-            GameClient client = new GameClient(IP, 8080);
+            GameClient client = new GameClient(IP, 8000);
         }).start();
     }
 
