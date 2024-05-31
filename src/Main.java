@@ -3,13 +3,16 @@ import view.GUI;
 import view.Lose;
 import view.Win;
 import view.Story;
-import view.Watch;
+import view.Multiplayer;
+import view.Controll;
 import controller.Controller;
 import model.MainModel;
 import interfaces.Redirector;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main implements Redirector {
     private static JFrame mainFrame;
@@ -17,8 +20,9 @@ public class Main implements Redirector {
     private Lose lose;
     private Win win;
     private Story story;
-    private Watch watch;
     private GUI gui;
+    private Multiplayer multiplayer;
+    private Controll controll;
     private Controller controller;
     private MainModel model;
 
@@ -28,7 +32,7 @@ public class Main implements Redirector {
         lose = new Lose();
         win = new Win();
         story = new Story();
-        watch = new Watch(this);
+        multiplayer = new Multiplayer(this);
     }
 
     public static void main(String[] args) {
@@ -52,8 +56,8 @@ public class Main implements Redirector {
 
     @Override
     public void menu() { // um vom Spiel zurück ins Menü zu kommen
-        if (watch != null) {
-            mainFrame.remove(watch);
+        if (multiplayer != null) {
+            mainFrame.remove(multiplayer);
         }
         if (gui != null) {
             mainFrame.remove(gui);
@@ -72,9 +76,23 @@ public class Main implements Redirector {
     }
 
     @Override
-    public void watch() {
+    public void controll() {
+        model = new MainModel("Username", true); //Username = Standard, wird nicht in DB gespeichert
+        controll = new Controll(model.calculatePossiblePositions(), this);
+
+        mainFrame.remove(multiplayer);
+
+        mainFrame.add(controll);
+        mainFrame.revalidate();
+        mainFrame.repaint();
+        mainFrame.setVisible(true);
+    }
+
+    @Override
+    public void multiplayer() {
         mainFrame.remove(menu);
-        mainFrame.add(watch);
+
+        mainFrame.add(multiplayer);
         mainFrame.revalidate();
         mainFrame.repaint();
         mainFrame.setVisible(true);
@@ -90,6 +108,24 @@ public class Main implements Redirector {
     }
 
     @Override
+    public void startMultiplayerGame() {
+        mainFrame.remove(multiplayer);
+
+        model = new MainModel("Username", true); //Username = Standard, wird nicht in DB gespeichert
+        gui = new GUI(model);
+        controller = new Controller(model, gui, this, "Username", true);
+
+        mainFrame.add(gui);
+        mainFrame.revalidate();
+        mainFrame.repaint();
+
+        mainFrame.requestFocus();
+        mainFrame.addKeyListener(controller);
+
+        controller.startGame();
+    }
+
+    @Override
     public void startGame(String name) {
         story(); // Delay für Story
 
@@ -99,10 +135,9 @@ public class Main implements Redirector {
     }
 
     private void startGameNow(String name) {
-        model = new MainModel(name);
+        model = new MainModel(name, false);
         gui = new GUI(model);
-        controller = new Controller(model, gui, this, name);
-        startStream();
+        controller = new Controller(model, gui, this, name, false);
 
         mainFrame.remove(story);
 
@@ -143,10 +178,11 @@ public class Main implements Redirector {
     }
 
     //Stream
-    public void startStream() {
+    @Override
+    public void startStream(ArrayList<Point> clickedButtonValues) {
         new Thread(() -> {
             try {
-                GameServer server = new GameServer(8000, model, controller);
+                GameServer server = new GameServer(8000, clickedButtonValues);
                 server.start();
             } catch (IOException e) {
                 e.printStackTrace();

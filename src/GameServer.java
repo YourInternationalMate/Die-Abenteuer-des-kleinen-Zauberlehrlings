@@ -1,25 +1,22 @@
-import controller.Controller;
-import model.MainModel;
-
+import java.awt.*;
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
 public class GameServer {
     private ServerSocket serverSocket;
-    private MainModel model;
-    private Controller controller;
+    private ArrayList<Point> clickedButtonValues;
 
-    public GameServer(int port, MainModel model, Controller controller) throws IOException {
+    public GameServer(int port, ArrayList<Point> clickedButtonValues) throws IOException {
         serverSocket = new ServerSocket(port);
-        this.model = model;
-        this.controller = controller;
+        this.clickedButtonValues = clickedButtonValues;
     }
 
     public void start() {
         while (true) {
             try {
                 Socket clientSocket = serverSocket.accept();
-                new ClientHandler(clientSocket, model, controller).start();
+                new ClientHandler(clientSocket, clickedButtonValues).start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -30,23 +27,26 @@ public class GameServer {
         private Socket clientSocket;
         private DataOutputStream out;
 
-        private MainModel model;
-        private Controller controller;
+        private ArrayList<Point> clickedButtonValues;
 
-        public ClientHandler(Socket socket, MainModel model, Controller controller) {
+        public ClientHandler(Socket socket, ArrayList<Point> clickedButtonValues) {
             this.clientSocket = socket;
-            this.model = model;
-            this.controller = controller;
+            this.clickedButtonValues = clickedButtonValues;
         }
 
         public void run() {
             try {
                 out = new DataOutputStream(clientSocket.getOutputStream());
 
-                 while (!controller.isEnd()) { // solange das Spiel nicht beendet ist
-                     out.write(model.getPlayerX());
-                     out.flush();
-                 }
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ObjectOutputStream oos = new ObjectOutputStream(baos);
+                oos.writeObject(clickedButtonValues);
+                oos.close();
+
+                String clickedButtonValuesString = baos.toString("ISO-8859-1");
+
+                out.writeUTF(clickedButtonValuesString);
+                out.flush();
 
             } catch (IOException e) {
                 e.printStackTrace();

@@ -1,36 +1,31 @@
-import model.MainModel;
-
+import java.awt.*;
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
 public class GameClient {
     private Socket socket;
     private DataInputStream in;
-    private MainModel model;
 
     public GameClient(String address, int port) {
         try {
             socket = new Socket(address, port);
             in = new DataInputStream(socket.getInputStream());
-            this.model = new MainModel("Username");
 
-            // Empfange die Daten vom Server
-            while (true) {
-                int test = in.read();
+            String clickedButtonValuesString = in.readUTF();
 
-                System.out.println(test);
+            ByteArrayInputStream bais = new ByteArrayInputStream(clickedButtonValuesString.getBytes("ISO-8859-1"));
+            ObjectInputStream ois = new ObjectInputStream(bais);
 
-                // TODO: Hier die empfangenen Spiel-Daten an View weiterleiten
-            }
+            ArrayList<Point> clickedButtonValues = (ArrayList<Point>) ois.readObject();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (socket != null) socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+            } catch (UnknownHostException ex) {
+            throw new RuntimeException(ex);
+        } catch (IOException | ClassNotFoundException ex) {
+            throw new RuntimeException(ex);
         }
+
+
     }
 }

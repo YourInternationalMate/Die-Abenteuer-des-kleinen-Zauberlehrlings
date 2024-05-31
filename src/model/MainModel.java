@@ -4,12 +4,9 @@ import data.SQLite;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MainModel implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class MainModel{
 
     private int currentLevel;
     private ArrayList<Enemies> enemies = new ArrayList<>();
@@ -17,17 +14,20 @@ public class MainModel implements Serializable {
     private Player player;
     private Level[] level = new Level[4];
 
+    private boolean multiplayer = false;
+
     private Image playerImage;
     private Image spellImage;
     private Image[] enemyImages = new Image[7];
     private Image[] backgroundImages = new Image[4];
 
-    public MainModel(String name) {
+    public MainModel(String name, boolean multiplayer) {
+        this.multiplayer = multiplayer;
         loadImages();
         getLevel(name);
         this.player = new Player(playerImage ,7, 0, 360);
         createLevel();
-        spawnEnemies();
+        if (!multiplayer) {spawnEnemies();}
     }
 
     // Getter and Setter
@@ -59,6 +59,13 @@ public class MainModel implements Serializable {
 
     public void spawnEnemies() {
         randomizeEnemySpawn(calculatePossiblePositions());
+    }
+
+
+    public void placeEnemies(ArrayList<Point> positionsToUse) { //Platzierung der Gegner an bestimmten Positionen
+        for (int i = 0; i < positionsToUse.size(); i++) {
+            enemies.add(new Enemies(enemyImages[(int) (Math.random() * enemyImages.length)], 10, level[currentLevel].getEnemySpeed(), positionsToUse.get(i).x, positionsToUse.get(i).y));
+        }
     }
 
     public ArrayList<Point> calculatePossiblePositions() {

@@ -20,18 +20,20 @@ public class Controller extends KeyAdapter {
     private Level[] level;
     private boolean win = false;
     private boolean lose = false;
+    private boolean multiplayer;
 
     private boolean[] keys = new boolean[256];
 
     private long lastSpellTime; // letzter Schuss
     private static final long SPELL_COOLDOWN = 300; // Cooldown Zeit
 
-    public Controller(MainModel model, GUI view, Redirector redirector, String name) {
+    public Controller(MainModel model, GUI view, Redirector redirector, String name, boolean multiplayer) {
         this.model = model;
         this.view = view;
         this.level = model.getLevels();
         this.redirector = redirector;
         this.name = name;
+        this.multiplayer = multiplayer;
     }
 
     public void startGame() {
@@ -63,7 +65,7 @@ public class Controller extends KeyAdapter {
         }
 
         if (level[model.getCurrentLevel()].isCompleted()) {
-            if (model.getCurrentLevel() < level.length - 1) {
+            if (model.getCurrentLevel() < level.length - 1 && !multiplayer) {
                 model.increaseCurrentLevel();
                 model.nextLevel();
                 timer.start();
