@@ -29,6 +29,7 @@ public class Controll extends JPanel {
     }
 
     private void initButtons() {
+        JButton backButton;
         buttons = new JButton[BUTTON_COUNT];
         clickedButtonValues = new ArrayList<>();
 
@@ -68,6 +69,20 @@ public class Controll extends JPanel {
             }
         });
         add(placeButton);
+
+        backButton = new JButton(new ImageIcon("src/resources/menu/button_back.png"));
+        backButton.setContentAreaFilled(false);
+        backButton.setBorderPainted(false);
+        backButton.setFocusPainted(false);
+
+        backButton.setBounds(100, 560, 180, 50);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                redirector.multiplayer();
+            }
+        });
+        add(backButton);
     }
 
     @Override

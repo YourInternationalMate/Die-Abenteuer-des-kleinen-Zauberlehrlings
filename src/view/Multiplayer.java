@@ -12,7 +12,7 @@ import java.awt.event.FocusEvent;
 public class Multiplayer extends JPanel {
 
     private Image backgroundImage;
-    private JButton playButton, controllButton;
+    private JButton playButton, controllButton, backButton;
     private JTextField ipField;
     private Redirector redirector;
 
@@ -33,12 +33,11 @@ public class Multiplayer extends JPanel {
         playButton.setBorderPainted(false);
         playButton.setFocusPainted(false);
 
-        playButton.setBounds(100, 500, 180, 50);
+        playButton.setBounds(100, 440, 180, 50);
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                redirector.connectToStream(ipField.getText());
-                redirector.startMultiplayerGame();
+                redirector.startMultiplayerGame(ipField.getText());
             }
         });
         add(playButton);
@@ -48,7 +47,7 @@ public class Multiplayer extends JPanel {
         controllButton.setBorderPainted(false);
         controllButton.setFocusPainted(false);
 
-        controllButton.setBounds(100, 560, 300, 50);
+        controllButton.setBounds(100, 500, 300, 50);
         controllButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,6 +55,20 @@ public class Multiplayer extends JPanel {
             }
         });
         add(controllButton);
+
+        backButton = new JButton(new ImageIcon("src/resources/menu/button_back.png"));
+        backButton.setContentAreaFilled(false);
+        backButton.setBorderPainted(false);
+        backButton.setFocusPainted(false);
+
+        backButton.setBounds(100, 560, 180, 50);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                redirector.menu();
+            }
+        });
+        add(backButton);
     }
 
     private void initTextFields() {

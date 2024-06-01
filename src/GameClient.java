@@ -1,3 +1,5 @@
+import model.MainModel;
+
 import java.awt.*;
 import java.io.*;
 import java.net.*;
@@ -6,8 +8,11 @@ import java.util.ArrayList;
 public class GameClient {
     private Socket socket;
     private DataInputStream in;
+    private MainModel model;
 
-    public GameClient(String address, int port) {
+    public GameClient(String address, int port, MainModel model) {
+        this.model = model;
+
         try {
             socket = new Socket(address, port);
             in = new DataInputStream(socket.getInputStream());

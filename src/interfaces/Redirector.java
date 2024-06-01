@@ -8,7 +8,7 @@ public interface Redirector {
     void menu();
     void win();
     void lose();
-    void startMultiplayerGame();
+    void startMultiplayerGame(String IP);
     void multiplayer();
     void controll();
     void connectToStream(String IP);

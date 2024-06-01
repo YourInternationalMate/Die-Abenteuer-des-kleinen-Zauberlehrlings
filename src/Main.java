@@ -90,7 +90,12 @@ public class Main implements Redirector {
 
     @Override
     public void multiplayer() {
-        mainFrame.remove(menu);
+        if (controll != null) {
+            mainFrame.remove(controll);
+        }
+        if (menu != null) {
+            mainFrame.remove(menu);
+        }
 
         mainFrame.add(multiplayer);
         mainFrame.revalidate();
@@ -108,12 +113,14 @@ public class Main implements Redirector {
     }
 
     @Override
-    public void startMultiplayerGame() {
+    public void startMultiplayerGame(String IP) {
         mainFrame.remove(multiplayer);
 
         model = new MainModel("Username", true); //Username = Standard, wird nicht in DB gespeichert
         gui = new GUI(model);
         controller = new Controller(model, gui, this, "Username", true);
+
+        connectToStream(IP);
 
         mainFrame.add(gui);
         mainFrame.revalidate();
@@ -194,7 +201,7 @@ public class Main implements Redirector {
     @Override
     public void connectToStream(String IP) {
         new Thread(() -> {
-            GameClient client = new GameClient(IP, 8000);
+            GameClient client = new GameClient(IP, 8000, model);
         }).start();
     }
 
