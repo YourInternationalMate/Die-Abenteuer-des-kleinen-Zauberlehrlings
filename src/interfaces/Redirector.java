@@ -12,5 +12,5 @@ public interface Redirector {
     void multiplayer();
     void controll();
     void connectToStream(String IP);
-    void startStream(ArrayList<Point> clickedButtonValues);
+    void startStream();
 }

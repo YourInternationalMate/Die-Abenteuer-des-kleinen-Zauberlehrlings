@@ -19,6 +19,8 @@ public class Controll extends JPanel {
     private ArrayList<Point> possiblePositions;
     private Redirector redirector;
 
+    private boolean streamStarted = false;
+
     public Controll(ArrayList<Point> possiblePositions, Redirector redirector) {
         this.possiblePositions = possiblePositions;
         this.redirector = redirector;
@@ -39,7 +41,7 @@ public class Controll extends JPanel {
             buttons[index].setContentAreaFilled(false);
             buttons[index].setBorderPainted(false);
             buttons[index].setFocusPainted(false);
-            buttons[index].setBounds(100 + (index % 4) * 150, 100 + (index / 4) * 100, 120, 35);
+            buttons[index].setBounds(100 + (index % 4) * 150, 100 + (index / 4) * 100, 130, 35);
             buttons[index].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -65,7 +67,9 @@ public class Controll extends JPanel {
             public void actionPerformed(ActionEvent e) {
 
                 System.out.println("Clicked button values: " + clickedButtonValues);
-                redirector.startStream(clickedButtonValues);
+                if (streamStarted) {
+//                    GameServer.run(clickedButtonValues);
+                }
             }
         });
         add(placeButton);

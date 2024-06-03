@@ -25,6 +25,7 @@ public class Main implements Redirector {
     private Controll controll;
     private Controller controller;
     private MainModel model;
+    private GameServer server;
 
     public Main() {
         mainFrame = new JFrame("Die Abenteuer des kleinen Zauberlehrlings");
@@ -78,6 +79,9 @@ public class Main implements Redirector {
     @Override
     public void controll() {
         model = new MainModel("Username", true); //Username = Standard, wird nicht in DB gespeichert
+
+
+        startStream();
         controll = new Controll(model.calculatePossiblePositions(), this);
 
         mainFrame.remove(multiplayer);
@@ -186,10 +190,10 @@ public class Main implements Redirector {
 
     //Stream
     @Override
-    public void startStream(ArrayList<Point> clickedButtonValues) {
+    public void startStream() {
         new Thread(() -> {
             try {
-                GameServer server = new GameServer(8000, clickedButtonValues);
+                this.server = new GameServer(8000);
                 server.start();
             } catch (IOException e) {
                 e.printStackTrace();
