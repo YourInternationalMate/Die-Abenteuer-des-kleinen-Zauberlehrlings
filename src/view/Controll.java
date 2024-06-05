@@ -1,6 +1,7 @@
 package view;
 
 import interfaces.Redirector;
+import Server.GameServer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,12 +19,12 @@ public class Controll extends JPanel {
     private ArrayList<Point> clickedButtonValues;
     private ArrayList<Point> possiblePositions;
     private Redirector redirector;
+    private GameServer server;
 
-    private boolean streamStarted = false;
-
-    public Controll(ArrayList<Point> possiblePositions, Redirector redirector) {
+    public Controll(ArrayList<Point> possiblePositions, Redirector redirector, GameServer server) {
         this.possiblePositions = possiblePositions;
         this.redirector = redirector;
+        this.server = server;
         setPreferredSize(new Dimension(1280, 760));
         loadImages();
         initButtons();
@@ -36,7 +37,7 @@ public class Controll extends JPanel {
         clickedButtonValues = new ArrayList<>();
 
         for (int i = 0; i < BUTTON_COUNT; i++) {
-            int index = i; // final or effectively final variable for lambda
+            int index = i;
             buttons[index] = new JButton("Button " + possiblePositions.get(index), new ImageIcon("src/resources/controll/button_enemy.png"));
             buttons[index].setContentAreaFilled(false);
             buttons[index].setBorderPainted(false);
@@ -65,11 +66,7 @@ public class Controll extends JPanel {
         placeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                System.out.println("Clicked button values: " + clickedButtonValues);
-                if (streamStarted) {
-//                    GameServer.run(clickedButtonValues);
-                }
+                server.setClickedButtonValues(clickedButtonValues);
             }
         });
         add(placeButton);

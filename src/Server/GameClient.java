@@ -1,3 +1,5 @@
+package Server;
+
 import model.MainModel;
 
 import java.awt.*;

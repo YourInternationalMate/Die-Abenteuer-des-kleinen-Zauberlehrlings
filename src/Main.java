@@ -1,3 +1,5 @@
+import Server.GameClient;
+import Server.GameServer;
 import view.Menu;
 import view.GUI;
 import view.Lose;
@@ -10,9 +12,7 @@ import model.MainModel;
 import interfaces.Redirector;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Main implements Redirector {
     private static JFrame mainFrame;
@@ -82,7 +82,7 @@ public class Main implements Redirector {
 
 
         startStream();
-        controll = new Controll(model.calculatePossiblePositions(), this);
+        controll = new Controll(model.calculatePossiblePositions(), this, this.server);
 
         mainFrame.remove(multiplayer);
 
@@ -191,14 +191,12 @@ public class Main implements Redirector {
     //Stream
     @Override
     public void startStream() {
-        new Thread(() -> {
-            try {
-                this.server = new GameServer(8000);
-                server.start();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
+        try {
+            this.server = new GameServer(12345);
+            server.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
