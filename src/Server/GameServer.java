@@ -8,11 +8,10 @@ import java.util.List;
 
 public class GameServer {
     private ServerSocket serverSocket;
-    private List<ClientHandler> clientHandlers;
+    private List<ClientHandler> clientHandlers = new ArrayList<>();
 
     public GameServer(int port) throws IOException {
         serverSocket = new ServerSocket(port);
-        clientHandlers = new ArrayList<>();
     }
 
     public void start() {
@@ -20,13 +19,14 @@ public class GameServer {
             while (true) {
                 try {
                     Socket clientSocket = serverSocket.accept();
-                    System.out.println("Client connected: " + clientSocket.getInetAddress());
 
-                    ClientHandler clientHandler = new ClientHandler(clientSocket);
+                    ClientHandler handler = new ClientHandler(clientSocket);
+                    handler.start();
                     synchronized (clientHandlers) {
-                        clientHandlers.add(clientHandler);
+                        clientHandlers.add(handler);
                     }
-                    clientHandler.start();
+                    System.out.println(clientHandlers);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -36,14 +36,9 @@ public class GameServer {
 
     public void setClickedButtonValues(ArrayList<Point> clickedButtonValues) {
         synchronized (clientHandlers) {
-            System.out.println(clientHandlers);
             for (ClientHandler handler : clientHandlers) {
-                if (handler != null) {
-                    handler.sendClickedButtonValues(clickedButtonValues);
-                    System.out.println("Clicked button values sent to client");
-                } else {
-                    System.out.println("ClientHandler is null");
-                }
+                handler.sendClickedButtonValues(clickedButtonValues);
+                System.out.println("Clicked button values sent to client");
             }
         }
     }

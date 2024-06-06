@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class GameClient {
     private Socket socket;
-    private DataInputStream in;
+    private ObjectInputStream in;
     private MainModel model;
 
     public GameClient(String address, int port, MainModel model) {
@@ -17,22 +17,22 @@ public class GameClient {
 
         try {
             socket = new Socket(address, port);
-            in = new DataInputStream(socket.getInputStream());
+            in = new ObjectInputStream(socket.getInputStream());
 
-            String clickedButtonValuesString = in.readUTF();
+            ArrayList<Point> clickedButtonValues = (ArrayList<Point>) in.readObject();
+            System.out.println("Clicked button values received from server: " + clickedButtonValues);
 
-            ByteArrayInputStream bais = new ByteArrayInputStream(clickedButtonValuesString.getBytes("ISO-8859-1"));
-            ObjectInputStream ois = new ObjectInputStream(bais);
-
-            ArrayList<Point> clickedButtonValues = (ArrayList<Point>) ois.readObject();
-
-
-            } catch (UnknownHostException ex) {
+        } catch (UnknownHostException ex) {
             throw new RuntimeException(ex);
         } catch (IOException | ClassNotFoundException ex) {
             throw new RuntimeException(ex);
+        } finally {
+            try {
+                if (socket != null) socket.close();
+                if (in != null) in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-
     }
 }
