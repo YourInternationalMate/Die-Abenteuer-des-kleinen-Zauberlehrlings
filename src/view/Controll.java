@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 
 public class Controll extends JPanel {
@@ -15,11 +17,14 @@ public class Controll extends JPanel {
     private Image backgroundImage;
     private JButton[] buttons;
     private JButton placeButton;
+    private JTextField ipField;
     private static final int BUTTON_COUNT = 16;
     private static final int MAX_BUTTON_CLICKS = 5; // Anzahl der zu platzierenden Gegner
     private ArrayList<SerializablePoint> clickedButtonValues;
     private ArrayList<Point> possiblePositions;
     private Redirector redirector;
+
+    private static final String DEFAULT_TEXT = "IP-Adress";
 
     public Controll(ArrayList<Point> possiblePositions, Redirector redirector) {
         this.possiblePositions = possiblePositions;
@@ -27,6 +32,8 @@ public class Controll extends JPanel {
         setPreferredSize(new Dimension(1280, 760));
         loadImages();
         initButtons();
+
+        initTextFields();
         setLayout(null); // Layout deaktivieren -> manuelle Positionierung
     }
 
@@ -67,7 +74,7 @@ public class Controll extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 new Thread(() -> {
                     GameClient client = new GameClient(clickedButtonValues);
-                    client.sendPoints();
+                    client.sendPoints(ipField.getText());
                 }).start();
             }
         });
@@ -86,6 +93,33 @@ public class Controll extends JPanel {
             }
         });
         add(backButton);
+    }
+
+    private void initTextFields() {
+        ipField = new JTextField(DEFAULT_TEXT);
+        ipField.setBounds(560, 650, 220, 50);
+        ipField.setHorizontalAlignment(JTextField.CENTER);
+        ipField.setForeground(Color.WHITE);
+        ipField.setFont(new Font("SansSerif", Font.BOLD, 24));
+        ipField.setOpaque(false);
+        ipField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+        ipField.setCaretColor(Color.WHITE);
+        ipField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (ipField.getText().equals(DEFAULT_TEXT)) {
+                    ipField.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (ipField.getText().isEmpty()) {
+                    ipField.setText(DEFAULT_TEXT);
+                }
+            }
+        });
+        add(ipField);
     }
 
     @Override

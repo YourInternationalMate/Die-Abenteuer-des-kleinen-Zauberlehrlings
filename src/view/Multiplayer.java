@@ -13,17 +13,15 @@ public class Multiplayer extends JPanel {
 
     private Image backgroundImage;
     private JButton playButton, controllButton, backButton;
-    private JTextField ipField;
     private Redirector redirector;
 
-    private static final String DEFAULT_TEXT = "IP-Adress";
+
 
     public Multiplayer(Redirector redirector) {
         this.redirector = redirector;
         setPreferredSize(new Dimension(1280, 760));
         loadImages();
         initButtons();
-        initTextFields();
         setLayout(null); // Layout deaktivieren -> manuelle Positionierung
     }
 
@@ -37,7 +35,7 @@ public class Multiplayer extends JPanel {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                redirector.startMultiplayerGame(ipField.getText());
+                redirector.startMultiplayerGame();
             }
         });
         add(playButton);
@@ -69,33 +67,6 @@ public class Multiplayer extends JPanel {
             }
         });
         add(backButton);
-    }
-
-    private void initTextFields() {
-        ipField = new JTextField(DEFAULT_TEXT);
-        ipField.setBounds(520, 600, 220, 50);
-        ipField.setHorizontalAlignment(JTextField.CENTER);
-        ipField.setForeground(Color.WHITE);
-        ipField.setFont(new Font("SansSerif", Font.BOLD, 24));
-        ipField.setOpaque(false);
-        ipField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
-        ipField.setCaretColor(Color.WHITE);
-        ipField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (ipField.getText().equals(DEFAULT_TEXT)) {
-                    ipField.setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (ipField.getText().isEmpty()) {
-                    ipField.setText(DEFAULT_TEXT);
-                }
-            }
-        });
-        add(ipField);
     }
 
     @Override

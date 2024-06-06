@@ -13,10 +13,9 @@ public class GameClient {
         this.points = points;
     }
 
-    public void sendPoints() {
+    public void sendPoints(String hostName) {
         System.out.println("Client gestartet!");
 
-        String hostName = "10.25.2.67"; // Rechner-Name bzw. -Adresse
         int port = 8080; // Port-Nummer
 
         try (Socket socket = new Socket(hostName, port)) {

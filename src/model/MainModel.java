@@ -62,7 +62,7 @@ public class MainModel{
     }
 
 
-    public void placeEnemies(ArrayList<Point> positionsToUse) { //Platzierung der Gegner an bestimmten Positionen
+    public void placeEnemies(ArrayList<SerializablePoint> positionsToUse) { //Platzierung der Gegner an bestimmten Positionen
         for (int i = 0; i < positionsToUse.size(); i++) {
             enemies.add(new Enemies(enemyImages[(int) (Math.random() * enemyImages.length)], 10, level[currentLevel].getEnemySpeed(), positionsToUse.get(i).x, positionsToUse.get(i).y));
         }

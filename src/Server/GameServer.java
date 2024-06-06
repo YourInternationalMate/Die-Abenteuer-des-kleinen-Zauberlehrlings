@@ -1,6 +1,7 @@
 package Server;
 
 import model.SerializablePoint;
+import model.MainModel;
 
 import java.awt.*;
 import java.io.*;
@@ -10,23 +11,25 @@ import java.util.*;
 
 public class GameServer {
 
-    public GameServer() {
-        int port = 8080; // Port-Nummer
+    public GameServer(MainModel model) {
+        int port = 8080;
 
         try (ServerSocket server = new ServerSocket(port)) {
             System.out.println("Server gestartet!");
 
             while (true) {
-                try (Socket socket = server.accept()) { // try-with-resources, Auf Verbindung warten, Methode blockiert
+                try (Socket socket = server.accept()) {
 
-                    ObjectInputStream objectIn = new ObjectInputStream(socket.getInputStream()); // ObjectInputstream vom Client
-                    PrintWriter socketOut = new PrintWriter(socket.getOutputStream(), true); // Outputstream zum Client mit autoflush
+                    ObjectInputStream objectIn = new ObjectInputStream(socket.getInputStream());
+                    PrintWriter socketOut = new PrintWriter(socket.getOutputStream(), true);
 
                     Object obj = objectIn.readObject();
                     if (obj instanceof ArrayList) {
                         ArrayList<SerializablePoint> points = (ArrayList<SerializablePoint>) obj;
                         System.out.println("Received ArrayList from client: " + points);
                         // Do something with points
+
+                        model.placeEnemies(points);
                     }
 
                     socketOut.println("ArrayList received");
