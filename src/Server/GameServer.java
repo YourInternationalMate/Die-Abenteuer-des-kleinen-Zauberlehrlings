@@ -4,13 +4,15 @@ import java.awt.*;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameServer {
     private ServerSocket serverSocket;
-    private ClientHandler clientHandler;
+    private List<ClientHandler> clientHandlers;
 
     public GameServer(int port) throws IOException {
         serverSocket = new ServerSocket(port);
+        clientHandlers = new ArrayList<>();
     }
 
     public void start() {
@@ -20,10 +22,11 @@ public class GameServer {
                     Socket clientSocket = serverSocket.accept();
                     System.out.println("Client connected: " + clientSocket.getInetAddress());
 
-                    synchronized (this) {
-                        this.clientHandler = new ClientHandler(clientSocket);
+                    ClientHandler clientHandler = new ClientHandler(clientSocket);
+                    synchronized (clientHandlers) {
+                        clientHandlers.add(clientHandler);
                     }
-                    this.clientHandler.start();
+                    clientHandler.start();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -32,15 +35,16 @@ public class GameServer {
     }
 
     public void setClickedButtonValues(ArrayList<Point> clickedButtonValues) {
-        ClientHandler handler;
-        synchronized (this) {
-            handler = this.clientHandler;
-        }
-        if (handler != null) {
-            handler.sendClickedButtonValues(clickedButtonValues);
-            System.out.println("Clicked button values sent to client");
-        } else {
-            System.out.println("ClientHandler is null");
+        synchronized (clientHandlers) {
+            System.out.println(clientHandlers);
+            for (ClientHandler handler : clientHandlers) {
+                if (handler != null) {
+                    handler.sendClickedButtonValues(clickedButtonValues);
+                    System.out.println("Clicked button values sent to client");
+                } else {
+                    System.out.println("ClientHandler is null");
+                }
+            }
         }
     }
 
