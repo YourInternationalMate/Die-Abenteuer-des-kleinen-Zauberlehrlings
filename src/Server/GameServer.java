@@ -1,91 +1,57 @@
 package Server;
-
-import java.awt.*;
-import java.io.*;
-import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.*;
 
 public class GameServer {
-    private ServerSocket serverSocket;
-    private List<ClientHandler> clientHandlers = new ArrayList<>();
 
-    public GameServer(int port) throws IOException {
-        serverSocket = new ServerSocket(port);
-    }
+    public static void main(String[] args) {
 
-    public void start() {
-        new Thread(() -> {
+
+
+        int port = 8080; // Port-Nummer
+
+        try (ServerSocket server = new ServerSocket(port)){
+
+            System.out.println("Server gestartet!");
+
             while (true) {
-                try {
-                    Socket clientSocket = serverSocket.accept();
 
-                    ClientHandler handler = new ClientHandler(clientSocket);
-                    handler.start();
-                    synchronized (clientHandlers) {
-                        clientHandlers.add(handler);
-                    }
-                    System.out.println(clientHandlers);
+                try (Socket socket = server.accept()) { // try-with-resources, Auf Verbindung warten, Methode blockiert
+                    //socket.setSoTimeout(5000);
+
+                    BufferedReader socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Inputstream vom Client
+                    PrintWriter socketOut = new PrintWriter(socket.getOutputStream(), true); // Outputstream zum Client mit autoflush
+
+                    String line = socketIn.readLine();
+                    System.out.println("Received from client: " + line);
+
+//                    int matrikelnummer = 0; // Antwort
+//                    try {
+//                        matrikelnummer = Integer.parseInt(line);
+//                        System.out.println("Matrikelnummer:" + matrikelnummer);
+//                        socketOut.println(studenten.get(matrikelnummer));
+//
+//                    } catch (NumberFormatException e) {
+//                        socketOut.println(e.getMessage());
+//                    }
 
                 } catch (IOException e) {
+                    System.err.println(e.getMessage());
                     e.printStackTrace();
                 }
+
+                System.out.println("Warte auf n�chste Anfrage!");
             }
-        }).start();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+
     }
 
-    public void setClickedButtonValues(ArrayList<Point> clickedButtonValues) {
-        synchronized (clientHandlers) {
-            for (ClientHandler handler : clientHandlers) {
-                handler.sendClickedButtonValues(clickedButtonValues);
-                System.out.println("Clicked button values sent to client");
-            }
-        }
-    }
-
-    private static class ClientHandler extends Thread {
-        private Socket clientSocket;
-        private ObjectOutputStream out;
-
-        public ClientHandler(Socket socket) {
-            this.clientSocket = socket;
-            System.out.println("ClientHandler created for: " + socket.getInetAddress());
-        }
-
-        @Override
-        public void run() {
-            try {
-                out = new ObjectOutputStream(clientSocket.getOutputStream());
-                out.flush();
-                System.out.println("Output stream initialized for: " + clientSocket.getInetAddress());
-
-                while (!clientSocket.isClosed()) {
-                    // Placeholder for handling incoming messages
-                    Thread.sleep(1000); // Sleep to prevent busy waiting
-                }
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    clientSocket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        public void sendClickedButtonValues(ArrayList<Point> clickedButtonValues) {
-            try {
-                if (out != null) {
-                    out.writeObject(clickedButtonValues);
-                    out.flush();
-                    System.out.println("Clicked button values sent to client: " + clientSocket.getInetAddress());
-                } else {
-                    System.out.println("Output stream is null for: " + clientSocket.getInetAddress());
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

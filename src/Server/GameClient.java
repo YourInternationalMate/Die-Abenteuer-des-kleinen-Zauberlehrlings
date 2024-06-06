@@ -1,38 +1,46 @@
 package Server;
 
-import model.MainModel;
-
-import java.awt.*;
-import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.*;
 
 public class GameClient {
-    private Socket socket;
-    private ObjectInputStream in;
-    private MainModel model;
+    public static void main(String[] args) {
 
-    public GameClient(String address, int port, MainModel model) {
-        this.model = model;
+        int matrikelnummer;
 
-        try {
-            socket = new Socket(address, port);
-            in = new ObjectInputStream(socket.getInputStream());
+        System.out.println("Client gestartet!");
 
-            ArrayList<Point> clickedButtonValues = (ArrayList<Point>) in.readObject();
-            System.out.println("Clicked button values received from server: " + clickedButtonValues);
+        String hostName = "10.25.2.67"; // Rechner-Name bzw. -Adresse
+        int port = 8080; // Port-Nummer
 
-        } catch (UnknownHostException ex) {
-            throw new RuntimeException(ex);
-        } catch (IOException | ClassNotFoundException ex) {
-            throw new RuntimeException(ex);
-        } finally {
-            try {
-                if (socket != null) socket.close();
-                if (in != null) in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+
+        try (Socket socket = new Socket(hostName, port)){
+
+            BufferedReader socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Inputstream vom Server
+            PrintWriter socketOut = new PrintWriter(socket.getOutputStream(), true); // Outputstream zum Server
+
+            try (Scanner scanner = new Scanner(System.in)) {
+                System.out.println("Matrikelnummer:");
+                matrikelnummer = scanner.nextInt();
             }
+
+
+            socketOut.println(matrikelnummer);
+
+//            String text = socketIn.readLine(); // Zeile vom Server empfangen // Antwort empfangen
+//
+//            System.out.println(text); // Zeile auf die Konsole schreiben
+
+
+        } catch (UnknownHostException ue) {
+            System.out.println("Kein DNS-Eintrag fuer " + hostName);
+        } catch (NoRouteToHostException e) {
+            System.err.println("Nicht erreichbar " + hostName);
+        } catch (IOException e) {
+            System.out.println("IO-Error");
         }
+
+
     }
 }

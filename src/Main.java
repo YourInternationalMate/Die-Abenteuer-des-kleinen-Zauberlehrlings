@@ -81,7 +81,7 @@ public class Main implements Redirector {
         model = new MainModel("Username", true); //Username = Standard, wird nicht in DB gespeichert
 
 
-        startStream();
+        connectToStream();
         controll = new Controll(model.calculatePossiblePositions(), this, this.server);
 
         mainFrame.remove(multiplayer);
@@ -124,7 +124,7 @@ public class Main implements Redirector {
         gui = new GUI(model);
         controller = new Controller(model, gui, this, "Username", true);
 
-        connectToStream(IP);
+        startStream();
 
         mainFrame.add(gui);
         mainFrame.revalidate();
@@ -189,21 +189,15 @@ public class Main implements Redirector {
     }
 
     //Stream
-    @Override
     public void startStream() {
-        try {
-            this.server = new GameServer(12345);
-            server.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        new Thread(() -> {
+            server = new GameServer();
+        }).start();
     }
 
-    @Override
-    public void connectToStream(String IP) {
+    public void connectToStream() {
         new Thread(() -> {
-            GameClient client = new GameClient(IP, 8000, model);
+            GameClient client = new GameClient();
         }).start();
     }
 
