@@ -1,46 +1,39 @@
 package Server;
 
-import java.net.*;
-import java.util.Scanner;
+import model.SerializablePoint;
+
 import java.io.*;
+import java.net.*;
+import java.util.*;
 
 public class GameClient {
-    public static void main(String[] args) {
+    private ArrayList<SerializablePoint> points;
 
-        int matrikelnummer;
+    public GameClient(ArrayList<SerializablePoint> points) {
+        this.points = points;
+    }
 
+    public void sendPoints() {
         System.out.println("Client gestartet!");
 
         String hostName = "10.25.2.67"; // Rechner-Name bzw. -Adresse
         int port = 8080; // Port-Nummer
 
-
-        try (Socket socket = new Socket(hostName, port)){
-
+        try (Socket socket = new Socket(hostName, port)) {
+            ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream()); // ObjectOutputstream zum Server
             BufferedReader socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Inputstream vom Server
-            PrintWriter socketOut = new PrintWriter(socket.getOutputStream(), true); // Outputstream zum Server
 
-            try (Scanner scanner = new Scanner(System.in)) {
-                System.out.println("Matrikelnummer:");
-                matrikelnummer = scanner.nextInt();
-            }
+            objectOut.writeObject(points); // Sende ArrayList an den Server
 
-
-            socketOut.println(matrikelnummer);
-
-//            String text = socketIn.readLine(); // Zeile vom Server empfangen // Antwort empfangen
-//
-//            System.out.println(text); // Zeile auf die Konsole schreiben
-
+            String response = socketIn.readLine(); // Zeile vom Server empfangen
+            System.out.println(response); // Zeile auf die Konsole schreiben
 
         } catch (UnknownHostException ue) {
-            System.out.println("Kein DNS-Eintrag fuer " + hostName);
+            System.out.println("Kein DNS-Eintrag für " + hostName);
         } catch (NoRouteToHostException e) {
             System.err.println("Nicht erreichbar " + hostName);
         } catch (IOException e) {
             System.out.println("IO-Error");
         }
-
-
     }
 }

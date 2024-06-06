@@ -1,7 +1,8 @@
 package view;
 
+import Server.GameClient;
 import interfaces.Redirector;
-import Server.GameServer;
+import model.SerializablePoint;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,15 +17,13 @@ public class Controll extends JPanel {
     private JButton placeButton;
     private static final int BUTTON_COUNT = 16;
     private static final int MAX_BUTTON_CLICKS = 5; // Anzahl der zu platzierenden Gegner
-    private ArrayList<Point> clickedButtonValues;
+    private ArrayList<SerializablePoint> clickedButtonValues;
     private ArrayList<Point> possiblePositions;
     private Redirector redirector;
-    private GameServer server;
 
-    public Controll(ArrayList<Point> possiblePositions, Redirector redirector, GameServer server) {
+    public Controll(ArrayList<Point> possiblePositions, Redirector redirector) {
         this.possiblePositions = possiblePositions;
         this.redirector = redirector;
-        this.server = server;
         setPreferredSize(new Dimension(1280, 760));
         loadImages();
         initButtons();
@@ -51,7 +50,7 @@ public class Controll extends JPanel {
                     } else {
                         JButton source = (JButton) e.getSource();
                         source.setEnabled(false);
-                        clickedButtonValues.add(possiblePositions.get(index));
+                        clickedButtonValues.add(new SerializablePoint(possiblePositions.get(index).x, possiblePositions.get(index).y));
                     }
                 }
             });
@@ -66,7 +65,10 @@ public class Controll extends JPanel {
         placeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                server.setClickedButtonValues(clickedButtonValues);
+                new Thread(() -> {
+                    GameClient client = new GameClient(clickedButtonValues);
+                    client.sendPoints();
+                }).start();
             }
         });
         add(placeButton);

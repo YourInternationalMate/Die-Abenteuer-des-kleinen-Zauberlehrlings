@@ -80,9 +80,7 @@ public class Main implements Redirector {
     public void controll() {
         model = new MainModel("Username", true); //Username = Standard, wird nicht in DB gespeichert
 
-
-        connectToStream();
-        controll = new Controll(model.calculatePossiblePositions(), this, this.server);
+        controll = new Controll(model.calculatePossiblePositions(), this);
 
         mainFrame.remove(multiplayer);
 
@@ -195,10 +193,5 @@ public class Main implements Redirector {
         }).start();
     }
 
-    public void connectToStream() {
-        new Thread(() -> {
-            GameClient client = new GameClient();
-        }).start();
-    }
 
 }
