@@ -1,4 +1,3 @@
-import Server.GameClient;
 import Server.GameServer;
 import view.Menu;
 import view.GUI;
@@ -6,13 +5,12 @@ import view.Lose;
 import view.Win;
 import view.Story;
 import view.Multiplayer;
-import view.Controll;
+import view.Control;
 import controller.Controller;
 import model.MainModel;
 import interfaces.Redirector;
 
 import javax.swing.*;
-import java.io.IOException;
 
 public class Main implements Redirector {
     private static JFrame mainFrame;
@@ -22,10 +20,12 @@ public class Main implements Redirector {
     private Story story;
     private GUI gui;
     private Multiplayer multiplayer;
-    private Controll controll;
+    private Control controll;
     private Controller controller;
     private MainModel model;
     private GameServer server;
+    private boolean serverStarted = false;
+
 
     public Main() {
         mainFrame = new JFrame("Die Abenteuer des kleinen Zauberlehrlings");
@@ -80,7 +80,7 @@ public class Main implements Redirector {
     public void controll() {
         model = new MainModel("Username", true); //Username = Standard, wird nicht in DB gespeichert
 
-        controll = new Controll(model.calculatePossiblePositions(), this);
+        controll = new Control(model.calculatePossiblePositions(), this);
 
         mainFrame.remove(multiplayer);
 
@@ -122,7 +122,10 @@ public class Main implements Redirector {
         gui = new GUI(model);
         controller = new Controller(model, gui, this, "Username", true);
 
-        startStream(model);
+        if (!serverStarted){
+            startStream(model);
+            serverStarted = true;
+        }
 
         mainFrame.add(gui);
         mainFrame.revalidate();

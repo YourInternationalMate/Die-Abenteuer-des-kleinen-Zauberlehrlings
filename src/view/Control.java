@@ -12,7 +12,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 
-public class Controll extends JPanel {
+public class Control extends JPanel {
 
     private Image backgroundImage;
     private JButton[] buttons;
@@ -26,7 +26,7 @@ public class Controll extends JPanel {
 
     private static final String DEFAULT_TEXT = "IP-Adress";
 
-    public Controll(ArrayList<Point> possiblePositions, Redirector redirector) {
+    public Control(ArrayList<Point> possiblePositions, Redirector redirector) {
         this.possiblePositions = possiblePositions;
         this.redirector = redirector;
         setPreferredSize(new Dimension(1280, 760));
