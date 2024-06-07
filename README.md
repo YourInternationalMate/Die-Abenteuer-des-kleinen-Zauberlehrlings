@@ -17,6 +17,7 @@ Willkommen zu "Die Abenteuer des kleinen Zauberlehrlings", einem von Space Invad
 - **Klassisches Gameplay**: Inspiriert vom klassischen Space Invaders Spiel, jedoch mit einer einzigartigen Wendung.
 - **Benutzeroberfläche**: Entwickelt mit Java Swing für eine reaktionsschnelle und interaktive UI.
 - **Spielzustände**: Beinhaltet verschiedene Spielzustände wie Menü, Spielen, Gewinnen und Verlieren.
+- **Multiplayer: Erlebe gemeinsam mit deinem Freund das Abenteuer und stellt euch den Herausforderungen zusammen.
 - **Levelwiedereinstieg**: Starte in dem Level, in dem du aufgehört hast zu spielen.
 
 ## Installation
@@ -40,12 +41,27 @@ Um "Die Abenteuer des kleinen Zauberlehrlings" auf deinem lokalen Rechner zu spi
     ```
 
 ## Spielanleitung
-1. **Spiel starten**: Starte das Spiel und drücke 'Start' im Hauptmenü.
+**Singleplayer**
+1. **Spiel starten**: Starte das Spiel und drücke 'Play' im Hauptmenü.
 2. **Steuerung**:
     - **Nach oben bewegen**: Verwende die Pfeil-nach-oben-Taste.
     - **Nach unten bewegen**: Verwende die Pfeil-nach-unten-Taste.
     - **Schießen**: Drücke die Leertaste, um einen Zauber zu wirken.
 3. **Ziel**: Besiege alle ankommenden Wellen von magischen Kreaturen, ohne dass sie dich erreichen.
+
+**Multplayer**
+1. **Spiel starten**: Starte das Spiel und drücke 'Multplayer' im Hauptmenü.
+2. **Rollen auswählen**:
+   - **Spieler 1**: Starte das Spiel und drücke 'Play' im Hauptmenü.
+   - **Spieler 2**: Wähle 'Control' im Hauptmenü, um die Monster zu steuern.
+3. **Monster Steuern**: Spieler 2 bestimmt die Positionen der Monster.
+4. **Steuerung Avatar**:
+    - **Nach oben bewegen**: Verwende die Pfeil-nach-oben-Taste.
+    - **Nach unten bewegen**: Verwende die Pfeil-nach-unten-Taste.
+    - **Schießen**: Drücke die Leertaste, um einen Zauber zu wirken.
+5. **Ziel**: Besiege alle ankommenden Wellen von magischen Kreaturen, ohne dass sie dich erreichen.
+
+## UML
 
 ## Code-Struktur
 - **Main.java**: Einstiegspunkt des Spiels, initialisiert das Hauptfenster und verwaltet Spielzustandsübergänge.
