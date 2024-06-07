@@ -68,7 +68,9 @@ Hier ist die vollständige Ordnerstruktur des Projekts:
 ```
 src
 ├── Main.java
-├── backup.txt
+├── Server
+│   ├── GameClient.java
+│   └── GameServer.java
 ├── controller
 │   └── Controller.java
 ├── data
@@ -81,8 +83,12 @@ src
 │   ├── Level.java
 │   ├── MainModel.java
 │   ├── Player.java
+│   ├── SerializablePoint.java
 │   └── Spells.java
 ├── resources
+│   ├── controll
+│   │   ├── button_enemy.png
+│   │   └── button_place.png
 │   ├── game
 │   │   ├── backgrounds
 │   │   │   ├── level0.jpg
@@ -106,13 +112,19 @@ src
 │   │   └── story.jpg
 │   └── menu
 │       ├── background.jpg
+│       ├── background_clean.jpg
+│       ├── button_back.png
+│       ├── button_controll.png
 │       ├── button_exit.png
+│       ├── button_multiplayer.png
 │       ├── button_play.png
 │       └── button_resume.png
 └── view
+    ├── Controll.java
     ├── GUI.java
     ├── Lose.java
     ├── Menu.java
+    ├── Multiplayer.java
     ├── Story.java
     └── Win.java
 ```
