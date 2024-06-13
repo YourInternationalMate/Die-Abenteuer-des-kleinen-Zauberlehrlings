@@ -1,8 +1,11 @@
+import Server.GameServer;
 import view.Menu;
 import view.GUI;
 import view.Lose;
 import view.Win;
 import view.Story;
+import view.Multiplayer;
+import view.Control;
 import controller.Controller;
 import model.MainModel;
 import interfaces.Redirector;
@@ -16,8 +19,13 @@ public class Main implements Redirector {
     private Win win;
     private Story story;
     private GUI gui;
+    private Multiplayer multiplayer;
+    private Control controll;
     private Controller controller;
     private MainModel model;
+    private GameServer server;
+    private boolean serverStarted = false;
+
 
     public Main() {
         mainFrame = new JFrame("Die Abenteuer des kleinen Zauberlehrlings");
@@ -25,6 +33,7 @@ public class Main implements Redirector {
         lose = new Lose();
         win = new Win();
         story = new Story();
+        multiplayer = new Multiplayer(this);
     }
 
     public static void main(String[] args) {
@@ -48,11 +57,49 @@ public class Main implements Redirector {
 
     @Override
     public void menu() { // um vom Spiel zurück ins Menü zu kommen
-        mainFrame.remove(gui);
-        mainFrame.remove(lose);
-        mainFrame.remove(win);
+        if (multiplayer != null) {
+            mainFrame.remove(multiplayer);
+        }
+        if (gui != null) {
+            mainFrame.remove(gui);
+        }
+        if (lose != null) {
+            mainFrame.remove(lose);
+        }
+        if (win != null) {
+            mainFrame.remove(win);
+        }
 
         mainFrame.add(menu);
+        mainFrame.revalidate();
+        mainFrame.repaint();
+        mainFrame.setVisible(true);
+    }
+
+    @Override
+    public void controll() {
+        model = new MainModel("Username", true); //Username = Standard, wird nicht in DB gespeichert
+
+        controll = new Control(model.calculatePossiblePositions(), this);
+
+        mainFrame.remove(multiplayer);
+
+        mainFrame.add(controll);
+        mainFrame.revalidate();
+        mainFrame.repaint();
+        mainFrame.setVisible(true);
+    }
+
+    @Override
+    public void multiplayer() {
+        if (controll != null) {
+            mainFrame.remove(controll);
+        }
+        if (menu != null) {
+            mainFrame.remove(menu);
+        }
+
+        mainFrame.add(multiplayer);
         mainFrame.revalidate();
         mainFrame.repaint();
         mainFrame.setVisible(true);
@@ -68,6 +115,29 @@ public class Main implements Redirector {
     }
 
     @Override
+    public void startMultiplayerGame() {
+        mainFrame.remove(multiplayer);
+
+        model = new MainModel("Username", true); //Username = Standard, wird nicht in DB gespeichert
+        gui = new GUI(model);
+        controller = new Controller(model, gui, this, "Username", true);
+
+        if (!serverStarted){
+            startStream(model);
+            serverStarted = true;
+        }
+
+        mainFrame.add(gui);
+        mainFrame.revalidate();
+        mainFrame.repaint();
+
+        mainFrame.requestFocus();
+        mainFrame.addKeyListener(controller);
+
+        controller.startGame();
+    }
+
+    @Override
     public void startGame(String name) {
         story(); // Delay für Story
 
@@ -77,9 +147,9 @@ public class Main implements Redirector {
     }
 
     private void startGameNow(String name) {
-        model = new MainModel(name);
+        model = new MainModel(name, false);
         gui = new GUI(model);
-        controller = new Controller(model, gui, this, name);
+        controller = new Controller(model, gui, this, name, false);
 
         mainFrame.remove(story);
 
@@ -118,4 +188,13 @@ public class Main implements Redirector {
         mainFrame.repaint();
         mainFrame.setVisible(true);
     }
+
+    //Stream
+    public void startStream(MainModel model) {
+        new Thread(() -> {
+            server = new GameServer(model);
+        }).start();
+    }
+
+
 }

@@ -5,4 +5,7 @@ public interface Redirector {
     void menu();
     void win();
     void lose();
+    void startMultiplayerGame();
+    void multiplayer();
+    void controll();
 }

@@ -12,7 +12,7 @@ import java.awt.event.FocusEvent;
 public class Menu extends JPanel {
 
     private Image backgroundImage;
-    private JButton playButton, exitButton;
+    private JButton playButton, exitButton, multiplayerButton;
     private JTextField nameField;
     private Redirector redirector;
 
@@ -33,7 +33,7 @@ public class Menu extends JPanel {
         playButton.setBorderPainted(false);
         playButton.setFocusPainted(false);
 
-        playButton.setBounds(100, 500, 180, 50);
+        playButton.setBounds(100, 440, 180, 50);
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -41,6 +41,20 @@ public class Menu extends JPanel {
             }
         });
         add(playButton);
+
+        multiplayerButton = new JButton(new ImageIcon("src/resources/menu/button_multiplayer.png"));
+        multiplayerButton.setContentAreaFilled(false);
+        multiplayerButton.setBorderPainted(false);
+        multiplayerButton.setFocusPainted(false);
+
+        multiplayerButton.setBounds(100, 500, 300, 50);
+        multiplayerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                redirector.multiplayer();
+            }
+        });
+        add(multiplayerButton);
 
         exitButton = new JButton(new ImageIcon("src/resources/menu/button_exit.png"));
         exitButton.setContentAreaFilled(false);

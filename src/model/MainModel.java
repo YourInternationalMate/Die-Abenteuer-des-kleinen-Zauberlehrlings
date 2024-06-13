@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MainModel {
+public class MainModel{
 
     private int currentLevel;
     private ArrayList<Enemies> enemies = new ArrayList<>();
@@ -14,17 +14,20 @@ public class MainModel {
     private Player player;
     private Level[] level = new Level[4];
 
+    private boolean multiplayer = false;
+
     private Image playerImage;
     private Image spellImage;
     private Image[] enemyImages = new Image[7];
     private Image[] backgroundImages = new Image[4];
 
-    public MainModel(String name) {
+    public MainModel(String name, boolean multiplayer) {
+        this.multiplayer = multiplayer;
         loadImages();
         getLevel(name);
-        this.player = new Player(playerImage ,5, 0, 360);
-        createLevel(4);
-        spawnEnemies();
+        this.player = new Player(playerImage ,7, 0, 360);
+        createLevel();
+        if (!multiplayer) {spawnEnemies();}
     }
 
     // Getter and Setter
@@ -49,13 +52,20 @@ public class MainModel {
     // Spells spawnen
 
     public void shootSpell() {
-        spells.add(new Spells(spellImage, 10, 10, player.getX()+115, player.getY()+35));
+        spells.add(new Spells(spellImage, Math.min(currentLevel + 8, 10), 10, player.getX()+115, player.getY()+35));
     }
 
     // Gegner spawnen
 
     public void spawnEnemies() {
         randomizeEnemySpawn(calculatePossiblePositions());
+    }
+
+
+    public void placeEnemies(ArrayList<SerializablePoint> positionsToUse) { //Platzierung der Gegner an bestimmten Positionen
+        for (int i = 0; i < positionsToUse.size(); i++) {
+            enemies.add(new Enemies(enemyImages[(int) (Math.random() * enemyImages.length)], 10, level[currentLevel].getEnemySpeed(), positionsToUse.get(i).x, positionsToUse.get(i).y));
+        }
     }
 
     public ArrayList<Point> calculatePossiblePositions() {
@@ -114,10 +124,10 @@ public class MainModel {
 
     // Level Logik
 
-    public void createLevel(int enemyCount) {
+    public void createLevel() {
         for (int levelNumber = 0; levelNumber < level.length; levelNumber++) {
-            level[levelNumber] = new Level(backgroundImages[levelNumber], levelNumber, enemyCount+levelNumber, 1);
-        }
+            level[levelNumber] = new Level(backgroundImages[levelNumber], levelNumber, Math.min(4 + levelNumber, 16), Math.min(levelNumber + 1, 5));
+        } // nur bis zur Maximalen Anzahl an Gegnern + nicht zu schnell
     }
 
     public void nextLevel() {
@@ -162,7 +172,7 @@ public class MainModel {
         }
     }
 
-    public void insertLevel(String name) {
+    public void insertLevel(String name) { // User anlegen
         try {
             SQLite.insertLevel("INSERT INTO score (name, level) VALUES ('" + name + "', 0)");
         } catch (Exception e) {
@@ -184,4 +194,5 @@ public class MainModel {
             backgroundImages[i] = new ImageIcon("src/resources/game/backgrounds/level" + i + ".jpg").getImage();
         }
     }
+
 }

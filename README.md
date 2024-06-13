@@ -17,6 +17,7 @@ Willkommen zu "Die Abenteuer des kleinen Zauberlehrlings", einem von Space Invad
 - **Klassisches Gameplay**: Inspiriert vom klassischen Space Invaders Spiel, jedoch mit einer einzigartigen Wendung.
 - **Benutzeroberfläche**: Entwickelt mit Java Swing für eine reaktionsschnelle und interaktive UI.
 - **Spielzustände**: Beinhaltet verschiedene Spielzustände wie Menü, Spielen, Gewinnen und Verlieren.
+- **Multiplayer: Erlebe gemeinsam mit deinem Freund das Abenteuer und stellt euch den Herausforderungen zusammen.
 - **Levelwiedereinstieg**: Starte in dem Level, in dem du aufgehört hast zu spielen.
 
 ## Installation
@@ -40,12 +41,30 @@ Um "Die Abenteuer des kleinen Zauberlehrlings" auf deinem lokalen Rechner zu spi
     ```
 
 ## Spielanleitung
-1. **Spiel starten**: Starte das Spiel und drücke 'Start' im Hauptmenü.
+**Singleplayer**
+1. **Spiel starten**: Starte das Spiel und drücke 'Play' im Hauptmenü.
 2. **Steuerung**:
     - **Nach oben bewegen**: Verwende die Pfeil-nach-oben-Taste.
     - **Nach unten bewegen**: Verwende die Pfeil-nach-unten-Taste.
     - **Schießen**: Drücke die Leertaste, um einen Zauber zu wirken.
 3. **Ziel**: Besiege alle ankommenden Wellen von magischen Kreaturen, ohne dass sie dich erreichen.
+
+
+**Multiplayer**
+1. **Spiel starten**: Starte das Spiel und drücke 'Multiplayer' im Hauptmenü.
+2. **Rollen auswählen**:
+   - **Spieler 1**: Starte das Spiel und drücke 'Play' im Hauptmenü.
+   - **Spieler 2**: Wähle 'Control' im Hauptmenü, um die Monster zu steuern.
+3. **Monster Steuern**: Spieler 2 bestimmt die Positionen der Monster.
+4. **Steuerung Avatar**:
+    - **Nach oben bewegen**: Verwende die Pfeil-nach-oben-Taste.
+    - **Nach unten bewegen**: Verwende die Pfeil-nach-unten-Taste.
+    - **Schießen**: Drücke die Leertaste, um einen Zauber zu wirken.
+5. **Ziel**: Besiege alle ankommenden Wellen von magischen Kreaturen, ohne dass sie dich erreichen.
+
+## UML
+![Prog2_Rusch_Koenigsmann_UML](https://github.com/YourInternationalMate/Die-Abenteuer-des-kleinen-Zauberlehrlings/assets/73663569/f8956b81-1008-4396-bfa0-d200663801d7)
+
 
 ## Code-Struktur
 - **Main.java**: Einstiegspunkt des Spiels, initialisiert das Hauptfenster und verwaltet Spielzustandsübergänge.
@@ -68,7 +87,9 @@ Hier ist die vollständige Ordnerstruktur des Projekts:
 ```
 src
 ├── Main.java
-├── backup.txt
+├── Server
+│   ├── GameClient.java
+│   └── GameServer.java
 ├── controller
 │   └── Controller.java
 ├── data
@@ -81,8 +102,12 @@ src
 │   ├── Level.java
 │   ├── MainModel.java
 │   ├── Player.java
+│   ├── SerializablePoint.java
 │   └── Spells.java
 ├── resources
+│   ├── controll
+│   │   ├── button_enemy.png
+│   │   └── button_place.png
 │   ├── game
 │   │   ├── backgrounds
 │   │   │   ├── level0.jpg
@@ -106,13 +131,19 @@ src
 │   │   └── story.jpg
 │   └── menu
 │       ├── background.jpg
+│       ├── background_clean.jpg
+│       ├── button_back.png
+│       ├── button_controll.png
 │       ├── button_exit.png
+│       ├── button_multiplayer.png
 │       ├── button_play.png
 │       └── button_resume.png
 └── view
+    ├── Control.java
     ├── GUI.java
     ├── Lose.java
     ├── Menu.java
+    ├── Multiplayer.java
     ├── Story.java
     └── Win.java
 ```
