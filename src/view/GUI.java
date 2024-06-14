@@ -8,43 +8,42 @@ import javax.swing.JPanel;
 import java.awt.*;
 
 public class GUI extends JPanel {
-    private final MainModel model;
+    private final MainModel model; // Referenz auf das MainModel, das die Spiel-Daten enthält
 
-
-    public GUI(MainModel model) {
+    public GUI(MainModel model) { // Konstruktor
         this.model = model;
 
-        setPreferredSize(new Dimension(1280, 760));
-        setFocusable(true);
-        requestFocusInWindow();
+        setPreferredSize(new Dimension(1280, 760)); // Setzt die bevorzugte Größe des Panels
+        setFocusable(true); // Macht das Panel fokussierbar
+        requestFocusInWindow(); // Fordert den Fokus für das Panel an
     }
 
     @Override
-    protected void paintComponent(Graphics g) { // Spieler zeichnen
+    protected void paintComponent(Graphics g) { // Überschreibt die paintComponent-Methode von JPanel
         super.paintComponent(g);
-        drawBackground(g);
-        drawPlayer(g);
-        drawSpells(g);
-        drawEnemies(g);
+        drawBackground(g); // Zeichnet den Hintergrund
+        drawPlayer(g); // Zeichnet den Spieler
+        drawSpells(g); // Zeichnet die Zaubersprüche
+        drawEnemies(g); // Zeichnet die Gegner
     }
 
-    private void drawBackground(Graphics g) {
-        g.drawImage(model.getLevel().getImage(), 0, 0, null);
+    private void drawBackground(Graphics g) { // Methode zum Zeichnen des Hintergrundes
+        g.drawImage(model.getLevel().getImage(), 0, 0, null); // Zeichnet das Hintergrundbild des aktuellen Levels
     }
 
-    private void drawPlayer(Graphics g) {
-        g.drawImage(model.getPlayer().getImage(), model.getPlayerX(), model.getPlayerY(), null);
+    private void drawPlayer(Graphics g) { // Methode zum Zeichnen des Spielers
+        g.drawImage(model.getPlayer().getImage(), model.getPlayerX(), model.getPlayerY(), null); // Zeichnet das Spielerbild an den aktuellen Koordinaten
     }
 
-    private void drawSpells(Graphics g) {
-        for (Spells spell : model.getSpells()) {
-            g.drawImage(spell.getImage(), spell.getX(), spell.getY(), null);
+    private void drawSpells(Graphics g) { // Methode zum Zeichnen der Zaubersprüche
+        for (Spells spell : model.getSpells()) { // Iteriert durch alle Zaubersprüche im Modell
+            g.drawImage(spell.getImage(), spell.getX(), spell.getY(), null); // Zeichnet jedes Zauberspruch-Bild an den aktuellen Koordinaten
         }
     }
 
-    private void drawEnemies(Graphics g) {
-        for (Enemies enemy : model.getEnemies()) {
-            g.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), null); //funktioniert so halb, wenn gegner stirb, muss bild aus liste entfernt werden
+    private void drawEnemies(Graphics g) { // Methode zum Zeichnen der Gegner
+        for (Enemies enemy : model.getEnemies()) { // Iteriert durch alle Gegner im Modell
+            g.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), null); // Zeichnet jedes Gegner-Bild an den aktuellen Koordinaten
         }
     }
 }

@@ -3,72 +3,71 @@ package model;
 import java.awt.*;
 
 public class Enemies {
-    private Image image;
-    private int health;
-    private int speed;
-    private int x;
-    private int y;
-    private static final int HEIGHT = 90;
-    private static final int WIDTH = 128;
+    private Image image; // Bild des Gegners
+    private int health; // Lebenspunkte des Gegners
+    private int speed; // Geschwindigkeit des Gegners
+    private int x; // X-Position des Gegners
+    private int y; // Y-Position des Gegners
+    private static final int HEIGHT = 90; // Höhe des Gegners
+    private static final int WIDTH = 128; // Breite des Gegners
 
-    public Enemies(Image image, int health, int speed, int x, int y) {
-        this.image = image;
-        this.health = health;
-        this.speed = speed;
-        this.x = x;
-        this.y = y;
+    public Enemies(Image image, int health, int speed, int x, int y) { // Konstruktor
+        this.image = image; // Initialisiert das Bild
+        this.health = health; // Initialisiert die Lebenspunkte
+        this.speed = speed; // Initialisiert die Geschwindigkeit
+        this.x = x; // Initialisiert die X-Position
+        this.y = y; // Initialisiert die Y-Position
     }
 
-    public Image getImage() {
+    public Image getImage() { // Getter für das Bild
         return image;
     }
 
-    public int getSpeed() {
+    public int getSpeed() { // Getter für die Geschwindigkeit
         return speed;
     }
 
-    public int getX() {
+    public int getX() { // Getter für die X-Position
         return x;
     }
 
-    public int getY() {
+    public int getY() { // Getter für die Y-Position
         return y;
     }
 
-    public static int getHEIGHT() {
+    public static int getHEIGHT() { // Getter für die Höhe
         return HEIGHT;
     }
 
-    public static int getWIDTH() {
+    public static int getWIDTH() { // Getter für die Breite
         return WIDTH;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(int speed) { // Setter für die Geschwindigkeit
         this.speed = speed;
     }
 
-    public void setX(int x) {
+    public void setX(int x) { // Setter für die X-Position
         this.x = x;
     }
 
-    public void setY(int y) {
+    public void setY(int y) { // Setter für die Y-Position
         this.y = y;
     }
 
-    public boolean isAlive() {
+    public boolean isAlive() { // Überprüft, ob der Gegner noch lebt
         return health > 0;
     }
 
-    public void takeDamage(int damage) {
+    public void takeDamage(int damage) { // Reduziert die Lebenspunkte des Gegners
         health -= damage;
     }
 
-    public void move() {
-        this.x -= speed;// Bewegt sich von Rechts nach Links
+    public void move() { // Methode zum Bewegen des Gegners
+        this.x -= speed; // Bewegt sich von rechts nach links
     }
 
-    public boolean isOffScreen() {
-        return x < 0; //Überprüfen, ob Gegner am Ende ist
+    public boolean isOffScreen() { // Überprüft, ob der Gegner außerhalb des Bildschirms ist
+        return x < 0; // Der Gegner ist außerhalb des Bildschirms, wenn die X-Position kleiner als 0 ist
     }
-
 }

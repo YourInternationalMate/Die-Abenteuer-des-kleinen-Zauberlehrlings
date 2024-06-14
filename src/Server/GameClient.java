@@ -7,31 +7,31 @@ import java.net.*;
 import java.util.*;
 
 public class GameClient {
-    private ArrayList<SerializablePoint> points;
+    private ArrayList<SerializablePoint> points; // Liste der zu sendenden Punkte
 
-    public GameClient(ArrayList<SerializablePoint> points) {
+    public GameClient(ArrayList<SerializablePoint> points) { // Konstruktor
         this.points = points;
     }
 
-    public void sendPoints(String hostName) {
+    public void sendPoints(String hostName) { // Methode zum Senden der Punkte an den Server
         System.out.println("Client gestartet!");
 
         int port = 8080; // Port-Nummer
 
-        try (Socket socket = new Socket(hostName, port)) {
-            ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream()); // ObjectOutputstream zum Server
-            BufferedReader socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Inputstream vom Server
+        try (Socket socket = new Socket(hostName, port)) { // Erstellt eine Socket-Verbindung zum Server
+            ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream()); // OutputStream zum Senden von Objekten
+            BufferedReader socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream())); // InputStream zum Empfangen von Nachrichten
 
-            objectOut.writeObject(points); // Sende ArrayList an den Server
+            objectOut.writeObject(points); // Sendet die ArrayList an den Server
 
-            String response = socketIn.readLine(); // Zeile vom Server empfangen
-            System.out.println(response); // Zeile auf die Konsole schreiben
+            String response = socketIn.readLine(); // Empfängt eine Zeile vom Server
+            System.out.println(response); // Gibt die empfangene Zeile auf der Konsole aus
 
-        } catch (UnknownHostException ue) {
+        } catch (UnknownHostException ue) { // Fehlerbehandlung für unbekannte Hosts
             System.out.println("Kein DNS-Eintrag für " + hostName);
-        } catch (NoRouteToHostException e) {
+        } catch (NoRouteToHostException e) { // Fehlerbehandlung für nicht erreichbare Hosts
             System.err.println("Nicht erreichbar " + hostName);
-        } catch (IOException e) {
+        } catch (IOException e) { // Fehlerbehandlung für allgemeine E/A-Fehler
             System.out.println("IO-Error");
         }
     }

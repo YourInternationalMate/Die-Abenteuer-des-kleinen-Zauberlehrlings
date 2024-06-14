@@ -12,189 +12,185 @@ import interfaces.Redirector;
 
 import javax.swing.*;
 
-public class Main implements Redirector {
-    private static JFrame mainFrame;
-    private Menu menu;
-    private Lose lose;
-    private Win win;
-    private Story story;
-    private GUI gui;
-    private Multiplayer multiplayer;
-    private Control controll;
-    private Controller controller;
-    private MainModel model;
-    private GameServer server;
-    private boolean serverStarted = false;
+public class Main implements Redirector { // Hauptklasse, die das Redirector-Interface implementiert
+    private static JFrame mainFrame; // Hauptfenster des Spiels
+    private Menu menu; // Menü-Ansicht
+    private Lose lose; // Verlierer-Ansicht
+    private Win win; // Gewinner-Ansicht
+    private Story story; // Story-Ansicht
+    private GUI gui; // Spielansicht
+    private Multiplayer multiplayer; // Multiplayer-Ansicht
+    private Control controll; // Steuerungsansicht
+    private Controller controller; // Controller für die Spiel-Logik
+    private MainModel model; // Modell für die Spiel-Daten
+    private GameServer server; // GameServer-Instanz für Multiplayer-Spiele
+    private boolean serverStarted = false; // Flag, ob der Server gestartet wurde
 
-
-    public Main() {
-        mainFrame = new JFrame("Die Abenteuer des kleinen Zauberlehrlings");
-        menu = new Menu(this);
-        lose = new Lose();
-        win = new Win();
-        story = new Story();
-        multiplayer = new Multiplayer(this);
+    public Main() { // Konstruktor der Hauptklasse
+        mainFrame = new JFrame("Die Abenteuer des kleinen Zauberlehrlings"); // Initialisiert das Hauptfenster
+        menu = new Menu(this); // Initialisiert das Menü
+        lose = new Lose(); // Initialisiert die Verlierer-Ansicht
+        win = new Win(); // Initialisiert die Gewinner-Ansicht
+        story = new Story(); // Initialisiert die Story-Ansicht
+        multiplayer = new Multiplayer(this); // Initialisiert die Multiplayer-Ansicht
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Main().setWindow());
+    public static void main(String[] args) { // Hauptmethode des Programms
+        SwingUtilities.invokeLater(() -> new Main().setWindow()); // Setzt das Fenster im Event-Dispatch-Thread
     }
 
-    public void setWindow() {
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setSize(1280, 760);
-        mainFrame.setResizable(false);
-        mainFrame.setIconImage(new ImageIcon("src/resources/game/icon.jpg").getImage());
-        initMenu();
+    public void setWindow() { // Methode zur Konfiguration des Hauptfensters
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Beendet das Programm bei Fenster-Schließung
+        mainFrame.setSize(1280, 760); // Setzt die Fenstergröße
+        mainFrame.setResizable(false); // Verhindert die Größenänderung des Fensters
+        mainFrame.setIconImage(new ImageIcon("src/resources/game/icon.jpg").getImage()); // Setzt das Fenster-Icon
+        initMenu(); // Initialisiert das Menü
     }
 
-    public void initMenu() { // anfangs Menü
-        mainFrame.add(menu);
-        mainFrame.revalidate();
-        mainFrame.repaint();
-        mainFrame.setVisible(true);
+    public void initMenu() { // Initialisiert und zeigt das Hauptmenü
+        mainFrame.add(menu); // Fügt das Menü zum Hauptfenster hinzu
+        mainFrame.revalidate(); // Validiert die Komponenten-Hierarchie
+        mainFrame.repaint(); // Repaint das Fenster
+        mainFrame.setVisible(true); // Macht das Fenster sichtbar
     }
 
     @Override
-    public void menu() { // um vom Spiel zurück ins Menü zu kommen
+    public void menu() { // Methode zur Rückkehr ins Menü
         if (multiplayer != null) {
-            mainFrame.remove(multiplayer);
+            mainFrame.remove(multiplayer); // Entfernt die Multiplayer-Ansicht, falls vorhanden
         }
         if (gui != null) {
-            mainFrame.remove(gui);
+            mainFrame.remove(gui); // Entfernt die Spielansicht, falls vorhanden
         }
         if (lose != null) {
-            mainFrame.remove(lose);
+            mainFrame.remove(lose); // Entfernt die Verlierer-Ansicht, falls vorhanden
         }
         if (win != null) {
-            mainFrame.remove(win);
+            mainFrame.remove(win); // Entfernt die Gewinner-Ansicht, falls vorhanden
         }
 
-        mainFrame.add(menu);
+        mainFrame.add(menu); // Fügt das Menü wieder hinzu
         mainFrame.revalidate();
         mainFrame.repaint();
         mainFrame.setVisible(true);
     }
 
     @Override
-    public void controll() {
-        model = new MainModel("Username", true); //Username = Standard, wird nicht in DB gespeichert
+    public void controll() { // Methode zur Anzeige der Steuerungsansicht
+        model = new MainModel("Username", true); // Initialisiert das Modell mit Standard-Username
+        controll = new Control(model.calculatePossiblePositions(), this); // Initialisiert die Steuerungsansicht
 
-        controll = new Control(model.calculatePossiblePositions(), this);
+        mainFrame.remove(multiplayer); // Entfernt die Multiplayer-Ansicht
 
-        mainFrame.remove(multiplayer);
-
-        mainFrame.add(controll);
+        mainFrame.add(controll); // Fügt die Steuerungsansicht hinzu
         mainFrame.revalidate();
         mainFrame.repaint();
         mainFrame.setVisible(true);
     }
 
     @Override
-    public void multiplayer() {
+    public void multiplayer() { // Methode zur Anzeige der Multiplayer-Ansicht
         if (controll != null) {
-            mainFrame.remove(controll);
+            mainFrame.remove(controll); // Entfernt die Steuerungsansicht, falls vorhanden
         }
         if (menu != null) {
-            mainFrame.remove(menu);
+            mainFrame.remove(menu); // Entfernt das Menü, falls vorhanden
         }
 
-        mainFrame.add(multiplayer);
+        mainFrame.add(multiplayer); // Fügt die Multiplayer-Ansicht hinzu
         mainFrame.revalidate();
         mainFrame.repaint();
         mainFrame.setVisible(true);
     }
 
-    public void story() {
-        mainFrame.remove(menu);
+    public void story() { // Methode zur Anzeige der Story-Ansicht
+        mainFrame.remove(menu); // Entfernt das Menü
 
-        mainFrame.add(story);
+        mainFrame.add(story); // Fügt die Story-Ansicht hinzu
         mainFrame.revalidate();
         mainFrame.repaint();
         mainFrame.setVisible(true);
     }
 
     @Override
-    public void startMultiplayerGame() {
-        mainFrame.remove(multiplayer);
+    public void startMultiplayerGame() { // Methode zum Starten eines Multiplayer-Spiels
+        mainFrame.remove(multiplayer); // Entfernt die Multiplayer-Ansicht
 
-        model = new MainModel("Username", true); //Username = Standard, wird nicht in DB gespeichert
-        gui = new GUI(model);
-        controller = new Controller(model, gui, this, "Username", true);
+        model = new MainModel("Username", true); // Initialisiert das Modell mit Standard-Username
+        gui = new GUI(model); // Initialisiert die Spielansicht
+        controller = new Controller(model, gui, this, "Username", true); // Initialisiert den Controller
 
-        if (!serverStarted){
-            startStream(model);
+        if (!serverStarted) {
+            startStream(model); // Startet den GameServer
             serverStarted = true;
         }
 
-        mainFrame.add(gui);
+        mainFrame.add(gui); // Fügt die Spielansicht hinzu
         mainFrame.revalidate();
         mainFrame.repaint();
 
-        mainFrame.requestFocus();
-        mainFrame.addKeyListener(controller);
+        mainFrame.requestFocus(); // Setzt den Fokus auf das Fenster
+        mainFrame.addKeyListener(controller); // Fügt den KeyListener hinzu
 
-        controller.startGame();
+        controller.startGame(); // Startet das Spiel
     }
 
     @Override
-    public void startGame(String name) {
-        story(); // Delay für Story
+    public void startGame(String name) { // Methode zum Starten eines Spiels mit Story-Delay
+        story(); // Zeigt die Story-Ansicht
 
-        Timer timer = new Timer(3000, e -> startGameNow(name));
-        timer.setRepeats(false);
-        timer.start();
+        Timer timer = new Timer(3000, e -> startGameNow(name)); // Timer für Verzögerung
+        timer.setRepeats(false); // Einmaliger Timer
+        timer.start(); // Startet den Timer
     }
 
-    private void startGameNow(String name) {
-        model = new MainModel(name, false);
-        gui = new GUI(model);
-        controller = new Controller(model, gui, this, name, false);
+    private void startGameNow(String name) { // Methode zum tatsächlichen Starten des Spiels
+        model = new MainModel(name, false); // Initialisiert das Modell mit Spielername
+        gui = new GUI(model); // Initialisiert die Spielansicht
+        controller = new Controller(model, gui, this, name, false); // Initialisiert den Controller
 
-        mainFrame.remove(story);
+        mainFrame.remove(story); // Entfernt die Story-Ansicht
 
-        mainFrame.add(gui);
+        mainFrame.add(gui); // Fügt die Spielansicht hinzu
         mainFrame.revalidate();
         mainFrame.repaint();
 
-        mainFrame.requestFocus();
-        mainFrame.addKeyListener(controller);
+        mainFrame.requestFocus(); // Setzt den Fokus auf das Fenster
+        mainFrame.addKeyListener(controller); // Fügt den KeyListener hinzu
 
-        controller.startGame();
+        controller.startGame(); // Startet das Spiel
     }
 
     @Override
-    public void lose() {
-        mainFrame.remove(gui);
+    public void lose() { // Methode zur Anzeige der Verlierer-Ansicht
+        mainFrame.remove(gui); // Entfernt die Spielansicht
 
-        mainFrame.add(lose);
+        mainFrame.add(lose); // Fügt die Verlierer-Ansicht hinzu
         mainFrame.revalidate();
 
-        controller.winOrLose();
+        controller.winOrLose(); // Beendet das Spiel
 
         mainFrame.repaint();
         mainFrame.setVisible(true);
     }
 
     @Override
-    public void win() {
-        mainFrame.remove(gui);
+    public void win() { // Methode zur Anzeige der Gewinner-Ansicht
+        mainFrame.remove(gui); // Entfernt die Spielansicht
 
-        mainFrame.add(win);
+        mainFrame.add(win); // Fügt die Gewinner-Ansicht hinzu
         mainFrame.revalidate();
 
-        controller.winOrLose();
+        controller.winOrLose(); // Beendet das Spiel
 
         mainFrame.repaint();
         mainFrame.setVisible(true);
     }
 
-    //Stream
+    // Methode zum Starten des GameServers für den Multiplayer-Stream
     public void startStream(MainModel model) {
         new Thread(() -> {
-            server = new GameServer(model);
-        }).start();
+            server = new GameServer(model); // Initialisiert den GameServer
+        }).start(); // Startet den Server in einem neuen Thread
     }
-
-
 }

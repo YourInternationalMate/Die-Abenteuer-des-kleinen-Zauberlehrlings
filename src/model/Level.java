@@ -3,45 +3,45 @@ package model;
 import java.awt.*;
 
 public class Level {
-    private Image image;
-    private int levelNumber;
-    private int enemyCount;
-    private int killedEnemies;
-    private int enemySpeed;
+    private Image image; // Bild für das Level
+    private int levelNumber; // Levelnummer
+    private int enemyCount; // Anzahl der Gegner im Level
+    private int killedEnemies; // Anzahl der getöteten Gegner
+    private int enemySpeed; // Geschwindigkeit der Gegner
 
-    public Level(Image image, int levelNumber, int enemyCount, int enemySpeed) {
-        this.image = image;
-        this.levelNumber = levelNumber;
-        this.enemyCount = enemyCount;
-        this.enemySpeed = enemySpeed;
-        this.killedEnemies = 0;
+    public Level(Image image, int levelNumber, int enemyCount, int enemySpeed) { // Konstruktor
+        this.image = image; // Initialisiert das Bild des Levels
+        this.levelNumber = levelNumber; // Initialisiert die Levelnummer
+        this.enemyCount = enemyCount; // Initialisiert die Anzahl der Gegner
+        this.enemySpeed = enemySpeed; // Initialisiert die Geschwindigkeit der Gegner
+        this.killedEnemies = 0; // Setzt die Anzahl der getöteten Gegner auf 0
     }
 
-    public boolean isCompleted() { // wenn alle Gegner besiegt wurden, ist das Level geschafft
-        return killedEnemies == enemyCount;
+    public boolean isCompleted() { // Überprüft, ob das Level abgeschlossen ist
+        return killedEnemies == enemyCount; // Das Level ist abgeschlossen, wenn alle Gegner getötet wurden
     }
 
-    public void enemyKilled() {
+    public void enemyKilled() { // Erhöht die Anzahl der getöteten Gegner
         killedEnemies++;
     }
 
-    public void reset() { // falls man Level neustarten möchte
+    public void reset() { // Setzt die Anzahl der getöteten Gegner zurück
         killedEnemies = 0;
     }
 
-    public int getLevelNumber() {
+    public int getLevelNumber() { // Getter für die Levelnummer
         return levelNumber;
     }
 
-    public int getEnemyCount() {
+    public int getEnemyCount() { // Getter für die Anzahl der Gegner
         return enemyCount;
     }
 
-    public int getEnemySpeed(){
+    public int getEnemySpeed() { // Getter für die Geschwindigkeit der Gegner
         return enemySpeed;
     }
 
-    public Image getImage() {
+    public Image getImage() { // Getter für das Bild des Levels
         return image;
     }
 }

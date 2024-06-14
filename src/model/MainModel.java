@@ -6,53 +6,92 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MainModel{
+public class MainModel {
 
     private int currentLevel;
-    private ArrayList<Enemies> enemies = new ArrayList<>();
-    private ArrayList<Spells> spells = new ArrayList<>();
-    private Player player;
-    private Level[] level = new Level[4];
+    private ArrayList<Enemies> enemies = new ArrayList<>(); // Liste der Gegner
+    private ArrayList<Spells> spells = new ArrayList<>(); // Liste der Zaubersprüche
+    private Player player; // Spieler-Objekt
+    private Level[] level = new Level[4]; // Array der Level
 
     private boolean multiplayer = false;
 
     private Image playerImage;
     private Image spellImage;
-    private Image[] enemyImages = new Image[7];
-    private Image[] backgroundImages = new Image[4];
+    private Image[] enemyImages = new Image[7]; // Array der Gegnerbilder
+    private Image[] backgroundImages = new Image[4]; // Array der Hintergrundbilder
 
-    public MainModel(String name, boolean multiplayer) {
+    public MainModel(String name, boolean multiplayer) { // Konstruktor
         this.multiplayer = multiplayer;
         loadImages();
-        getLevel(name);
-        this.player = new Player(playerImage ,7, 0, 360);
-        createLevel();
-        if (!multiplayer) {spawnEnemies();}
+        getLevel(name); // Level aus der Datenbank laden
+        this.player = new Player(playerImage, 7, 0, 360); // Spieler initialisieren
+        createLevel(); // Level erstellen
+        if (!multiplayer) {
+            spawnEnemies(); // Gegner spawnen, falls nicht im Multiplayer-Modus
+        }
     }
 
-    // Getter and Setter
+    // Getter und Setter
 
-    public int getPlayerX() { return player.getX(); }
-    public int getPlayerY() { return player.getY(); }
-    public ArrayList<Spells> getSpells() { return spells; }
-    public ArrayList<Enemies> getEnemies() { return enemies; }
-    public Level[] getLevels() { return level; }
-    public int getCurrentLevel() { return currentLevel; }
-    public void increaseCurrentLevel() { this.currentLevel += 1; }
-    public Player getPlayer() { return player; }
-    public Level getLevel() { return level[currentLevel]; }
+    public int getPlayerX() {
+        return player.getX();
+    }
 
-    // Movement
+    public int getPlayerY() {
+        return player.getY();
+    }
 
-    public void movePlayerUp() { player.moveUp(); }
-    public void movePlayerDown() { player.moveDown(); }
-    public void moveEnemies() { enemies.forEach(Enemies::move); }
-    public void moveSpells() { spells.forEach(Spells::move); }
+    public ArrayList<Spells> getSpells() {
+        return spells;
+    }
 
-    // Spells spawnen
+    public ArrayList<Enemies> getEnemies() {
+        return enemies;
+    }
+
+    public Level[] getLevels() {
+        return level;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void increaseCurrentLevel() {
+        this.currentLevel += 1;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Level getLevel() {
+        return level[currentLevel];
+    }
+
+    // Bewegung
+
+    public void movePlayerUp() {
+        player.moveUp();
+    }
+
+    public void movePlayerDown() {
+        player.moveDown();
+    }
+
+    public void moveEnemies() {
+        enemies.forEach(Enemies::move);
+    }
+
+    public void moveSpells() {
+        spells.forEach(Spells::move);
+    }
+
+    // Zauber spawnen
 
     public void shootSpell() {
-        spells.add(new Spells(spellImage, Math.min(currentLevel + 8, 10), 10, player.getX()+115, player.getY()+35));
+        spells.add(new Spells(spellImage, Math.min(currentLevel + 8, 10), 10, player.getX() + 115, player.getY() + 35));
     }
 
     // Gegner spawnen
@@ -61,8 +100,7 @@ public class MainModel{
         randomizeEnemySpawn(calculatePossiblePositions());
     }
 
-
-    public void placeEnemies(ArrayList<SerializablePoint> positionsToUse) { //Platzierung der Gegner an bestimmten Positionen
+    public void placeEnemies(ArrayList<SerializablePoint> positionsToUse) { // Gegner an bestimmten Positionen platzieren
         for (int i = 0; i < positionsToUse.size(); i++) {
             enemies.add(new Enemies(enemyImages[(int) (Math.random() * enemyImages.length)], 10, level[currentLevel].getEnemySpeed(), positionsToUse.get(i).x, positionsToUse.get(i).y));
         }
@@ -70,7 +108,7 @@ public class MainModel{
 
     public ArrayList<Point> calculatePossiblePositions() {
         ArrayList<Point> possiblePositions = new ArrayList<>();
-        for (int x = 1280 - Enemies.getWIDTH(); x >= 1280 - 2*Enemies.getWIDTH(); x -= Enemies.getWIDTH()) {
+        for (int x = 1280 - Enemies.getWIDTH(); x >= 1280 - 2 * Enemies.getWIDTH(); x -= Enemies.getWIDTH()) {
             for (int y = 0; y <= 720 - Enemies.getHEIGHT(); y += Enemies.getHEIGHT()) {
                 possiblePositions.add(new Point(x, y));
             }
@@ -86,7 +124,7 @@ public class MainModel{
         }
     }
 
-    // Generelle Logik
+    // Allgemeine Logik
 
     public void isEnemieHit() {
         ArrayList<Enemies> copyOfEnemies = new ArrayList<>(enemies);
@@ -194,5 +232,4 @@ public class MainModel{
             backgroundImages[i] = new ImageIcon("src/resources/game/backgrounds/level" + i + ".jpg").getImage();
         }
     }
-
 }
