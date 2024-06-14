@@ -40,27 +40,62 @@ Um "Die Abenteuer des kleinen Zauberlehrlings" auf deinem lokalen Rechner zu spi
     java -cp bin Main
     ```
 
-## Spielanleitung
+## Spielanleitung - Die Abenteuer des kleinen Zauberlehrlings
+
+**Startmenü**
+
+In Abbildung 1 ist das Startmenü mit seinen verschiedenen Auswahlmöglichkeiten dargestellt. Der Benutzer wird aufgefordert, einen Namen einzugeben, um den Spielstand zu speichern. Mit dem "Play"-Button wird das Einzelspielerspiel gestartet. Der "Multiplayer"-Button führt zum Mehrspieler-Modus. Mit der Schaltfläche "Exit" wird das Spiel beendet.
+ 
+ 
+**Playermodus**
+
+In Abbildung 2 wird die Zaubererwelt gezeigt, in der der Spieler seinen Charakter, einen Zauberlehrling auf einem Besen, auf der linken Seite navigiert. Der Spieler muss Monster besiegen, um voranzukommen. Das Spiel umfasst vier Level, die nacheinander durchgespielt werden. Mit jedem Level wird der Schwierigkeitsgrad erhöht. Die Benutzeroberfläche ist benutzerfreundlich und einfach gestaltet.
+ 
+ 
+**Darstellung der Zaubererwelt**
+
+Das Spiel wird in einem rechteckigen, zweidimensionalen Fenster angezeigt. Die Bildgröße ist festgelegt und zeigt die aktuellen Positionen des Spielers sowie der Monster.
+ 
+ 
 **Singleplayer**
-1. **Spiel starten**: Starte das Spiel und drücke 'Play' im Hauptmenü.
-2. **Steuerung**:
-    - **Nach oben bewegen**: Verwende die Pfeil-nach-oben-Taste.
-    - **Nach unten bewegen**: Verwende die Pfeil-nach-unten-Taste.
-    - **Schießen**: Drücke die Leertaste, um einen Zauber zu wirken.
-3. **Ziel**: Besiege alle ankommenden Wellen von magischen Kreaturen, ohne dass sie dich erreichen.
-
-
+ 
+   - **Steuerung des Spielers:**
+    Der Spieler bewegt seinen Charakter am linken Bildschirmrand durch Drücken der Pfeiltasten nach oben und unten. Mit der Leertaste kann der Spieler         einen Zauberspruch wirken.
+ 
+ 
+   - **Bewegung der Monster:**
+    Die Monster bewegen sich unabhängig vom Spieler. Ihre Höhe wird zufällig festgelegt und bleibt konstant, während sie sich von links nach rechts            bewegen. Mit jedem Level steigen die Geschwindigkeit und die Lebenspunkte der Monster nehmen ab. Werden die Monster von Zaubersprüchen getroffen,          verlieren sie Lebenspunkte. Sobald ihre Lebenspunkte aufgebraucht sind, verschwinden die Monster.
+ 
+ 
 **Multiplayer**
-1. **Spiel starten**: Starte das Spiel und drücke 'Multiplayer' im Hauptmenü.
-2. **Rollen auswählen**:
-   - **Spieler 1**: Starte das Spiel und drücke 'Play' im Hauptmenü.
-   - **Spieler 2**: Wähle 'Control' im Hauptmenü, um die Monster zu steuern.
-3. **Monster Steuern**: Spieler 2 bestimmt die Positionen der Monster.
-4. **Steuerung Avatar**:
-    - **Nach oben bewegen**: Verwende die Pfeil-nach-oben-Taste.
-    - **Nach unten bewegen**: Verwende die Pfeil-nach-unten-Taste.
-    - **Schießen**: Drücke die Leertaste, um einen Zauber zu wirken.
-5. **Ziel**: Besiege alle ankommenden Wellen von magischen Kreaturen, ohne dass sie dich erreichen.
+ 
+   - **Rollen auswählen:**
+    Im Multiplayermenü startet Spieler 1 das Spiel, indem er "Play" drückt. Spieler 2 wählt "Control" aus, um die Monster zu steuern.
+ 
+   - **Steuerung der Monster:**
+    Zuerst startet Spieler 1 das Spiel durch Drücken von "Play", um den Server zu öffnen. Anschließend kann Spieler 2 die Anzahl und Position der Monster      frei bestimmen, wobei die Anzahl auf fünf Objekte begrenzt ist. Einmal ausgewählte Objekte können nicht abgewählt werden. Mit dem "Place"-Button setzt     Spieler 2 die Anzahl und Platzierung der Monster fest.  Zudem muss die IP-Adresse vom Spieler 1 eingetragen werden. Beide Spieler bestreiten das           Abenteuer gemeinsam in einem Level.
+ 
+   - **Steuerung des Spielers:**
+    Die Steuerung des Spielers erfolgt wie im Einzelspielermodus.
+ 
+ 
+**Kollision von Spieler und Monster**
+
+Erreicht ein Monster den linken Spielfeldrand, verliert der Spieler das Spiel und ein Gameover-Screen erscheint. Eine direkte Kollision zwischen Monster und Spieler ist dafür nicht erforderlich. Mit der ESC-Taste gelangt man zurück zum Startmenü.
+ 
+ 
+**Speichern und Laden**
+
+Wird das Spiel unterbrochen, wird der aktuelle Spielstand automatisch gespeichert. Beim Wiederaufnehmen des Spiels startet man im selben Level, in dem das Spiel gestoppt wurde, von vorne.
+
+**Abbildung 1: Startmenü**
+
+![Screenshot 2024-06-13 173205](https://github.com/YourInternationalMate/Die-Abenteuer-des-kleinen-Zauberlehrlings/assets/155901809/0ea15076-fd78-47e8-bc83-6136b32cf1a7)
+
+**Abbildung 2: Playermodus**
+
+![Screenshot 2024-06-13 173221](https://github.com/YourInternationalMate/Die-Abenteuer-des-kleinen-Zauberlehrlings/assets/155901809/fb698da5-1116-46fd-9b02-f2c567b4db56)
+
 
 ## UML
 ![Prog2_Rusch_Koenigsmann_UML](https://github.com/YourInternationalMate/Die-Abenteuer-des-kleinen-Zauberlehrlings/assets/73663569/f8956b81-1008-4396-bfa0-d200663801d7)
