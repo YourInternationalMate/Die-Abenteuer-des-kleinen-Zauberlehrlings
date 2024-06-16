@@ -19,7 +19,7 @@ public class Control extends JPanel {
     private JButton placeButton; // Schaltfläche zum Bestätigen der Platzierungen
     private JTextField ipField; // Textfeld für die Eingabe der IP-Adresse
     private static final int BUTTON_COUNT = 16; // Anzahl der Schaltflächen
-    private static final int MAX_BUTTON_CLICKS = 5; // Maximale Anzahl der Platzierungen
+    private static final int MAX_BUTTON_CLICKS = 4; // Maximale Anzahl der Platzierungen
     private ArrayList<SerializablePoint> clickedButtonValues; // Liste der angeklickten Schaltflächen
     private ArrayList<Point> possiblePositions; // Mögliche Positionen für die Schaltflächen
     private Redirector redirector; // Referenz auf den Redirector zur Navigation

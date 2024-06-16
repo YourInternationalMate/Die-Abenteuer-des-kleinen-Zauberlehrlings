@@ -73,7 +73,7 @@ Das Spiel wird in einem rechteckigen, zweidimensionalen Fenster angezeigt. Die B
     Im Multiplayermenü startet Spieler 1 das Spiel, indem er "Play" drückt. Spieler 2 wählt "Control" aus, um die Monster zu steuern.
  
    - **Steuerung der Monster:**
-    Zuerst startet Spieler 1 das Spiel durch Drücken von "Play", um den Server zu öffnen. Anschließend kann Spieler 2 die Anzahl und Position der Monster      frei bestimmen, wobei die Anzahl auf fünf Objekte begrenzt ist. Einmal ausgewählte Objekte können nicht abgewählt werden. Mit dem "Place"-Button setzt     Spieler 2 die Anzahl und Platzierung der Monster fest.  Zudem muss die IP-Adresse vom Spieler 1 eingetragen werden. Beide Spieler bestreiten das           Abenteuer gemeinsam in einem Level.
+    Zuerst startet Spieler 1 das Spiel durch Drücken von "Play", um den Server zu öffnen. Anschließend kann Spieler 2 die Anzahl und Position der Monster      frei bestimmen, wobei die Anzahl auf vier Objekte begrenzt ist. Einmal ausgewählte Objekte können nicht abgewählt werden. Mit dem "Place"-Button setzt     Spieler 2 die Anzahl und Platzierung der Monster fest.  Zudem muss die IP-Adresse vom Spieler 1 eingetragen werden. Beide Spieler bestreiten das           Abenteuer gemeinsam in einem Level.
  
    - **Steuerung des Spielers:**
     Die Steuerung des Spielers erfolgt wie im Einzelspielermodus.
