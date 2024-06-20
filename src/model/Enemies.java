@@ -19,40 +19,24 @@ public class Enemies {
         this.y = y; // Initialisiert die Y-Position
     }
 
-    public Image getImage() { // Getter für das Bild
+    public Image getImage() {
         return image;
     }
 
-    public int getSpeed() { // Getter für die Geschwindigkeit
-        return speed;
-    }
-
-    public int getX() { // Getter für die X-Position
+    public int getX() {
         return x;
     }
 
-    public int getY() { // Getter für die Y-Position
+    public int getY() {
         return y;
     }
 
-    public static int getHEIGHT() { // Getter für die Höhe
+    public static int getHEIGHT() {
         return HEIGHT;
     }
 
-    public static int getWIDTH() { // Getter für die Breite
+    public static int getWIDTH() {
         return WIDTH;
-    }
-
-    public void setSpeed(int speed) { // Setter für die Geschwindigkeit
-        this.speed = speed;
-    }
-
-    public void setX(int x) { // Setter für die X-Position
-        this.x = x;
-    }
-
-    public void setY(int y) { // Setter für die Y-Position
-        this.y = y;
     }
 
     public boolean isAlive() { // Überprüft, ob der Gegner noch lebt
@@ -63,11 +47,11 @@ public class Enemies {
         health -= damage;
     }
 
-    public void move() { // Methode zum Bewegen des Gegners
+    public void move() {
         this.x -= speed; // Bewegt sich von rechts nach links
     }
 
-    public boolean isOffScreen() { // Überprüft, ob der Gegner außerhalb des Bildschirms ist
+    public boolean isOffScreen() {
         return x < 0; // Der Gegner ist außerhalb des Bildschirms, wenn die X-Position kleiner als 0 ist
     }
 }

@@ -13,21 +13,21 @@ import java.util.ArrayList;
 
 public class Controller extends KeyAdapter {
     private String name; // Name des Spielers
-    private MainModel model; // Modell, das den Spielzustand verwaltet
-    private GUI view; // Ansicht zur Darstellung des Spiels
+    private MainModel model;
+    private GUI view;
     private Redirector redirector; // Interface zur Navigation zwischen verschiedenen Ansichten
     private Timer timer; // Timer für das Spiel-Loop
-    private Level[] level; // Array der Levels
-    private boolean win = false; // Status, ob das Spiel gewonnen wurde
-    private boolean lose = false; // Status, ob das Spiel verloren wurde
-    private boolean multiplayer; // Status, ob das Spiel im Multiplayer-Modus ist
+    private Level[] level; // Array der Level
+    private boolean win = false;
+    private boolean lose = false;
+    private boolean multiplayer;
 
     private boolean[] keys = new boolean[256]; // Array zur Verwaltung der Tastendrücke
 
-    private long lastSpellTime; // Zeit des letzten Schusses
+    private long lastSpellTime;
     private static final long SPELL_COOLDOWN = 300; // Abklingzeit zwischen den Schüssen in Millisekunden
 
-    public Controller(MainModel model, GUI view, Redirector redirector, String name, boolean multiplayer) { // Konstruktor
+    public Controller(MainModel model, GUI view, Redirector redirector, String name, boolean multiplayer) {
         this.model = model;
         this.view = view;
         this.level = model.getLevels();
@@ -63,7 +63,7 @@ public class Controller extends KeyAdapter {
             }
         }
 
-        if (level[model.getCurrentLevel()].isCompleted()) { // Überprüfen, ob das Level abgeschlossen ist
+        if (level[model.getCurrentLevel()].isCompleted()) {
             if (model.getCurrentLevel() < level.length - 1 && !multiplayer) { // Nächstes Level laden, wenn es kein Multiplayer-Spiel ist und noch Levels übrig sind
                 model.increaseCurrentLevel(); // Aktuelles Level erhöhen
                 model.nextLevel();
@@ -110,12 +110,12 @@ public class Controller extends KeyAdapter {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) { // Wird aufgerufen, wenn eine Taste gedrückt wird
+    public void keyPressed(KeyEvent e) {
         keys[e.getKeyCode()] = true; // Taste als gedrückt markieren
     }
 
     @Override
-    public void keyReleased(KeyEvent e) { // Wird aufgerufen, wenn eine Taste losgelassen wird
+    public void keyReleased(KeyEvent e) {
         keys[e.getKeyCode()] = false; // Taste als losgelassen markieren
     }
 

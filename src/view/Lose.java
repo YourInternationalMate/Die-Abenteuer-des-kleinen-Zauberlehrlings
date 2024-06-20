@@ -5,20 +5,20 @@ import java.awt.*;
 
 public class Lose extends JPanel {
 
-    private Image loseScreen; // Bild für den Verlierer-Bildschirm
+    private Image loseScreen;
 
     @Override
-    protected void paintComponent(Graphics g) { // Überschreibt die paintComponent-Methode von JPanel
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        loadImages(); // Lädt das Verlierer-Bild
-        drawBackground(g); // Zeichnet den Hintergrund
+        loadImages();
+        drawBackground(g);
     }
 
-    private void loadImages() { // Methode zum Laden des Verlierer-Bildes
-        loseScreen = new ImageIcon("src/resources/game/ending/lose.jpg").getImage(); // Lädt das Bild aus dem angegebenen Pfad
+    private void loadImages() {
+        loseScreen = new ImageIcon("src/resources/game/ending/lose.jpg").getImage();
     }
 
-    private void drawBackground(Graphics g) { // Methode zum Zeichnen des Hintergrundbildes
-        g.drawImage(loseScreen, 0, 0, null); // Zeichnet das Bild an den Koordinaten (0, 0)
+    private void drawBackground(Graphics g) {
+        g.drawImage(loseScreen, 0, 0, null);
     }
 }

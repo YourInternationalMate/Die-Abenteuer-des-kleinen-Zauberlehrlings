@@ -8,17 +8,17 @@ public class Story extends JPanel {
     private Image storyImage; // Bild für die Story-Anzeige
 
     @Override
-    protected void paintComponent(Graphics g) { // Überschreibt die paintComponent-Methode von JPanel
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        loadImages(); // Lädt das Story-Bild
-        drawStory(g); // Zeichnet die Story
+        loadImages();
+        drawStory(g);
     }
 
-    private void loadImages() { // Methode zum Laden des Story-Bildes
-        storyImage = new ImageIcon("src/resources/game/story.jpg").getImage(); // Lädt das Bild aus dem angegebenen Pfad
+    private void loadImages() {
+        storyImage = new ImageIcon("src/resources/game/story.jpg").getImage();
     }
 
-    private void drawStory(Graphics g) { // Methode zum Zeichnen der Story
-        g.drawImage(storyImage, 0, 0, null); // Zeichnet das Bild an den Koordinaten (0, 0)
+    private void drawStory(Graphics g) {
+        g.drawImage(storyImage, 0, 0, null);
     }
 }

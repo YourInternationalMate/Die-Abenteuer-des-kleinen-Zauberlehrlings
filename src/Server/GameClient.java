@@ -9,7 +9,7 @@ import java.util.*;
 public class GameClient {
     private ArrayList<SerializablePoint> points; // Liste der zu sendenden Punkte
 
-    public GameClient(ArrayList<SerializablePoint> points) { // Konstruktor
+    public GameClient(ArrayList<SerializablePoint> points) {
         this.points = points;
     }
 
@@ -18,14 +18,14 @@ public class GameClient {
 
         int port = 8080; // Port-Nummer
 
-        try (Socket socket = new Socket(hostName, port)) { // Erstellt eine Socket-Verbindung zum Server
-            ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream()); // OutputStream zum Senden von Objekten
-            BufferedReader socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream())); // InputStream zum Empfangen von Nachrichten
+        try (Socket socket = new Socket(hostName, port)) {
+            ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream());
+            BufferedReader socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             objectOut.writeObject(points); // Sendet die ArrayList an den Server
 
-            String response = socketIn.readLine(); // Empfängt eine Zeile vom Server
-            System.out.println(response); // Gibt die empfangene Zeile auf der Konsole aus
+            String response = socketIn.readLine();
+            System.out.println(response);
 
         } catch (UnknownHostException ue) { // Fehlerbehandlung für unbekannte Hosts
             System.out.println("Kein DNS-Eintrag für " + hostName);

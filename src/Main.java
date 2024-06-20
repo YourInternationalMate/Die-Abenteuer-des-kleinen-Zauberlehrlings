@@ -12,46 +12,46 @@ import interfaces.Redirector;
 
 import javax.swing.*;
 
-public class Main implements Redirector { // Hauptklasse, die das Redirector-Interface implementiert
-    private static JFrame mainFrame; // Hauptfenster des Spiels
-    private Menu menu; // Menü-Ansicht
-    private Lose lose; // Verlierer-Ansicht
-    private Win win; // Gewinner-Ansicht
-    private Story story; // Story-Ansicht
-    private GUI gui; // Spielansicht
-    private Multiplayer multiplayer; // Multiplayer-Ansicht
-    private Control controll; // Steuerungsansicht
-    private Controller controller; // Controller für die Spiel-Logik
-    private MainModel model; // Modell für die Spiel-Daten
-    private GameServer server; // GameServer-Instanz für Multiplayer-Spiele
-    private boolean serverStarted = false; // Flag, ob der Server gestartet wurde
+public class Main implements Redirector {
+    private static JFrame mainFrame;
+    private Menu menu;
+    private Lose lose;
+    private Win win;
+    private Story story;
+    private GUI gui;
+    private Multiplayer multiplayer;
+    private Control control;
+    private Controller controller;
+    private MainModel model;
+    private GameServer server;
+    private boolean serverStarted = false;
 
-    public Main() { // Konstruktor der Hauptklasse
-        mainFrame = new JFrame("Die Abenteuer des kleinen Zauberlehrlings"); // Initialisiert das Hauptfenster
-        menu = new Menu(this); // Initialisiert das Menü
-        lose = new Lose(); // Initialisiert die Verlierer-Ansicht
-        win = new Win(); // Initialisiert die Gewinner-Ansicht
-        story = new Story(); // Initialisiert die Story-Ansicht
-        multiplayer = new Multiplayer(this); // Initialisiert die Multiplayer-Ansicht
+    public Main() {
+        mainFrame = new JFrame("Die Abenteuer des kleinen Zauberlehrlings");
+        menu = new Menu(this);
+        lose = new Lose();
+        win = new Win();
+        story = new Story();
+        multiplayer = new Multiplayer(this);
     }
 
-    public static void main(String[] args) { // Hauptmethode des Programms
-        SwingUtilities.invokeLater(() -> new Main().setWindow()); // Setzt das Fenster im Event-Dispatch-Thread
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Main().setWindow());
     }
 
     public void setWindow() { // Methode zur Konfiguration des Hauptfensters
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Beendet das Programm bei Fenster-Schließung
-        mainFrame.setSize(1280, 760); // Setzt die Fenstergröße
-        mainFrame.setResizable(false); // Verhindert die Größenänderung des Fensters
-        mainFrame.setIconImage(new ImageIcon("src/resources/game/icon.jpg").getImage()); // Setzt das Fenster-Icon
-        initMenu(); // Initialisiert das Menü
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setSize(1280, 760);
+        mainFrame.setResizable(false);
+        mainFrame.setIconImage(new ImageIcon("src/resources/game/icon.jpg").getImage());
+        initMenu();
     }
 
-    public void initMenu() { // Initialisiert und zeigt das Hauptmenü
-        mainFrame.add(menu); // Fügt das Menü zum Hauptfenster hinzu
-        mainFrame.revalidate(); // Validiert die Komponenten-Hierarchie
-        mainFrame.repaint(); // Repaint das Fenster
-        mainFrame.setVisible(true); // Macht das Fenster sichtbar
+    public void initMenu() {
+        mainFrame.add(menu);
+        mainFrame.revalidate();
+        mainFrame.repaint();
+        mainFrame.setVisible(true);
     }
 
     @Override
@@ -76,13 +76,13 @@ public class Main implements Redirector { // Hauptklasse, die das Redirector-Int
     }
 
     @Override
-    public void controll() { // Methode zur Anzeige der Steuerungsansicht
+    public void control() {
         model = new MainModel("Username", true); // Initialisiert das Modell mit Standard-Username
-        controll = new Control(model.calculatePossiblePositions(), this); // Initialisiert die Steuerungsansicht
+        control = new Control(model.calculatePossiblePositions(), this);
 
         mainFrame.remove(multiplayer); // Entfernt die Multiplayer-Ansicht
 
-        mainFrame.add(controll); // Fügt die Steuerungsansicht hinzu
+        mainFrame.add(control); // Fügt die Steuerungsansicht hinzu
         mainFrame.revalidate();
         mainFrame.repaint();
         mainFrame.setVisible(true);
@@ -90,8 +90,8 @@ public class Main implements Redirector { // Hauptklasse, die das Redirector-Int
 
     @Override
     public void multiplayer() { // Methode zur Anzeige der Multiplayer-Ansicht
-        if (controll != null) {
-            mainFrame.remove(controll); // Entfernt die Steuerungsansicht, falls vorhanden
+        if (control != null) {
+            mainFrame.remove(control); // Entfernt die Steuerungsansicht, falls vorhanden
         }
         if (menu != null) {
             mainFrame.remove(menu); // Entfernt das Menü, falls vorhanden
@@ -117,8 +117,8 @@ public class Main implements Redirector { // Hauptklasse, die das Redirector-Int
         mainFrame.remove(multiplayer); // Entfernt die Multiplayer-Ansicht
 
         model = new MainModel("Username", true); // Initialisiert das Modell mit Standard-Username
-        gui = new GUI(model); // Initialisiert die Spielansicht
-        controller = new Controller(model, gui, this, "Username", true); // Initialisiert den Controller
+        gui = new GUI(model);
+        controller = new Controller(model, gui, this, "Username", true);
 
         if (!serverStarted) {
             startStream(model); // Startet den GameServer
@@ -129,25 +129,25 @@ public class Main implements Redirector { // Hauptklasse, die das Redirector-Int
         mainFrame.revalidate();
         mainFrame.repaint();
 
-        mainFrame.requestFocus(); // Setzt den Fokus auf das Fenster
+        mainFrame.requestFocus();
         mainFrame.addKeyListener(controller); // Fügt den KeyListener hinzu
 
-        controller.startGame(); // Startet das Spiel
+        controller.startGame();
     }
 
     @Override
-    public void startGame(String name) { // Methode zum Starten eines Spiels mit Story-Delay
+    public void startGame(String name) {
         story(); // Zeigt die Story-Ansicht
 
         Timer timer = new Timer(3000, e -> startGameNow(name)); // Timer für Verzögerung
         timer.setRepeats(false); // Einmaliger Timer
-        timer.start(); // Startet den Timer
+        timer.start();
     }
 
-    private void startGameNow(String name) { // Methode zum tatsächlichen Starten des Spiels
-        model = new MainModel(name, false); // Initialisiert das Modell mit Spielername
-        gui = new GUI(model); // Initialisiert die Spielansicht
-        controller = new Controller(model, gui, this, name, false); // Initialisiert den Controller
+    private void startGameNow(String name) {
+        model = new MainModel(name, false);
+        gui = new GUI(model);
+        controller = new Controller(model, gui, this, name, false);
 
         mainFrame.remove(story); // Entfernt die Story-Ansicht
 
@@ -155,10 +155,10 @@ public class Main implements Redirector { // Hauptklasse, die das Redirector-Int
         mainFrame.revalidate();
         mainFrame.repaint();
 
-        mainFrame.requestFocus(); // Setzt den Fokus auf das Fenster
+        mainFrame.requestFocus();
         mainFrame.addKeyListener(controller); // Fügt den KeyListener hinzu
 
-        controller.startGame(); // Startet das Spiel
+        controller.startGame();
     }
 
     @Override
@@ -187,7 +187,6 @@ public class Main implements Redirector { // Hauptklasse, die das Redirector-Int
         mainFrame.setVisible(true);
     }
 
-    // Methode zum Starten des GameServers für den Multiplayer-Stream
     public void startStream(MainModel model) {
         new Thread(() -> {
             server = new GameServer(model); // Initialisiert den GameServer

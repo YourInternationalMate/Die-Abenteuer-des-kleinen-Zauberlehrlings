@@ -17,31 +17,27 @@ public class Level {
         this.killedEnemies = 0; // Setzt die Anzahl der getöteten Gegner auf 0
     }
 
-    public boolean isCompleted() { // Überprüft, ob das Level abgeschlossen ist
+    public boolean isCompleted() {
         return killedEnemies == enemyCount; // Das Level ist abgeschlossen, wenn alle Gegner getötet wurden
     }
 
-    public void enemyKilled() { // Erhöht die Anzahl der getöteten Gegner
+    public void enemyKilled() {
         killedEnemies++;
     }
 
-    public void reset() { // Setzt die Anzahl der getöteten Gegner zurück
+    public void reset() {
         killedEnemies = 0;
     }
 
-    public int getLevelNumber() { // Getter für die Levelnummer
-        return levelNumber;
-    }
-
-    public int getEnemyCount() { // Getter für die Anzahl der Gegner
+    public int getEnemyCount() {
         return enemyCount;
     }
 
-    public int getEnemySpeed() { // Getter für die Geschwindigkeit der Gegner
+    public int getEnemySpeed() {
         return enemySpeed;
     }
 
-    public Image getImage() { // Getter für das Bild des Levels
+    public Image getImage() {
         return image;
     }
 }

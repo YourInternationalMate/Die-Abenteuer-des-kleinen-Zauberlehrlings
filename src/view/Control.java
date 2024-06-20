@@ -30,16 +30,16 @@ public class Control extends JPanel {
         this.possiblePositions = possiblePositions;
         this.redirector = redirector;
         setPreferredSize(new Dimension(1280, 760)); // Setzt die bevorzugte Größe des Panels
-        loadImages(); // Lädt die Bilder
-        initButtons(); // Initialisiert die Schaltflächen
-        initTextFields(); // Initialisiert das Textfeld
+        loadImages();
+        initButtons();
+        initTextFields();
         setLayout(null); // Deaktiviert das Layout-Manager für manuelle Positionierung
     }
 
-    private void initButtons() { // Methode zur Initialisierung der Schaltflächen
+    private void initButtons() {
         JButton backButton;
         buttons = new JButton[BUTTON_COUNT]; // Initialisiert das Array der Schaltflächen
-        clickedButtonValues = new ArrayList<>(); // Initialisiert die Liste der angeklickten Schaltflächen
+        clickedButtonValues = new ArrayList<>();
 
         for (int i = 0; i < BUTTON_COUNT; i++) {
             int index = i;
@@ -52,7 +52,6 @@ public class Control extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (clickedButtonValues.size() >= MAX_BUTTON_CLICKS) {
-                        System.out.println("Das waren alle"); // Meldung, wenn die maximale Anzahl erreicht ist
                     } else {
                         JButton source = (JButton) e.getSource();
                         source.setEnabled(false); // Deaktiviert die Schaltfläche nach dem Klick
@@ -60,7 +59,7 @@ public class Control extends JPanel {
                     }
                 }
             });
-            add(buttons[index]); // Fügt die Schaltfläche dem Panel hinzu
+            add(buttons[index]);
         }
 
         // Initialisierung der Place-Schaltfläche
@@ -68,7 +67,7 @@ public class Control extends JPanel {
         placeButton.setContentAreaFilled(false);
         placeButton.setBorderPainted(false);
         placeButton.setFocusPainted(false);
-        placeButton.setBounds(600, 600, 180, 50); // Setzt die Position und Größe der Schaltfläche
+        placeButton.setBounds(600, 600, 180, 50);
         placeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,7 +79,7 @@ public class Control extends JPanel {
         });
         add(placeButton); // Fügt die Schaltfläche dem Panel hinzu
 
-        // Initialisierung der Back-Schaltfläche
+
         backButton = new JButton(new ImageIcon("src/resources/menu/button_back.png"));
         backButton.setContentAreaFilled(false);
         backButton.setBorderPainted(false);
@@ -95,15 +94,15 @@ public class Control extends JPanel {
         add(backButton); // Fügt die Schaltfläche dem Panel hinzu
     }
 
-    private void initTextFields() { // Methode zur Initialisierung des Textfelds
+    private void initTextFields() {
         ipField = new JTextField(DEFAULT_TEXT); // Initialisiert das Textfeld mit dem Standardtext
-        ipField.setBounds(560, 650, 220, 50); // Setzt die Position und Größe des Textfelds
-        ipField.setHorizontalAlignment(JTextField.CENTER); // Zentriert den Text im Textfeld
-        ipField.setForeground(Color.WHITE); // Setzt die Textfarbe auf Weiß
-        ipField.setFont(new Font("SansSerif", Font.BOLD, 24)); // Setzt die Schriftart und -größe
+        ipField.setBounds(560, 650, 220, 50);
+        ipField.setHorizontalAlignment(JTextField.CENTER);
+        ipField.setForeground(Color.WHITE);
+        ipField.setFont(new Font("SansSerif", Font.BOLD, 24));
         ipField.setOpaque(false); // Macht das Textfeld transparent
         ipField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1)); // Setzt einen weißen Rand
-        ipField.setCaretColor(Color.WHITE); // Setzt die Farbe des Cursors auf Weiß
+        ipField.setCaretColor(Color.WHITE);
         ipField.addFocusListener(new FocusAdapter() { // Fügt einen Fokus-Listener hinzu
             @Override
             public void focusGained(FocusEvent e) {
@@ -119,20 +118,20 @@ public class Control extends JPanel {
                 }
             }
         });
-        add(ipField); // Fügt das Textfeld dem Panel hinzu
+        add(ipField);
     }
 
     @Override
-    protected void paintComponent(Graphics g) { // Überschreibt die paintComponent-Methode von JPanel
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        drawBackground(g); // Zeichnet den Hintergrund
+        drawBackground(g);
     }
 
-    private void loadImages() { // Methode zum Laden des Hintergrundbildes
-        backgroundImage = new ImageIcon("src/resources/menu/background_clean.jpg").getImage(); // Lädt das Bild aus dem angegebenen Pfad
+    private void loadImages() {
+        backgroundImage = new ImageIcon("src/resources/menu/background_clean.jpg").getImage();
     }
 
-    private void drawBackground(Graphics g) { // Methode zum Zeichnen des Hintergrundbildes
-        g.drawImage(backgroundImage, 0, 0, null); // Zeichnet das Bild an den Koordinaten (0, 0)
+    private void drawBackground(Graphics g) {
+        g.drawImage(backgroundImage, 0, 0, null);
     }
 }

@@ -21,12 +21,12 @@ public class MainModel {
     private Image[] enemyImages = new Image[7]; // Array der Gegnerbilder
     private Image[] backgroundImages = new Image[4]; // Array der Hintergrundbilder
 
-    public MainModel(String name, boolean multiplayer) { // Konstruktor
+    public MainModel(String name, boolean multiplayer) {
         this.multiplayer = multiplayer;
         loadImages();
         getLevel(name); // Level aus der Datenbank laden
         this.player = new Player(playerImage, 7, 0, 360); // Spieler initialisieren
-        createLevel(); // Level erstellen
+        createLevel();
         if (!multiplayer) {
             spawnEnemies(); // Gegner spawnen, falls nicht im Multiplayer-Modus
         }

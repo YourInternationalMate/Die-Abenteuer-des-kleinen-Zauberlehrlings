@@ -7,5 +7,5 @@ public interface Redirector {
     void lose(); // Methode zum Anzeigen des Verlierer-Bildschirms
     void startMultiplayerGame(); // Methode zum Starten eines Multiplayer-Spiels
     void multiplayer(); // Methode zum Anzeigen des Multiplayer-Menüs
-    void controll(); // Methode zum Anzeigen der Steuerungsansicht
+    void control(); // Methode zum Anzeigen der Steuerungsansicht
 }
