@@ -99,7 +99,7 @@ Wird das Spiel unterbrochen, wird der aktuelle Spielstand automatisch gespeicher
 
 ## UML
 ![Prog2_Rusch_Koenigsmann_UML](https://github.com/YourInternationalMate/Die-Abenteuer-des-kleinen-Zauberlehrlings/assets/73663569/f8956b81-1008-4396-bfa0-d200663801d7)
-(Erstellt mit IntelliJ Idea)
+<sub>(Erstellt mit IntelliJ Idea)</sub>
 
 
 ## Code-Struktur
