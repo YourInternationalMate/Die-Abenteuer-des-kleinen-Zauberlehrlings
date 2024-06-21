@@ -8,6 +8,7 @@ Willkommen zu "Die Abenteuer des kleinen Zauberlehrlings", einem von Space Invad
 - [Spielanleitung](#spielanleitung)
 - [Code-Struktur](#code-struktur)
 - [Ordnerstruktur](#ordnerstruktur)
+- [Quellen](#quellen)
 - [Mitwirkende](#mitwirkende)
 - [Beitragende](#beitragende)
 - [Lizenz](#lizenz)
@@ -182,6 +183,10 @@ src
     ├── Story.java
     └── Win.java
 ```
+
+## Quellen
+* Screen Storyline: Adobe Photoshop AI
+* UML mit Intellij
 
 ## Mitwirkende
 - **Mika Königsmann**
